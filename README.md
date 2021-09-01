@@ -4,7 +4,7 @@
 
 ## Todos
 
-- [ ] Colors for itemize and enumerate
+- [x] Colors for itemize and enumerate
 - [ ] Corresponding PowerPoint Template
 - [x] Seminar Template
 - [ ] BA/MA Template
