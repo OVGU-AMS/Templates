@@ -3,11 +3,14 @@
 %%
 %% Author: Benjamin Noack
 %% Last Modified by: Benjamin Noack
-%% Date: 2022-06-27
+%% Date: 2023-11-16
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Changes
+% Changes 2023/11/16
+% * font size in footline increased / consistent with PPTX template
+% * option smallfootfontsize added to decrease fontsize in footline
 % Changes 2022/06/27
 % * bounding box in tikzframe corrected
 % * pictheight/pictwidth renamed to slideheight/slidewidth
@@ -28,6 +31,10 @@
 \newif\ifAMSBeamer@AMSLogo
 \AMSBeamer@AMSLogotrue
 \DeclareOption{noAMSLogo}{\AMSBeamer@AMSLogofalse}
+
+% Check whether AMS logo should be included
+\newcommand{\AMSBeamer@footfontsize}{5} %this was previously 4
+\DeclareOption{smallfootfontsize}{\renewcommand{\AMSBeamer@footfontsize}{4}}
 
 % Check whether total of pages should be shown on page
 \newif\ifAMSBeamer@numberofpages
@@ -174,15 +181,15 @@
     %
 	% footline (height 3mm):
 		\ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-		\begin{beamercolorbox}[sep=0pt,ht=0.3cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+		\begin{beamercolorbox}[sep=0pt,ht=0.3cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}%
 		\vbox to0.3cm{\vfil\hbox{%
-		\color{white}{\fontsize{4}{7}\selectfont\bfseries{\insertshorttitle~$\vert$~\insertshortauthor}}%
+		\color{white}{\fontsize{\AMSBeamer@footfontsize}{7}\selectfont\bfseries{\insertshorttitle~$\vert$~\insertshortauthor}}%
 		}\vfil}%
 		\hfill%
 		\vbox to0.3cm{\vfil\hbox{%
-		\color{white}{\fontsize{4}{7}\selectfont\bfseries{\insertframenumber%
+		\color{white}{\fontsize{\AMSBeamer@footfontsize}{7}\selectfont\bfseries{\insertframenumber%
 		\ifAMSBeamer@numberofpages/\inserttotalframenumber\fi}}%
-		}\vfil}
+		}\vfil}%
 		\end{beamercolorbox}
     \fi%    
 }
