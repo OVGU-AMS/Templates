@@ -27,7 +27,7 @@
 % \title[Short Title]{Full Title of the Presentation}
 
 %% Subtitle if necessary:
-\subtitle{Subtitle}
+\subtitle{Template for AMS presentations (Subtitle)}
 
 %% Author(s)
 \author{Peter Trom}
@@ -54,8 +54,14 @@
 
 \section{Test Slides}
 
+%
+% You can structure your slide into parts, sections and subsections
+\part{General Information}
+%
+\section{First Section}
 % Use this command for section slides:
-\sectionslide[Title of Topic (Default is title of presentation)]{This is the section or subtitle}
+\sectionslide{\insertsection}
+\sectionslide[Chapter / Part name (Default is title of presentation)]{This is another section}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -105,6 +111,10 @@
     % \transfade<2->
 \end{frame}
 
+
+\section{Further Notes}
+\sectionslide{\insertsection}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Slide without tikz or textblock
@@ -119,13 +129,18 @@
 	% \makegridtp
 
 
-	\hfil
-	The folder \emph{pages} contains an AI template to create slides. The slide area is \SI{160}{mm} $\times$ \SI{78}{mm}.\newline
+	\bigskip%
+	The folder \emph{pages} contains an Adobe Illustrator template to create slides. The slide area is \SI{160}{mm} $\times$ \SI{78}{mm}.
+	
+	\bigskip
+	The following standard colors are provided:\\ \bfseries\textcolor{AMSblue}{AMSblue}, \textcolor{AMSred}{AMSred}, \textcolor{AMSgreen}{AMSgreen}, \textcolor{AMSorange}{AMSorange}
+
+	% \begin{tikzframe}
+	% 	% \path<1-> (0,0) node[anchor = south west,inner sep=0pt]{%
+	% 	% \includegraphics{./AI_gerated.pdf}};
+	% \end{tikzframe}
 
 
-	\Notes{
-		you can add separate todo notes here
-    }
     % \transfade<2->
 \end{frame}
 
