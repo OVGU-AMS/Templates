@@ -1,4 +1,5 @@
 % choose between class option BA, MA, PhD
+% choose between class option english/german
 \documentclass[english,algorithms,reviews,examples,PhD]{amsthesis}
 
 
@@ -29,6 +30,8 @@
 \reviewerB{Prof. Dipl. Inf. Gutachter 2}
 \reviewerC{Prof. Dipl. Inf. Gutachter 3}
 % \reviewerD{Prof. Dipl. Inf. Gutachter 4}
+
+\supervisor{Michael Mustermann}
 
 % \firstsupervisor{Prof. Dr.-Ing. Benjamin Noack}
 
@@ -136,12 +139,16 @@
 
     % Bibliographies
     \printbibliography[heading=bibintoc,notcategory={own},notcategory={students}]
+    % Following bibliographies only for PhD theses
     \cleardoublepage
     \newrefcontext[labelprefix=O]
     \printbibliography[heading=bibintoc,category={own},title=Own Publications,resetnumbers=true]
     \cleardoublepage
     \newrefcontext[labelprefix=S]
     \printbibliography[heading=bibintoc,category={students},title=Supervised Theses,resetnumbers=true]
+    
+    % Statement of Authorship (MA/BA theses)
+    \authorshipstatement
 
 \end{document}
 
