@@ -27,6 +27,12 @@
 	\type@MAtrue%
 }
 
+\newif\if@german
+\@germanfalse
+\DeclareOption{german}{%
+	\@germantrue%
+}
+
 \ProcessOptions\relax
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,6 +96,7 @@
 \def\@degree{}
 \def\@birthdate{}
 \def\@birthplace{}
+\def\@matriculation{}
 
 \def\reviewerA#1{\gdef\@reviewerA{#1}}
 \def\reviewerB#1{\gdef\@reviewerB{#1}}
@@ -112,6 +119,66 @@
 \else
 	\def\@thesistype{}
 \fi\fi\fi
+
+
+%% Defintions MA/BA %%
+\newcommand\matriculationlabel[0]{ }
+\newcommand\matriculation[1]{\def\@matriculation{#1}}
+\newcommand\supervisor[1]{\def\@supervisor{#1}}
+\newcommand{\supervisorlabel}[0]{ }
+\newcommand{\proflabel}[0]{ }
+\newcommand{\secondproflabel}[0]{ }
+\if@german
+	\renewcommand{\matriculationlabel}{Immatrikulationsnr.: }
+	\renewcommand{\supervisorlabel}[0]{Betreuer: }
+	\renewcommand{\proflabel}[0]{Themensteller: }
+	\renewcommand{\secondproflabel}[0]{Zweitgutachter: }
+\else
+	\renewcommand{\matriculationlabel}{Matrikulation no.: }
+	\renewcommand{\supervisorlabel}[0]{Supervisor: }
+	\renewcommand{\proflabel}[0]{Professor: }
+	\renewcommand{\secondproflabel}[0]{Second Assessor: }
+\fi
+
+\newcommand{\titleheader}[0]{$\quad$}
+\iftype@BA%
+	\if@german%
+		\renewcommand{\titleheader}[0]{Bachelorarbeit}
+	\else
+		\renewcommand{\titleheader}[0]{Bachelor Thesis}
+	\fi
+\fi
+
+\iftype@MA%
+	\if@german
+		\renewcommand{\titleheader}[0]{Masterarbeit}
+	\else
+		\renewcommand{\titleheader}[0]{Master Thesis}
+	\fi
+\fi
+
+
+\if@german
+	\newcommand{\@institution}{
+		Otto-von-Guericke-Universit\"at Magdeburg\\
+		Fakult\"at f\"ur Informatik\\
+		Institut f\"ur Intelligente Kooperierende Systeme\\
+		Lehrstuhl für Autonome Multisensor Systeme
+	}
+\else
+	\newcommand{\@institution}{
+		Otto-von-Guericke-University Magdeburg\\
+		Faculty of Computer Science\\
+		Institute for Intelligent Cooperating Systems\\
+		Autonomous Multisensor Systems Group
+	}
+\fi
+%\newlength{\institutionheight}
+%\settoheight{\institutionheight}{{\@institution}}
+\newcommand{\instlogo}[0]{\includegraphics[scale=0.45]{figures/logos/AMS}}
+		
+%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%           Avoiding Widows and Orphans
@@ -242,73 +309,156 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%           Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftype@dissertation
+	\renewcommand{\maketitle}{
+	\thispagestyle{empty}%
+	\newgeometry{margin=2.5cm,top=-1.5cm}%top=-2.1cm
+	{%
+	\parindent0pt%\baselinestretch1.0%
+	\begin{center}
+		\includegraphics[width=9.2cm]{figures/logos/OVGU.pdf}
+	\end{center}
+	\sffamily%
 
-\renewcommand{\maketitle}{
-\thispagestyle{empty}%
-\newgeometry{margin=2.5cm,top=-1.5cm}%top=-2.1cm
-{%
-\parindent0pt%\baselinestretch1.0%
-\begin{center}
-	\includegraphics[width=9.2cm]{figures/logos/OVGU.pdf}
-\end{center}
-\sffamily%
+	\vspace*{-1.8cm}%
 
-\vspace*{-1.8cm}%
+	{\LARGE \@title}%
 
-{\LARGE \@title}%
+	\vspace*{3.5cm}%
 
-\vspace*{3.5cm}%
+	{\bfseries DISSERTATION}
 
-{\bfseries DISSERTATION}
+	\vspace*{0.7cm}
 
-\vspace*{0.7cm}
+	\Large zur Erlangung des akademischen Grades
 
-\Large zur Erlangung des akademischen Grades
+	\vspace*{0.7cm}
 
-\vspace*{0.7cm}
+	Doktoringenieur (Dr.-Ing.)
 
-Doktoringenieur (Dr.-Ing.)
+	\vspace*{1.5cm}
 
-\vspace*{1.5cm}
+	angenommen durch die Fakultät für Informatik\\
+	der Otto-von-Guericke-Universität Magdeburg
 
-angenommen durch die Fakultät für Informatik\\
-der Otto-von-Guericke-Universität Magdeburg
+	\vspace*{1.25cm}
 
-\vspace*{1.25cm}
+	von \@degree~\@author
 
-von \@degree~\@author
+	\vspace*{0.2cm}
 
-\vspace*{0.2cm}
+	\begin{tabbing}
+		\=\hspace{7.5cm}\=\hspace{5cm}\\[-\baselineskip]
+		\>geb. am \@birthdate\>in \@birthplace
+	\end{tabbing}
 
-\begin{tabbing}
-	\=\hspace{7.5cm}\=\hspace{5cm}\\[-\baselineskip]
-	\>geb. am \@birthdate\>in \@birthplace
-\end{tabbing}
+	\vspace*{0.2cm}
 
-\vspace*{0.2cm}
+	Gutachterinnen/Gutachter
 
-Gutachterinnen/Gutachter
+	\vspace*{0.4cm}
 
-\vspace*{0.4cm}
+	\@reviewerA\\
+	\@reviewerB\\
+	\@reviewerC\\
+	\@reviewerD
 
-\@reviewerA\\
-\@reviewerB\\
-\@reviewerC\\
-\@reviewerD
+	\vspace*{1.75cm}
 
-\vspace*{1.75cm}
+	Magdeburg, den \printfdate{shbritishdots} %shbritishdots corresponds to German date format
 
-Magdeburg, den \printfdate{shbritishdots} %shbritishdots corresponds to German date format
+	}%
+	\restoregeometry
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\begin{minipage}{.95\textwidth}
+		\textbf{\@author}\\
+		\emph{\@title}\\
+		\@thesistype, Otto von Guericke University Magdeburg \\
+		Magdeburg, \printfdate{Y}.
+	\end{minipage}
+	\cleardoublepage
+	}
+	
+\else
+	\renewcommand{\maketitle}{
+	\thispagestyle{empty}%
+	\newgeometry{margin=2.5cm}%top=-2.1cm
+	{%
+		\parindent0pt%\baselinestretch1.0%
+	
+	\if@german
+		\includegraphics[width=\linewidth]{figures/logos/fin-de}\vspace*{2cm}
+	\else
+		\includegraphics[width=\linewidth]{figures/logos/fin-en}\vspace*{2cm}
+	\fi
+	
+	\hspace*{2.5cm}\begin{minipage}{.75\linewidth}
+		\huge
+		\textbf{\titleheader}\\[1cm]
+		\huge
+		\@title\\[1cm]
+		\large{\@author \\ [0.5cm] 
+			\ifx\@empty\@matriculation
+			\else
+				\matriculationlabel \@matriculation\\
+			\fi
+			Magdeburg, \printfdate{shbritishdots}}\\[4cm]
 
-}%
-\restoregeometry
-\thispagestyle{empty}
-\vspace*{\fill}
-\begin{minipage}{.95\textwidth}
-	\textbf{\@author}\\
-	\emph{\@title}\\
-	\@thesistype, Otto von Guericke University Magdeburg \\
-	Magdeburg, \printfdate{Y}.
-\end{minipage}
-\cleardoublepage
+		\large
+
+		\supervisorlabel \@supervisor
+		\ifx\@empty\@reviewerA
+		\else
+			\\ \proflabel \@reviewerA
+		\fi
+		\ifx\@empty\@reviewerB
+			\\[1cm]
+		\else
+			\\ \secondproflabel \@reviewerB
+			\\[1cm]
+		\fi
+	\end{minipage}
+
+	\vfill
+	\hrule
+	\vspace*{0.15cm}
+	\begin{minipage}{.7\linewidth}
+		\@institution
+	\end{minipage}
+	\begin{minipage}{.3\linewidth}
+		\raggedleft
+		\instlogo
+	\end{minipage}
+		}%
+	\restoregeometry
+	\cleardoublepage
+	}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%				Selbständigkeitserklärung
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\authorshipstatement}{
+	\chapter*{Statement of Authorship of the Student}
+	Thesis: \@title\\[1cm]
+	Name: \@author\\[1cm]
+	Date of birth: \@birthdate\\[1cm]
+	\matriculationlabel \@matriculation\\ [1cm]
+	
+	\noindent
+	I herewith assure that I wrote the present thesis independently, that the thesis has not
+	been partially or fully submitted as graded academic work and that I have used no other
+	means than the ones indicated. I have indicated all parts of the work in which sources
+	are used according to their wording or to their meaning.
+	
+	\noindent
+	I am aware of the fact that violations of copyright can lead to injunctive relief and claims
+	for damages of the author as well as a penalty by the law enforcement agency.\\ [1cm]
+%\chapter*{Selbstst\"andigkeitserkl\"arung}\markboth{\textsc{Selbstst\"andigkeitserkl\"arung}}{\textsc{Selbstst\"andigkeitserkl\"arung}}
+%Hiermit erkl\"are ich, dass ich die vorliegende Arbeit selbst\"andig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel verwendet habe.\\
+Magdeburg, \@date \\ [2cm]
+\dots\dots\dots\dots\dots\dots\dots\dots\dots\\
+(Signature)
 }
