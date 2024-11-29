@@ -78,7 +78,9 @@
 \colorlet{AMSblue}{ovgu-inf-blue}
 \definecolor{AMSred}{RGB}{194,23,20}
 \definecolor{AMSgreen}{RGB}{0,120,38}
-\definecolor{AMSorange}{RGB}{243,147,35}
+
+\definecolor{AMSorange}{RGB}{246,129,0}
+% \definecolor{AMSorange}{RGB}{243,147,35}
 
 % remove navigation symbols 
 \setbeamertemplate{navigation symbols}{}
