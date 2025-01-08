@@ -4,7 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{amsthesis}[2023/06/14 The AMS Thesis Class]
+\ProvidesClass{amsthesis}[2025/01/08 The AMS Thesis Class]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%            Class Options
@@ -167,7 +167,7 @@
 	}
 \else
 	\newcommand{\@institution}{
-		Otto-von-Guericke-University Magdeburg\\
+		Otto von Guericke University Magdeburg\\
 		Faculty of Computer Science\\
 		Institute for Intelligent Cooperating Systems\\
 		Autonomous Multisensor Systems Group
@@ -393,7 +393,7 @@
 		\includegraphics[width=\linewidth]{figures/logos/fin-en}\vspace*{2cm}
 	\fi
 	
-	\hspace*{2.5cm}\begin{minipage}{.75\linewidth}
+	\hspace*{2.5cm}\begin{minipage}[t][0.7\textheight]{.75\linewidth}
 		\huge
 		\textbf{\titleheader}\\[1cm]
 		\huge
@@ -403,8 +403,9 @@
 			\else
 				\matriculationlabel \@matriculation\\
 			\fi
-			Magdeburg, \printfdate{shbritishdots}}\\[4cm]
-
+			Magdeburg, \printfdate{shbritishdots}}\\%[4cm]
+		
+		~\vfill
 		\large
 
 		\supervisorlabel \@supervisor
@@ -424,7 +425,7 @@
 	\hrule
 	\vspace*{0.15cm}
 	\begin{minipage}{.7\linewidth}
-		\@institution
+		\small\@institution
 	\end{minipage}
 	\begin{minipage}{.3\linewidth}
 		\raggedleft
