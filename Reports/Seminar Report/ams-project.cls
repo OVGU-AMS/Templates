@@ -2,7 +2,7 @@
 %%            Identification
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ams-project}[2021/08/01 THE AMS PROJECT TEMPLATE]
+\ProvidesClass{ams-project}[2025/01/08 THE AMS PROJECT TEMPLATE]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%            Preliminary declarations
@@ -47,12 +47,12 @@
     \fontshape{sl}
     \begin{center}
       ~\\[4cm]
-      \fontsize{25}{30}\selectfont\@projecttype%
-      \\\bigskip%
-      \fontsize{34}{43}\selectfont\@projectname\fontsize{25}{30}\selectfont%
-      \\\bigskip%
-      \fontsize{25}{30}\selectfont\@date%
-      \\%
+      \fontsize{25}{30}\selectfont
+      \@projecttype\\[0.2cm]
+      \fontsize{34}{43}\selectfont
+      \@projectname\\[0.2cm]
+      \fontsize{25}{30}\selectfont
+      \@date\\
 
       \fontseries{m}%
       \fontshape{n}
@@ -64,13 +64,14 @@
       \fbox{%
         \begin{minipage}{16cm}%
           \centering
-          \@author\\
           \@title
         \end{minipage}
-      }
+      }\\
       \setlength{\fboxrule}{1pt}
+      \vspace{2cm}
+      \@author\\
 
-      \vspace{10cm}
+      \vfill
       \fontsize{20}{25}\selectfont
       \textbf{ams.ovgu.de}
     \end{center}
@@ -144,7 +145,7 @@
     \fontfamily{phv}\fontseries{b}%
     \fontshape{sl}\selectfont\normalcolor
     \vspace{0.5ex}
-     -- \@projecttype:~\@projectname --\\
+     --~\@projecttype:~\@projectname~--\\
     \vspace{1ex}
     \fontsize{16}{19}\fontfamily{phv}\fontseries{m}%
     \fontshape{n}\selectfont\normalcolor

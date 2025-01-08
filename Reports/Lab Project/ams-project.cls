@@ -2,7 +2,7 @@
 %%            Identification
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ams-project}[2021/08/01 THE AMS PROJECT TEMPLATE]
+\ProvidesClass{ams-project}[2025/01/08 THE AMS PROJECT TEMPLATE]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%            Preliminary declarations
