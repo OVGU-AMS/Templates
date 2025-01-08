@@ -48,9 +48,9 @@
     \begin{center}
       ~\\[4cm]
       \fontsize{25}{30}\selectfont
-      \@projecttype\\
+      \@projecttype\\[0.2cm]
       \fontsize{34}{43}\selectfont
-      \@projectname\\
+      \@projectname\\[0.2cm]
       \fontsize{25}{30}\selectfont
       \@date\\
 
@@ -64,13 +64,14 @@
       \fbox{%
         \begin{minipage}{16cm}%
           \centering
-          \@author\\
           \@title
         \end{minipage}
-      }
+      }\\
       \setlength{\fboxrule}{1pt}
+      \vspace{2cm}
+      \@author\\
 
-      \vspace{10cm}
+      \vfill
       \fontsize{20}{25}\selectfont
       \textbf{ams.ovgu.de}
     \end{center}
@@ -144,7 +145,7 @@
     \fontfamily{phv}\fontseries{b}%
     \fontshape{sl}\selectfont\normalcolor
     \vspace{0.5ex}
-     -- \@projecttype:~\@projectname --\\
+     --~\@projecttype:~\@projectname~--\\
     \vspace{1ex}
     \fontsize{16}{19}\fontfamily{phv}\fontseries{m}%
     \fontshape{n}\selectfont\normalcolor
