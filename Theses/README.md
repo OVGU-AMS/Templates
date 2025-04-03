@@ -7,5 +7,3 @@ You can choose between the class option `BA`, `MA`, and `PhD`.
 ## Todos
 
 - [ ] Add language switch (English/German)
-- [ ] Add Guideline
-
