@@ -138,7 +138,7 @@
 	\renewcommand{\proflabel}[0]{Themensteller: }
 	\renewcommand{\secondproflabel}[0]{Zweitgutachter: }
 \else
-	\renewcommand{\matriculationlabel}{Matrikulation no.: }
+	\renewcommand{\matriculationlabel}{Matriculation no.: }
 	\renewcommand{\supervisorlabel}[0]{Supervisor: }
 	\renewcommand{\proflabel}[0]{Professor: }
 	\renewcommand{\secondproflabel}[0]{Second Assessor: }

@@ -1,0 +1,103 @@
+
+\parindent0pt
+\parskip5mm plus1mm minus1mm
+
+\setlength{\textwidth}{140mm}
+\setlength{\textheight}{265mm}
+\setlength{\oddsidemargin}{12mm}
+\setlength{\evensidemargin}{12mm}
+\setlength{\topmargin}{-20mm}
+\setlength{\headheight}{0mm}
+\setlength{\columnsep}{5mm}
+\setlength{\footskip}{18mm}
+\setlength{\headsep}{12mm}
+
+\usepackage{ngerman}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{mdwlist}
+\usepackage{tabularx}
+\usepackage{xspace}
+
+
+\newcommand{\Referent}[2][]{
+  \newcommand{\betreuertitel}{#1}\xspace
+  \newcommand{\betreuername}{#2}        
+}
+
+
+\newcommand{\Mitarbeiter}[2][]{%
+  \newcommand{\mitarbeitertitel}{#1\ }%
+  \newcommand{\mitarbeitername}{#2}%
+}
+
+\newcommand{\Student}[2][]{%
+  \newcommand{\studenttitel}{#1\ }%
+  \newcommand{\studentname}{#2}%
+}
+\def\Matrikelnummer #1 {%
+  \def\matrikelnr {#1}%
+}
+
+\def\Titel #1 {%
+  \def\arbeittitel {#1}%
+}
+
+\def\Arbeitsart #1 {% 
+  \def\art {#1}
+}
+
+\newenvironment{aufgaben}[0]{\textbf{Aufgaben:}\\[-1.5\baselineskip]\begin{itemize*}}{\end{itemize*}}
+
+\def\Termine #1#2#3 {%
+  \def\beginn {#1} \def\zwischen {#2} \def\ende {#3}%
+}
+
+\def\Anfang{%
+  \centerline{\resizebox{\linewidth}{!}{\includegraphics{figures/logos/ovgu-fin-ams-de.pdf}}}%
+  % 
+  \sffamily 
+  \vspace*{5mm}%
+  \centerline{\Large{%
+      \textbf{\art:}}}\vspace*{-5mm}
+  \begin{center}
+    \Large{%
+      \textbf{\arbeittitel}}
+  \end{center}
+  \bigskip
+}			
+
+\def\Aufgaben #1{%
+  \def\aufgabenbesch {#1}
+}
+
+\def\Ende{%
+  \vfill
+  \hspace{-\parindent}%
+  \begin{tabularx}{\textwidth}{lXlX}
+    % \bf Titel: &\bf Effiziente Prädiktion nichtlinearer Systeme basierend auf der Approximation von Transitionsdichten mittels Gaussian Mixtures\\
+    \textbf{Bearbeiter:} &\textbf{\studenttitel\studentname} &
+    \textbf{Matrikelnummer: \matrikelnr}
+    \\\ \\
+    \textbf{Betr. Mitarbeiter:}&\multicolumn{2}{l}{\textbf{\mitarbeitertitel\mitarbeitername}}\\
+    \textbf{Referent:}& \multicolumn{2}{l}{\textbf{\betreuertitel\betreuername}}\\
+    \ \\\end{tabularx}
+  \begin{tabular}{lr}
+    \textbf{Beginn:} &\textbf{\beginn}\\
+    \textbf{Zwischenvortrag:} & \textbf{\zwischen}\\
+    \textbf{Abgabe:} & \textbf{\ende}
+  \end{tabular}
+  \par
+  \vfill
+
+
+  Magdeburg, den \today\par
+  \vspace{1.5cm}
+  \noindent\begin{tabularx}{1.0\linewidth}[h]{cXcXc}
+    \underline{\hspace{4cm}}&\ &\underline{\hspace{4.5cm}}
+    &\ &\underline{\hspace{4cm}}\\
+    \emph{\studentname} && \emph{\mitarbeitername} && \emph{\betreuername}
+  \end{tabularx}  
+
+}
