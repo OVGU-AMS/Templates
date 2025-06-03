@@ -1,0 +1,47 @@
+%% Class Options:
+% bachelor: Bachelor Thesis / default is Master Thesis
+% german: German Language / default is English
+% \documentclass[bachelor,german]{thesistasksheet}
+\documentclass{thesistasksheet}
+
+% % Sprache + Encoding
+% \usepackage{ucs} % unicode
+% \usepackage[utf8x]{inputenc}
+% \include{AufgabenblattHeaderDe} %deutsch
+% %\include{AufgabenblattHeaderEn} %englisch
+
+\Titel{Title of Thesis}
+
+\student[B.Sc.]{Susi Studiergut}
+\matrikelnummer{123456}
+\supervisor[M.Sc.]{ Max Mustermann}
+\supervisor[Prof. Dr.-Ing.]{Benjamin Noack}
+% more supervisors can be added with \supervisor{Title Name}
+
+
+% Beginning of Thesis / Intermediate Presentation / Thesis Submissio
+\Dates{April XX, 20XX}{$\approx$July XX, 20XX}{October XX, 20XX}
+
+% Date of the document if not today:
+%\renewcommand{\today}{20. Mai 2007}
+
+
+\begin{document}
+% \ThesisType{Thesis Type} %if you want to set the type manually, otherwise it is set automatically by the class option
+\Beginning
+
+Hier steht eine Problemformulierung
+
+\begin{tasks}
+\item Literaturüberblick über verwandte Ansätze zur Zustandsschätzung geben.
+\item Formale Beschreibung von einer Dichtemenge:
+  \begin{itemize}
+  \item Teilaufgabe 1
+  \item Teilaufgabe 2
+  \end{itemize}
+\item \ldots
+\item Aufgabe 23
+\end{tasks}%
+% \Ende
+\end{document}
+
