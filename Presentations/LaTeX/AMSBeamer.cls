@@ -3,11 +3,13 @@
 %%
 %% Author: Benjamin Noack
 %% Last Modified by: Benjamin Noack
-%% Date: 2023-11-16
+%% Date: 2025-06-11
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Changes
+% Changes 2025/06/11
+% * "align=flush left" added to frametitle tikz nodes to increase the interword spacing
 % Changes 2023/11/16
 % * font size in footline increased / consistent with PPTX template
 % * option smallfootfontsize added to decrease fontsize in footline
@@ -21,7 +23,7 @@
 
 %%% Identification:
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{AMSBeamer}[2022/06/27 AMS Beamer Style]
+\ProvidesClass{AMSBeamer}[2025/06/11 AMS Beamer Style]
 
 %%% Options:
 
@@ -174,9 +176,9 @@
 			};
 			% 5.5mm would center text vertically, but 5mm looks better
 			\ifAMSBeamer@AMSLogo%
-				\path (4mm,85mm) node[anchor=west,text width=97mm]{\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\strut\par};			
+				\path (4mm,85mm) node[anchor=west,text width=97mm,align=flush left]{\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\strut\par};			
 			\else%
-				\path (4mm,85mm) node[anchor=west,text width=121mm]{\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\strut\par};
+				\path (4mm,85mm) node[anchor=west,text width=121mm,align=flush left]{\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\strut\par};
 			\fi%
 		\end{tikzpicture}%
 		\fi%
