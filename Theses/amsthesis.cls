@@ -4,7 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{amsthesis}[2025/01/08 The AMS Thesis Class]
+\ProvidesClass{amsthesis}[2025/09/03 The AMS Thesis Class]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%            Class Options
@@ -53,7 +53,9 @@
 
 \RequirePackage{caption,subcaption}			% Subcaption and subfigures 
 % Caption formatting
-\captionsetup{format=hang,justification=justified,singlelinecheck=false,labelfont={sf,bf}}
+% \captionsetup{format=hang,justification=justified,singlelinecheck=true,labelfont={sf,bf}}
+\captionsetup{format=plain,justification=justified,singlelinecheck=true,labelfont={small,sf,bf},textfont={small}}
+\captionsetup[subfigure]{textfont={footnotesize},labelfont={footnotesize,sf}}
 
 \RequirePackage{multirow}					% Table with combined rows and columns
 

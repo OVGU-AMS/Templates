@@ -24,7 +24,7 @@
 \author{Max Mustermann}
 \birthdate{01.01.2021}
 \birthplace{Musterhausen}
-\initdate{2023}{01}{01} % date of thesis
+\initdate{2025}{01}{01} % date of thesis
 
 \reviewerA{Prof. Dipl. Inf. Gutachter 1}
 \reviewerB{Prof. Dr.-Ing. Gutachter 2}
@@ -65,12 +65,18 @@
     \end{otherlanguage}  
 
     \setcounter{tocdepth}{2}
-    \addcontentsline{toc}{chapter}{\contentsname}
-    \tableofcontents
+    \cleardoublepage%
+    \phantomsection%
+    \addcontentsline{toc}{chapter}{\contentsname}%
+    \tableofcontents%
 
-    \addcontentsline{toc}{chapter}{\listfigurename}
-    \listoffigures
+    \cleardoublepage%
+    \phantomsection\nopagebreak%
+    \addcontentsline{toc}{chapter}{\listfigurename}%
+    \listoffigures%
   
+    %\cleardoublepage%
+    % \phantomsection
     % \addcontentsline{toc}{chapter}{\listtablename}
     % \listoftables  
 
@@ -101,17 +107,26 @@
     \section{First Section}
     \lipsum[11]
     \begin{figure}[h]
-        --- Empty Figure ---
-        \caption{A Figure}
+        \includegraphics[width=\textwidth]{example-image-a}
+        \caption[A short description for the List of Figures.]{Figures should be vector graphics if possible. Plots should be created using TikZ or pgfplots. Text in figures should use the same font as the main document. Avoid pixelated images!}
     \end{figure}
 
     \lipsum[11-13]
 
     \section{Second Section}
     \lipsum[11]
-    \begin{figure}[ht]
-        --- Empty Figure ---
-        \caption{Another Figure}
+    \begin{figure}
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{example-image-b}
+            \caption{A Subfigure}
+        \end{subfigure}
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{example-image-c}
+            \caption{And Another Subfigure}
+        \end{subfigure}
+        \caption{Caption for Both Subfigures.}        
     \end{figure}
     \lipsum[11]   
 
