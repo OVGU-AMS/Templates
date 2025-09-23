@@ -36,6 +36,7 @@
 % \firstsupervisor{Prof. Dr.-Ing. Benjamin Noack}
 
 
+\addbibresource{thesis.bib}
 \addbibresource{ams.bib}
 \addbibresource{own.bib}
 \addbibresource{students.bib}
@@ -103,6 +104,18 @@
 
     \chapter{One Central Chapter}
     \lipsum[11]
+    
+    Equations should like be included in the text using correct punctuation. The estimate can be updated by
+    \begin{equation}
+        \mvec{x}_{k} = \mvec{x}_{k-1} + \mat{K}_k \bigl(\rvec{y}_k - \mat{H}_k \mvec{x}_{k-1} \bigr) \, , \label{eq:KalmanUpdate}
+    \end{equation}
+    where $\mat{K}_k\in\IR^{n\times m}$ is the Kalman gain, $\rvec{y}_k\in\IR^m$ the measurement, and $\mat{H}_k\in\IR^{m\times n}$ the observation matrix. The measurement update \eqref{eq:KalmanUpdate} is the optimal linear update for Gaussian random variables \cite{Anderson1979}.
+    In summary, take care of the following points when writing equations:
+    \begin{itemize}
+    \item Embed equations in the text.
+    \item Use correct punctuation. Punktuation after equation should have a whitespace using, e.g., \verb|\,|.
+    \item Equations should be numbered and referred to using \verb|\eqref{eq:label}|.
+    \end{itemize}
 
     \section{First Section}
     \lipsum[11]

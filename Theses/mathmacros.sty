@@ -4,520 +4,131 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mathmacros}[2012/03/24 The ISAS Math Macros]
+\ProvidesClass{mathmacros}[2025/09/25 Suggested Math Macros]
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Preliminary declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{bm} % correct bold symbols, like \bm
 \RequirePackage{amsmath}
+\RequirePackage{amsfonts}
 \RequirePackage{amssymb}
-\RequirePackage{dsfont}
-\RequirePackage{mathtools}
+\RequirePackage{mathrsfs}
+\RequirePackage{dsfont} % double stroke symbols like IR
 
+\RequirePackage{mathtools}
 % Only show equation numbers of referenced equations
 \mathtoolsset{showonlyrefs}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%            Definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Abbreviation for \displaystyle
-\newcommand{\ds}{\displaystyle}
+%------------------------------------------------------------
+% Mathematical Formulae
+%------------------------------------------------------------
 
-% Abbreviation for \textstyle
-\newcommand{\ns}{\textstyle}
+\@ifclassloaded{ifacconf}{% incompatible with ifacconf
+ \typeout{Documentclass is ifacconf, command \vec is changed}%
+ % solve problem with \vec:
+ \def\@bfvec#1{\underline{#1}}
+}{%
+}
 
-% Real numbers
-\newcommand{\IR}{\ensuremath{\mathds{R}}}
+% random variable
+\newcommand{\rv}[1]{\ensuremath{{\boldsymbol{\mathrm{#1}}}}}
 
-% Natural numbers
-\newcommand{\IN}{\ensuremath{\mathds{N}}}
-
-% Integers
-\newcommand{\IZ}{\ensuremath{\mathds{Z}}}
-
-% Complex numbers
-\newcommand{\IC}{\ensuremath{\mathds{C}}}
-
-% IR^{#1 x #1}
-\newcommand{\IRnm}[2]{\ensuremath{\IR^{{#1}\times{#2}}}}
-
-% Differential of a function
-\newcommand{\dd}{\operatorname{d}\!}
-
-% Differentiation
-\newcommand{\diff}[2]{\frac{\dd{#1}}{\dd{#2}}}
-
-% Partial differentiation			
-\newcommand{\pardiff}[2]{\frac{\partial{#1}}{\partial{#2}}}
-
-% n-dimensional integral from -inft to inft
-\newcommand{\intndim}{\ds\int_{-\infty}^\infty \dots \int_{-\infty}^\infty}
-
-% Round up
-\newcommand{\ceil}[1]{\ensuremath{\lceil{#1}\rceil}}
-
-% Round down
-\newcommand{\floor}[1]{\ensuremath{\lfloor{#1}\rfloor}}
-
-% Inverse
-\newcommand{\inv}[1]{\left(#1\right)^{-1}}
-
-% arg min operator
-\DeclareMathOperator*{\argmin}{arg\,min}
-
-% arg max operator
-\DeclareMathOperator*{\argmax}{arg\,max}
-
-% diag operator
-\DeclareMathOperator{\diag}{diag}
-
-% Probability operator
-\renewcommand{\Pr}{\operatorname{P}}
-
-% Random variable
-\newcommand{\rv}[1]{\ensuremath{{\boldsymbol{#1}}}}
+% mean of random variable
+\newcommand{\mv}[1]{{\ensuremath{\hat{\rv{#1}}}}}
 
 % Vector
 \renewcommand{\vec}[1]{\ensuremath{{\underline{#1}}}}
 
-% Random vector
-\newcommand{\rvec}[1]{\ensuremath{{\boldsymbol{\underline{#1}}}}}
+% Random Vector
+\newcommand{\rvec}[1]{\ensuremath{{\rv{\vec{#1}}}}}
 
-% Matrix
+% Mean
+\newcommand{\mvec}[1]{{\ensuremath{\hat{\rvec{#1}} }}}
+
+% midpoint
+\newcommand{\cvec}[1]{{\ensuremath{\vec{\hat{#1}} }}}
+
+% bar vec
+\newcommand{\bvec}[1]{{\ensuremath{\vec{\bar{#1}} }}}
+
+% random error
+\newcommand{\ervec}[1]{{\ensuremath{\tilde{\rvec{#1}} }}}
+
+% Zero vector
+\newcommand{\zero}{{\ensuremath{\vec{0}}}}
+
+
+% matrix
 \newcommand{\mat}[1]{{\ensuremath{{\mathbf{#1}}}}}
 
-% Transpose
-\newcommand{\T}{^\mathrm{T}}
 
-% Realization of a random variable / vector
-\newcommand{\real}[1]{\ensuremath{\accentset{\star}{#1}}}
+% error covariance matrix
+\newcommand{\ermat}[1]{
+	{\ensuremath{\widetilde{\mat{#1}} }}%
+}
 
-% Mean of a random variable / vector
-\newcommand{\mean}[1]{\ensuremath{\hat{#1}}}
+% matrix with bar
+\newcommand{\bmat}[1]{
+	{\ensuremath{\bar{\mat{#1}} }}%
+}
 
-% Covariance matrix
-\newcommand{\C}{\ensuremath{{\mC}}}
+% ellipsoid
+\newcommand{\ellip}{{\ensuremath{\mathcal{E}}}}
 
-% Expectation
-\newcommand{\E}[2][]{\ensuremath{{\operatorfont{E}}_{#1}\!\left\{#2\right\}}}
+%------------------------------------------------------------
+% Operators
+%------------------------------------------------------------
 
-% Variance
-\newcommand{\Var}[2][]{\ensuremath{{\operatorfont{Var}}\!\left\{\rv{#1}\right\}}}
+\def\T{\ensuremath{^\mathrm{T}}} % transpose
+\newcommand{\inv}{\ensuremath{^{-1}}}
+\newcommand{\invT}{\ensuremath{^{-\mathrm{T}}}}
+\newcommand{\nk}{{k+1}}
+\newcommand{\pk}{{k-1}}
 
-% Covariance
-\newcommand{\Cov}[2][]{\ensuremath{{\operatorfont{Cov}}_{#1}\!\left\{#2\right\}}}
+%------------------------------------------------------------
+% Mathematical Functions
+%------------------------------------------------------------
 
-% Normal distribution
-\newcommand{\Gaussian}{\ensuremath{\mathcal{N}}}
+\renewcommand{\arg}{\operatorname*{arg}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
-% Uniform distribution
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+
+\DeclareMathOperator{\rank}{rank}
+
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator*{\Var}{Var}
+
+
+%------------------------------------------------------------
+% Abbreviations
+%------------------------------------------------------------
+
+\newcommand{\op}[1]{{\ensuremath{\operatorfont{#1}}}}
+
+\newcommand{\NewB}{\ensuremath{\mathds{R}}}
+\newcommand{\NewC}{\ensuremath{\mathds{C}}}
+\newcommand{\NewN}{\ensuremath{\mathds{N}}}
+\newcommand{\NewR}{\ensuremath{\mathds{R}}}
+\newcommand{\NewZ}{\ensuremath{\mathds{Z}}}
+\newcommand{\IR}{\NewR}
+\newcommand{\IN}{\NewN}
+\newcommand{\IZ}{\NewZ}
+\newcommand{\IC}{\NewC}
+
+
+\newcommand{\PDF}{probability density function}
+
+\newcommand{\Gauss}{{\mathcal{N}}}
 \newcommand{\Uniform}{\ensuremath{\mathcal{U}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%            Convenience Definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Vectors
-\newcommand{\va}{\ensuremath{\vec{a}}}
-\newcommand{\vb}{\ensuremath{\vec{b}}}
-\newcommand{\vc}{\ensuremath{\vec{c}}}
-\newcommand{\vd}{\ensuremath{\vec{d}}}
-\newcommand{\ve}{\ensuremath{\vec{e}}}
-\newcommand{\vf}{\ensuremath{\vec{f}}}
-\newcommand{\vg}{\ensuremath{\vec{g}}}
-\newcommand{\vh}{\ensuremath{\vec{h}}}
-\newcommand{\vi}{\ensuremath{\vec{i}}}
-\newcommand{\vj}{\ensuremath{\vec{j}}}
-\newcommand{\vk}{\ensuremath{\vec{k}}}
-\newcommand{\vl}{\ensuremath{\vec{l}}}
-\newcommand{\vm}{\ensuremath{\vec{m}}}
-\newcommand{\vn}{\ensuremath{\vec{n}}}
-\newcommand{\vo}{\ensuremath{\vec{o}}}
-\newcommand{\vp}{\ensuremath{\vec{p}}}
-\newcommand{\vq}{\ensuremath{\vec{q}}}
-\newcommand{\vr}{\ensuremath{\vec{r}}}
-\newcommand{\vs}{\ensuremath{\vec{s}}}
-\newcommand{\vt}{\ensuremath{\vec{t}}}
-\newcommand{\vu}{\ensuremath{\vec{u}}}
-\newcommand{\vv}{\ensuremath{\vec{v}}}
-\newcommand{\vw}{\ensuremath{\vec{w}}}
-\newcommand{\vx}{\ensuremath{\vec{x}}}
-\newcommand{\vy}{\ensuremath{\vec{y}}}
-\newcommand{\vz}{\ensuremath{\vec{z}}}
-
-% Special vectors
-\newcommand{\vzero}{\ensuremath{\vec{0}}}
-\newcommand{\vones}{\ensuremath{\vec{1}}}
-
-% Greek vectors
-\newcommand{\valpha}{\ensuremath{\vec{\alpha}}}
-\newcommand{\vbeta}{\ensuremath{\vec{\beta}}}
-\newcommand{\vgamma}{\ensuremath{\vec{\gamma}}}
-\newcommand{\vdelta}{\ensuremath{\vec{\delta}}}
-\newcommand{\vepsilon}{\ensuremath{\vec{\varepsilon}}}
-\newcommand{\vzeta}{\ensuremath{\vec{\zeta}}}
-\newcommand{\veta}{\ensuremath{\vec{\eta}}}
-\newcommand{\vtheta}{\ensuremath{\vec{\teta}}}
-\newcommand{\viota}{\ensuremath{\vec{\iota}}}
-\newcommand{\vkappa}{\ensuremath{\vec{\kappa}}}
-\newcommand{\vlambda}{\ensuremath{\vec{\lambda}}}
-\newcommand{\vmu}{\ensuremath{\vec{\mu}}}
-\newcommand{\vnu}{\ensuremath{\vec{\nu}}}
-\newcommand{\vrho}{\ensuremath{\vec{\rho}}}
-\newcommand{\vsigma}{\ensuremath{\vec{\s\newcommand{\mI}{\ensuremath{\mat{I}}} igma}}}
-\newcommand{\vtau}{\ensuremath{\vec{\tau}}}
-\newcommand{\vupsilon}{\ensuremath{\vec{\upsilon}}}
-\newcommand{\vphi}{\ensuremath{\vec{\phi}}}
-\newcommand{\vvarphi}{\ensuremath{\vec{\varphi}}}
-\newcommand{\vchi}{\ensuremath{\vec{chi}}}
-\newcommand{\vpsi}{\ensuremath{\vec{\psi}}}
-\newcommand{\vxi}{\ensuremath{\vec{\xi}}}
-\newcommand{\vomega}{\ensuremath{\vec{\omega}}}
-
-% Matrices
-\newcommand{\mA}{\ensuremath{\mat{A}}}
-\newcommand{\mB}{\ensuremath{\mat{B}}}
-\newcommand{\mC}{\ensuremath{\mat{C}}}
-\newcommand{\mD}{\ensuremath{\mat{D}}}
-\newcommand{\mE}{\ensuremath{\mat{E}}}
-\newcommand{\mF}{\ensuremath{\mat{F}}}
-\newcommand{\mG}{\ensuremath{\mat{G}}}
-\newcommand{\mH}{\ensuremath{\mat{H}}}
-\newcommand{\mI}{\ensuremath{\mat{I}}} 
-\newcommand{\mJ}{\ensuremath{\mat{J}}}
-\newcommand{\mK}{\ensuremath{\mat{K}}}
-\newcommand{\mL}{\ensuremath{\mat{L}}}
-\newcommand{\mM}{\ensuremath{\mat{M}}}
-\newcommand{\mN}{\ensuremath{\mat{N}}}
-\newcommand{\mO}{\ensuremath{\mat{O}}}
-\newcommand{\mP}{\ensuremath{\mat{P}}}
-\newcommand{\mQ}{\ensuremath{\mat{Q}}}
-\newcommand{\mR}{\ensuremath{\mat{R}}}
-\newcommand{\mS}{\ensuremath{\mat{S}}}
-\newcommand{\mT}{\ensuremath{\mat{T}}}
-\newcommand{\mU}{\ensuremath{\mat{U}}}
-\newcommand{\mV}{\ensuremath{\mat{V}}}
-\newcommand{\mW}{\ensuremath{\mat{W}}}
-\newcommand{\mX}{\ensuremath{\mat{X}}}
-\newcommand{\mY}{\ensuremath{\mat{Y}}}
-\newcommand{\mZ}{\ensuremath{\mat{Z}}}
-
-% Special matrices
-\newcommand{\mzero}{\ensuremath{\mat{0}}}
-
-% Random variables
-\newcommand{\rra}{\ensuremath{\rv{a}}}
-\newcommand{\rrb}{\ensuremath{\rv{b}}}
-\newcommand{\rrc}{\ensuremath{\rv{c}}}
-\newcommand{\rrd}{\ensuremath{\rv{d}}}
-\newcommand{\rre}{\ensuremath{\rv{e}}}
-\newcommand{\rrf}{\ensuremath{\rv{f}}}
-\newcommand{\rrg}{\ensuremath{\rv{g}}}
-\newcommand{\rrh}{\ensuremath{\rv{h}}}
-\newcommand{\rri}{\ensuremath{\rv{i}}}
-\newcommand{\rrj}{\ensuremath{\rv{j}}}
-\newcommand{\rrk}{\ensuremath{\rv{k}}}
-\newcommand{\rrl}{\ensuremath{\rv{l}}}
-\newcommand{\rrm}{\ensuremath{\rv{m}}}
-\newcommand{\rrn}{\ensuremath{\rv{n}}}
-\newcommand{\rro}{\ensuremath{\rv{o}}}
-\newcommand{\rrp}{\ensuremath{\rv{p}}}
-\newcommand{\rrq}{\ensuremath{\rv{q}}}
-\newcommand{\rrr}{\ensuremath{\rv{r}}}
-\newcommand{\rrs}{\ensuremath{\rv{s}}}
-\newcommand{\rrt}{\ensuremath{\rv{t}}}
-\newcommand{\rru}{\ensuremath{\rv{u}}}
-\newcommand{\rrv}{\ensuremath{\rv{v}}}
-\newcommand{\rrw}{\ensuremath{\rv{w}}}
-\newcommand{\rrx}{\ensuremath{\rv{x}}}
-\newcommand{\rry}{\ensuremath{\rv{y}}}
-\newcommand{\rrz}{\ensuremath{\rv{z}}}
-
-% Greek random variables
-\newcommand{\rralpha}{\ensuremath{\rv{\alpha}}}
-\newcommand{\rrbeta}{\ensuremath{\rv{\beta}}}
-\newcommand{\rrgamma}{\ensuremath{\rv{\gamma}}}
-\newcommand{\rrdelta}{\ensuremath{\rv{\delta}}}
-\newcommand{\rrepsilon}{\ensuremath{\rv{\varepsilon}}}
-\newcommand{\rrzeta}{\ensuremath{\rv{\zeta}}}
-\newcommand{\rreta}{\ensuremath{\rv{\eta}}}
-\newcommand{\rrtheta}{\ensuremath{\rv{\teta}}}
-\newcommand{\rriota}{\ensuremath{\rv{\iota}}}
-\newcommand{\rrkappa}{\ensuremath{\rv{\kappa}}}
-\newcommand{\rrlambda}{\ensuremath{\rv{\lambda}}}
-\newcommand{\rrmu}{\ensuremath{\rv{\mu}}}
-\newcommand{\rrnu}{\ensuremath{\rv{\nu}}}
-\newcommand{\rrrho}{\ensuremath{\rv{\rho}}}
-\newcommand{\rrsigma}{\ensuremath{\rv{\sigma}}}
-\newcommand{\rrtau}{\ensuremath{\rv{\tau}}}
-\newcommand{\rrupsilon}{\ensuremath{\rv{\upsilon}}}
-\newcommand{\rrphi}{\ensuremath{\rv{\phi}}}
-\newcommand{\rrvarphi}{\ensuremath{\rv{\varphi}}}
-\newcommand{\rrchi}{\ensuremath{\rv{chi}}}
-\newcommand{\rrpsi}{\ensuremath{\rv{\psi}}}
-\newcommand{\rrxi}{\ensuremath{\rv{\xi}}}
-\newcommand{\rromega}{\ensuremath{\rv{\omega}}}
-
-% Means of random variables
-\newcommand{\eea}{\ensuremath{\mean{a}}}
-\newcommand{\eeb}{\ensuremath{\mean{b}}}
-\newcommand{\eec}{\ensuremath{\mean{c}}}
-\newcommand{\eed}{\ensuremath{\mean{d}}}
-\newcommand{\eee}{\ensuremath{\mean{e}}}
-\newcommand{\eef}{\ensuremath{\mean{f}}}
-\newcommand{\eeg}{\ensuremath{\mean{g}}}
-\newcommand{\eeh}{\ensuremath{\mean{h}}}
-\newcommand{\eei}{\ensuremath{\mean{i}}}
-\newcommand{\eej}{\ensuremath{{\mean{j\,}\!}}} % astetic reasons
-\newcommand{\eek}{\ensuremath{\mean{k}}}
-\newcommand{\eel}{\ensuremath{\mean{l}}}
-\newcommand{\eem}{\ensuremath{\mean{m}}}
-\newcommand{\een}{\ensuremath{\mean{n}}}
-\newcommand{\eeo}{\ensuremath{\mean{o}}}
-\newcommand{\eep}{\ensuremath{\mean{p}}}
-\newcommand{\eeq}{\ensuremath{\mean{q}}}
-\newcommand{\eer}{\ensuremath{\mean{r}}}
-\newcommand{\ees}{\ensuremath{\mean{s}}}
-\newcommand{\eet}{\ensuremath{\mean{t}}}
-\newcommand{\eeu}{\ensuremath{\mean{u}}}
-\newcommand{\eev}{\ensuremath{\mean{v}}}
-\newcommand{\eew}{\ensuremath{\mean{w}}}
-\newcommand{\eex}{\ensuremath{\mean{x}}}
-\newcommand{\eey}{\ensuremath{\mean{y}}}
-\newcommand{\eez}{\ensuremath{\mean{z}}}
-
-% Means of greek random variables
-\newcommand{\eealpha}{\ensuremath{\mean{\alpha}}}
-\newcommand{\eebeta}{\ensuremath{\mean{\beta}}}
-\newcommand{\eegamma}{\ensuremath{\mean{\gamma}}}
-\newcommand{\eedelta}{\ensuremath{\mean{\delta}}}
-\newcommand{\eeepsilon}{\ensuremath{\mean{\varepsilon}}}
-\newcommand{\eezeta}{\ensuremath{\mean{\zeta}}}
-\newcommand{\eeeta}{\ensuremath{\mean{\eta}}}
-\newcommand{\eetheta}{\ensuremath{\mean{\teta}}}
-\newcommand{\eeiota}{\ensuremath{\mean{\iota}}}
-\newcommand{\eekappa}{\ensuremath{\mean{\kappa}}}
-\newcommand{\eelambda}{\ensuremath{\mean{\lambda}}}
-\newcommand{\eemu}{\ensuremath{\mean{\mu}}}
-\newcommand{\eenu}{\ensuremath{\mean{\nu}}}
-\newcommand{\eerho}{\ensuremath{\mean{\rho}}}
-\newcommand{\eesigma}{\ensuremath{\mean{\sigma}}}
-\newcommand{\eetau}{\ensuremath{\mean{\tau}}}
-\newcommand{\eeupsilon}{\ensuremath{\mean{\upsilon}}}
-\newcommand{\eephi}{\ensuremath{\mean{\phi}}}
-\newcommand{\eevarphi}{\ensuremath{\mean{\varphi}}}
-\newcommand{\eechi}{\ensuremath{\mean{chi}}}
-\newcommand{\eepsi}{\ensuremath{\mean{\psi}}}
-\newcommand{\eexi}{\ensuremath{\mean{\xi}}}
-\newcommand{\eeomega}{\ensuremath{\mean{\omega}}}
-
-% Realizations of random variables
-\newcommand{\rla}{\ensuremath{\real{a}}}
-\newcommand{\rlb}{\ensuremath{\real{b}}}
-\newcommand{\rlc}{\ensuremath{\real{c}}}
-\newcommand{\rld}{\ensuremath{\real{d}}}
-\newcommand{\rle}{\ensuremath{\real{e}}}
-\newcommand{\rlf}{\ensuremath{\real{f}}}
-\newcommand{\rlg}{\ensuremath{\real{g}}}
-\newcommand{\rlh}{\ensuremath{\real{h}}}
-\newcommand{\rli}{\ensuremath{\real{i}}}
-\newcommand{\rlj}{\ensuremath{\real{j}}}
-\newcommand{\rlk}{\ensuremath{\real{k}}}
-\newcommand{\rll}{\ensuremath{\real{l}}}
-\newcommand{\rlm}{\ensuremath{\real{m}}}
-\newcommand{\rln}{\ensuremath{\real{n}}}
-\newcommand{\rlo}{\ensuremath{\real{o}}}
-\newcommand{\rlp}{\ensuremath{\real{p}}}
-\newcommand{\rlq}{\ensuremath{\real{q}}}
-\newcommand{\rlr}{\ensuremath{\real{r}}}
-\newcommand{\rls}{\ensuremath{\real{s}}}
-\newcommand{\rlt}{\ensuremath{\real{t}}}
-\newcommand{\rlu}{\ensuremath{\real{u}}}
-\newcommand{\rlv}{\ensuremath{\real{v}}}
-\newcommand{\rlw}{\ensuremath{\real{w}}}
-\newcommand{\rlx}{\ensuremath{\real{x}}}
-\newcommand{\rly}{\ensuremath{\real{y}}}
-\newcommand{\rlz}{\ensuremath{\real{z}}}
-
-% Realizations of greek random variables
-\newcommand{\rlalpha}{\ensuremath{\real{\alpha}}}
-\newcommand{\rlbeta}{\ensuremath{\real{\beta}}}
-\newcommand{\rlgamma}{\ensuremath{\real{\gamma}}}
-\newcommand{\rldelta}{\ensuremath{\real{\delta}}}
-\newcommand{\rlepsilon}{\ensuremath{\real{\varepsilon}}}
-\newcommand{\rlzeta}{\ensuremath{\real{\zeta}}}
-\newcommand{\rleta}{\ensuremath{\real{\eta}}}
-\newcommand{\rltheta}{\ensuremath{\real{\teta}}}
-\newcommand{\rliota}{\ensuremath{\real{\iota}}}
-\newcommand{\rlkappa}{\ensuremath{\real{\kappa}}}
-\newcommand{\rllambda}{\ensuremath{\real{\lambda}}}
-\newcommand{\rlmu}{\ensuremath{\real{\mu}}}
-\newcommand{\rlnu}{\ensuremath{\real{\nu}}}
-\newcommand{\rlrho}{\ensuremath{\real{\rho}}}
-\newcommand{\rlsigma}{\ensuremath{\real{\sigma}}}
-\newcommand{\rltau}{\ensuremath{\real{\tau}}}
-\newcommand{\rlupsilon}{\ensuremath{\real{\upsilon}}}
-\newcommand{\rlvarphi}{\ensuremath{\real{\varphi}}}
-\newcommand{\rlchi}{\ensuremath{\real{chi}}}
-\newcommand{\rlpsi}{\ensuremath{\real{\psi}}}
-\newcommand{\rlxi}{\ensuremath{\real{\xi}}}
-\newcommand{\rlomega}{\ensuremath{\real{\omega}}}
-
-% Random vectors
-\newcommand{\rva}{\ensuremath{\rvec{a}}}
-\newcommand{\rvb}{\ensuremath{\rvec{b}}}
-\newcommand{\rvc}{\ensuremath{\rvec{c}}}
-\newcommand{\rvd}{\ensuremath{\rvec{d}}}
-\newcommand{\rve}{\ensuremath{\rvec{e}}}
-\newcommand{\rvf}{\ensuremath{\rvec{f}}}
-\newcommand{\rvg}{\ensuremath{\rvec{g}}}
-\newcommand{\rvh}{\ensuremath{\rvec{h}}}
-\newcommand{\rvi}{\ensuremath{\rvec{i}}}
-\newcommand{\rvj}{\ensuremath{\rvec{j}}}
-\newcommand{\rvk}{\ensuremath{\rvec{k}}}
-\newcommand{\rvl}{\ensuremath{\rvec{l}}}
-\newcommand{\rvm}{\ensuremath{\rvec{m}}}
-\newcommand{\rvn}{\ensuremath{\rvec{n}}}
-\newcommand{\rvo}{\ensuremath{\rvec{o}}}
-\newcommand{\rvp}{\ensuremath{\rvec{p}}}
-\newcommand{\rvq}{\ensuremath{\rvec{q}}}
-\newcommand{\rvr}{\ensuremath{\rvec{r}}}
-\newcommand{\rvs}{\ensuremath{\rvec{s}}}
-\newcommand{\rvt}{\ensuremath{\rvec{t}}}
-\newcommand{\rvu}{\ensuremath{\rvec{u}}}
-\newcommand{\rvv}{\ensuremath{\rvec{v}}}
-\newcommand{\rvw}{\ensuremath{\rvec{w}}}
-\newcommand{\rvx}{\ensuremath{\rvec{x}}}
-\newcommand{\rvy}{\ensuremath{\rvec{y}}}
-\newcommand{\rvz}{\ensuremath{\rvec{z}}}
-
-% Greek random vectors
-\newcommand{\rvalpha}{\ensuremath{\rvec{\alpha}}}
-\newcommand{\rvbeta}{\ensuremath{\rvec{\beta}}}
-\newcommand{\rvgamma}{\ensuremath{\rvec{\gamma}}}
-\newcommand{\rvdelta}{\ensuremath{\rvec{\delta}}}
-\newcommand{\rvepsilon}{\ensuremath{\rvec{\varepsilon}}}
-\newcommand{\rvzeta}{\ensuremath{\rvec{\zeta}}}
-\newcommand{\rveta}{\ensuremath{\rvec{\eta}}}
-\newcommand{\rvtheta}{\ensuremath{\rvec{\teta}}}
-\newcommand{\rviota}{\ensuremath{\rvec{\iota}}}
-\newcommand{\rvkappa}{\ensuremath{\rvec{\kappa}}}
-\newcommand{\rvlambda}{\ensuremath{\rvec{\lambda}}}
-\newcommand{\rvmu}{\ensuremath{\rvec{\mu}}}
-\newcommand{\rvnu}{\ensuremath{\rvec{\nu}}}
-\newcommand{\rvrho}{\ensuremath{\rvec{\rho}}}
-\newcommand{\rvsigma}{\ensuremath{\rvec{\sigma}}}
-\newcommand{\rvtau}{\ensuremath{\rvec{\tau}}}
-\newcommand{\rvupsilon}{\ensuremath{\rvec{\upsilon}}}
-\newcommand{\rvphi}{\ensuremath{\rvec{\phi}}}
-\newcommand{\rvvarphi}{\ensuremath{\rvec{\varphi}}}
-\newcommand{\rvchi}{\ensuremath{\rvec{chi}}}
-\newcommand{\rvpsi}{\ensuremath{\rvec{\psi}}}
-\newcommand{\rvxi}{\ensuremath{\rvec{\xi}}}
-\newcommand{\rvomega}{\ensuremath{\rvec{\omega}}}
-
-% Means of random vectors
-\newcommand{\eva}{\ensuremath{\mean{\vec{a}}}}
-\newcommand{\evb}{\ensuremath{\mean{\vec{b}}}}
-\newcommand{\evc}{\ensuremath{\mean{\vec{c}}}}
-\newcommand{\evd}{\ensuremath{\mean{\vec{d}}}}
-\newcommand{\eve}{\ensuremath{\mean{\vec{e}}}}
-\newcommand{\evf}{\ensuremath{\mean{\vec{f}}}}
-\newcommand{\evg}{\ensuremath{\mean{\vec{g}}}}
-\newcommand{\evh}{\ensuremath{\mean{\vec{h}}}}
-\newcommand{\evi}{\ensuremath{\mean{\vec{i}}}}
-\newcommand{\evj}{\ensuremath{\mean{\vec{j}}}}
-\newcommand{\evk}{\ensuremath{\mean{\vec{k}}}}
-\newcommand{\evl}{\ensuremath{\mean{\vec{l}}}}
-\newcommand{\evm}{\ensuremath{\mean{\vec{m}}}}
-\newcommand{\evn}{\ensuremath{\mean{\vec{n}}}}
-\newcommand{\evo}{\ensuremath{\mean{\vec{o}}}}
-\newcommand{\evp}{\ensuremath{\mean{\vec{p}}}}
-\newcommand{\evq}{\ensuremath{\mean{\vec{q}}}}
-\newcommand{\evr}{\ensuremath{\mean{\vec{r}}}}
-\newcommand{\evs}{\ensuremath{\mean{\vec{s}}}}
-\newcommand{\evt}{\ensuremath{\mean{\vec{t}}}}
-\newcommand{\evu}{\ensuremath{\mean{\vec{u}}}}
-\newcommand{\evv}{\ensuremath{\mean{\vec{v}}}}
-\newcommand{\evw}{\ensuremath{\mean{\vec{w}}}}
-\newcommand{\evx}{\ensuremath{\mean{\vec{x}}}}
-\newcommand{\evy}{\ensuremath{\mean{\vec{y}}}}
-\newcommand{\evz}{\ensuremath{\mean{\vec{z}}}}
-
-% Means of greek random vectors
-\newcommand{\evalpha}{\ensuremath{\mean{\vec{\alpha}}}}
-\newcommand{\evbeta}{\ensuremath{\mean{\vec{\beta}}}}
-\newcommand{\evgamma}{\ensuremath{\mean{\vec{\gamma}}}}
-\newcommand{\evdelta}{\ensuremath{\mean{\vec{\delta}}}}
-\newcommand{\evepsilon}{\ensuremath{\mean{\vec{\varepsilon}}}}
-\newcommand{\evzeta}{\ensuremath{\mean{\vec{\zeta}}}}
-\newcommand{\eveta}{\ensuremath{\mean{\vec{\eta}}}}
-\newcommand{\evtheta}{\ensuremath{\mean{\vec{\teta}}}}
-\newcommand{\eviota}{\ensuremath{\mean{\vec{\iota}}}}
-\newcommand{\evkappa}{\ensuremath{\mean{\vec{\kappa}}}}
-\newcommand{\evlambda}{\ensuremath{\mean{\vec{\lambda}}}}
-\newcommand{\evmu}{\ensuremath{\mean{\vec{\mu}}}}
-\newcommand{\evnu}{\ensuremath{\mean{\vec{\nu}}}}
-\newcommand{\evrho}{\ensuremath{\mean{\vec{\rho}}}}
-\newcommand{\evsigma}{\ensuremath{\mean{\vec{\sigma}}}}
-\newcommand{\evtau}{\ensuremath{\mean{\vec{\tau}}}}
-\newcommand{\evupsilon}{\ensuremath{\mean{\vec{\upsilon}}}}
-\newcommand{\evphi}{\ensuremath{\mean{\vec{\phi}}}}
-\newcommand{\evvarphi}{\ensuremath{\mean{\vec{\varphi}}}}
-\newcommand{\evchi}{\ensuremath{\mean{\vec{chi}}}}
-\newcommand{\evpsi}{\ensuremath{\mean{\vec{\psi}}}}
-\newcommand{\evxi}{\ensuremath{\mean{\vec{\xi}}}}
-\newcommand{\evomega}{\ensuremath{\mean{\vec{\omega}}}}
-
-% Realizations of random vectors
-\newcommand{\rlva}{\ensuremath{\real{\vec{a}}}}
-\newcommand{\rlvb}{\ensuremath{\real{\vec{b}}}}
-\newcommand{\rlvc}{\ensuremath{\real{\vec{c}}}}
-\newcommand{\rlvd}{\ensuremath{\real{\vec{d}}}}
-\newcommand{\rlve}{\ensuremath{\real{\vec{e}}}}
-\newcommand{\rlvf}{\ensuremath{\real{\vec{f}}}}
-\newcommand{\rlvg}{\ensuremath{\real{\vec{g}}}}
-\newcommand{\rlvh}{\ensuremath{\real{\vec{h}}}}
-\newcommand{\rlvi}{\ensuremath{\real{\vec{i}}}}
-\newcommand{\rlvj}{\ensuremath{\real{\vec{j}}}}
-\newcommand{\rlvk}{\ensuremath{\real{\vec{k}}}}
-\newcommand{\rlvl}{\ensuremath{\real{\vec{l}}}}
-\newcommand{\rlvm}{\ensuremath{\real{\vec{m}}}}
-\newcommand{\rlvn}{\ensuremath{\real{\vec{n}}}}
-\newcommand{\rlvo}{\ensuremath{\real{\vec{o}}}}
-\newcommand{\rlvp}{\ensuremath{\real{\vec{p}}}}
-\newcommand{\rlvq}{\ensuremath{\real{\vec{q}}}}
-\newcommand{\rlvr}{\ensuremath{\real{\vec{r}}}}
-\newcommand{\rlvs}{\ensuremath{\real{\vec{s}}}}
-\newcommand{\rlvt}{\ensuremath{\real{\vec{t}}}}
-\newcommand{\rlvu}{\ensuremath{\real{\vec{u}}}}
-\newcommand{\rlvv}{\ensuremath{\real{\vec{v}}}}
-\newcommand{\rlvw}{\ensuremath{\real{\vec{w}}}}
-\newcommand{\rlvx}{\ensuremath{\real{\vec{x}}}}
-\newcommand{\rlvy}{\ensuremath{\real{\vec{y}}}}
-\newcommand{\rlvz}{\ensuremath{\real{\vec{z}}}}
-
-% Realizations of greek random vectors
-\newcommand{\rlvalpha}{\ensuremath{\real{\vec{\alpha}}}}
-\newcommand{\rlvbeta}{\ensuremath{\real{\vec{\beta}}}}
-\newcommand{\rlvgamma}{\ensuremath{\real{\vec{\gamma}}}}
-\newcommand{\rlvdelta}{\ensuremath{\real{\vec{\delta}}}}
-\newcommand{\rlvepsilon}{\ensuremath{\real{\vec{\varepsilon}}}}
-\newcommand{\rlvzeta}{\ensuremath{\real{\vec{\zeta}}}}
-\newcommand{\rlveta}{\ensuremath{\real{\vec{\eta}}}}
-\newcommand{\rlvtheta}{\ensuremath{\real{\vec{\teta}}}}
-\newcommand{\rlviota}{\ensuremath{\real{\vec{\iota}}}}
-\newcommand{\rlvkappa}{\ensuremath{\real{\vec{\kappa}}}}
-\newcommand{\rlvlambda}{\ensuremath{\real{\vec{\lambda}}}}
-\newcommand{\rlvmu}{\ensuremath{\real{\vec{\mu}}}}
-\newcommand{\rlvnu}{\ensuremath{\real{\vec{\nu}}}}
-\newcommand{\rlvrho}{\ensuremath{\real{\vec{\rho}}}}
-\newcommand{\rlvsigma}{\ensuremath{\real{\vec{\sigma}}}}
-\newcommand{\rlvtau}{\ensuremath{\real{\vec{\tau}}}}
-\newcommand{\rlvupsilon}{\ensuremath{\real{\vec{\upsilon}}}}
-\newcommand{\rlvphi}{\ensuremath{\real{\vec{\phi}}}}
-\newcommand{\rlvvarphi}{\ensuremath{\real{\vec{\varphi}}}}
-\newcommand{\rlvchi}{\ensuremath{\real{\vec{chi}}}}
-\newcommand{\rlvpsi}{\ensuremath{\real{\vec{\psi}}}}
-\newcommand{\rlvxi}{\ensuremath{\real{\vec{\xi}}}}
-\newcommand{\rlvomega}{\ensuremath{\real{\vec{\omega}}}}
 
