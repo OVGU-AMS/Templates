@@ -102,9 +102,13 @@
         \citeStudent{doe,doe2,doe3}%\addtocategory{students}{doe,doe2,doe3}        
 
 
-    \chapter{One Central Chapter}
-    \lipsum[11]
+    \chapter{One Central Chapter: Some Instructions for Writing the Thesis}
+    Please consider the following instructions when writing your thesis. 
     
+    Never start a section directly after a chapter heading, but always add some introductory paragraph.
+    
+    \section{Equations}
+
     Equations should like be included in the text using correct punctuation. The estimate can be updated by
     \begin{equation}
         \mvec{x}_{k} = \mvec{x}_{k-1} + \mat{K}_k \bigl(\rvec{y}_k - \mat{H}_k \mvec{x}_{k-1} \bigr) \, , \label{eq:KalmanUpdate}
@@ -113,35 +117,46 @@
     In summary, take care of the following points when writing equations:
     \begin{itemize}
     \item Embed equations in the text.
-    \item Use correct punctuation. Punktuation after equation should have a whitespace using, e.g., \verb|\,|.
-    \item Equations should be numbered and referred to using \verb|\eqref{eq:label}|.
+    \item Use correct punctuation. Punctuation after equation should have a whitespace using, e.g., \verb|\,|.
+    \item Equations should be numbered and referred to using \verb|\eqref{eq:label}|. With the current seeting \verb|\mathtoolsset{showonlyrefs}| in the style file \verb|mathmacros.sty|, an equation number only appears if the equation is referenced in the text.
     \end{itemize}
 
-    \section{First Section}
-    \lipsum[11]
+    \section{Figures}
+    Figures should be included as vector graphics if possible. Plots should be created using TikZ or pgfplots. Text in figures should use the same font as the main document. Avoid pixelated images! A placeholder figure is shown in Figure~\ref{fig:exampleA}. Figure~\ref{fig:exampleB} shows two subfigures: Figure~\ref{fig:exampleB:1} and Figure~\ref{fig:exampleB:2}.
+
+    Pleas consider the following points when including figures:
+    \begin{itemize} 
+        \item Use vector graphics if possible.
+        \item Use the same font as in the main document.
+        \item Use \verb|\caption[Short description]{Long Caption}| to explain the figures. The short description is used in the List of Figures and should be short but precise.
+        \item Figures should appear in order of reference.
+        \item Use \verb|\label{fig:label}| to label figures and subfigures and refer to them in the text using \verb|Figure~\ref{fig:label}|.
+    \end{itemize}
+
     \begin{figure}[h]
         \includegraphics[width=\textwidth]{example-image-a}
         \caption[A short description for the List of Figures.]{Figures should be vector graphics if possible. Plots should be created using TikZ or pgfplots. Text in figures should use the same font as the main document. Avoid pixelated images!}
+        \label{fig:exampleA}
     \end{figure}
 
-    \lipsum[11-13]
 
-    \section{Second Section}
-    \lipsum[11]
     \begin{figure}
         \begin{subfigure}{0.5\textwidth}
             \centering
             \includegraphics[width=0.9\textwidth]{example-image-b}
             \caption{A Subfigure}
+            \label{fig:exampleB:1}
         \end{subfigure}
         \begin{subfigure}{0.5\textwidth}
             \centering
             \includegraphics[width=0.9\textwidth]{example-image-c}
-            \caption{And Another Subfigure}
+            \caption{And Another Subfigure. It should be aligned with the first one.}
+            \label{fig:exampleB:2}
         \end{subfigure}
         \caption{Caption for Both Subfigures.}        
+        \label{fig:exampleB}
     \end{figure}
-    \lipsum[11]   
+    \lipsum[11-14]   
 
     \chapter{Conclusions}
     \lipsum[95-99]    

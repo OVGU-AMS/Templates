@@ -49,13 +49,18 @@
 \RequirePackage{epstopdf}					% include of .eps files in pdflatex, requires a ghostscript installation
 \RequirePackage[main=english,ngerman]{babel}				% Lineending in english
 
-\RequirePackage{lmodern}
+\RequirePackage{lmodern}					% Latin Modern Font
+
+\RequirePackage{enumitem}					% Customized itemize/enumerate/itemize
+% space between items is \itemsep + \parsep, \itemsep is set to 0pt here
+\setlist{itemsep=0pt}						% Reduce spacing in itemize/enumerate
 
 \RequirePackage{caption,subcaption}			% Subcaption and subfigures 
 % Caption formatting
 % \captionsetup{format=hang,justification=justified,singlelinecheck=true,labelfont={sf,bf}}
 \captionsetup{format=plain,justification=justified,singlelinecheck=true,labelfont={small,sf,bf},textfont={small}}
 \captionsetup[subfigure]{textfont={footnotesize},labelfont={footnotesize,sf}}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 
 \RequirePackage{multirow}					% Table with combined rows and columns
 
@@ -245,7 +250,7 @@
 
 \titleformat{\chapter}[display]
 {\normalfont\Large\raggedleft}
-{\MakeUppercase{\chaptertitlename}%
+{\raggedleft\MakeUppercase{\chaptertitlename}%
 	\rlap{ \color{gray!50!black}\resizebox{!}{1.3cm}{\bfseries\thechapter} \rule{5cm}{1.3cm}}}
 {10pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{30pt}{20pt}
