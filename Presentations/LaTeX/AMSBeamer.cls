@@ -29,16 +29,16 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 
-% Check whether AMS logo should be included
+%% Check whether AMS logo should be included
 \newif\ifAMSBeamer@AMSLogo
 \AMSBeamer@AMSLogotrue
 \DeclareOption{noAMSLogo}{\AMSBeamer@AMSLogofalse}
 
-% Check whether AMS logo should be included
+%% Check whether AMS logo should be included
 \newcommand{\AMSBeamer@footfontsize}{5} %this was previously 4
 \DeclareOption{smallfootfontsize}{\renewcommand{\AMSBeamer@footfontsize}{4}}
 
-% Check whether total of pages should be shown on page
+%% Check whether total of pages should be shown on page
 \newif\ifAMSBeamer@numberofpages
 \AMSBeamer@numberofpagesfalse
 \DeclareOption{numberofslides}{\AMSBeamer@numberofpagestrue}
@@ -46,11 +46,11 @@
 \ProcessOptions\relax
 
 
-% show header on slide
+%% show header on slide
 \newif\ifAMSBeamer@showheader
 \AMSBeamer@showheadertrue
 
-% show footer on slide
+%% show footer on slide
 \newif\ifAMSBeamer@showfooter
 \AMSBeamer@showfootertrue
 
@@ -67,27 +67,25 @@
 
 \useoutertheme{default}
 
-% start slide top left
+%% start slide top left
 \beamer@centeredfalse
 
 \usefonttheme{professionalfonts}
 \RequirePackage{lmodern}
 
-% define colors
-% \definecolor{stimulate}{RGB}{0 104 180}
+%% define colors
 \definecolor{ovgu-inf-blue}{RGB}{0 104 180}
 
 \colorlet{AMSblue}{ovgu-inf-blue}
 \definecolor{AMSred}{RGB}{194,23,20}
 \definecolor{AMSgreen}{RGB}{0,120,38}
-
 \definecolor{AMSorange}{RGB}{246,129,0}
 % \definecolor{AMSorange}{RGB}{243,147,35}
 
-% remove navigation symbols 
+%% remove navigation symbols 
 \setbeamertemplate{navigation symbols}{}
 
-% smaller textsize in nested items
+%% smaller textsize in nested items
 \beamertemplatedotitem
 
 % \setbeamerfont{title}{series=\bfseries,size=\Large}
@@ -98,28 +96,28 @@
 \setbeamercolor{frametitle}{fg=ovgu-inf-blue}
 % \setbeamercolor{frametitle}{fg=ovgu-inf-blue,bg=red}
 
-% set bullet color in itemized
+%% set bullet color in itemized
 % \setbeamercolor{itemize item}?
 \setbeamercolor{item}{fg=ovgu-inf-blue}
 \setbeamercolor{subitem}{fg=ovgu-inf-blue}
 \setbeamercolor{subsubitem}{fg=ovgu-inf-blue}
 
-% manually set bullet color, e.g., \item<AMSred@1->
+%% manually set bullet color, e.g., \item<AMSred@1->
 \newenvironment{AMSgreenenv}{\only{\setbeamercolor{itemize item}{fg=AMSgreen}\usebeamerfont{color=AMSgreen}}}{}
 \newenvironment{AMSredenv}{\only{\setbeamercolor{itemize item}{fg=AMSred}}}{}
 \newenvironment{AMSorangeenv}{\only{\setbeamercolor{itemize item}{fg=AMSorange}}}{}
 \setbeamercolor{alerted text}{fg=AMSred}
 \setbeamercolor{example text}{fg=AMSgreen}
 
-% content size
-% slide size is 160mm x 90mm including header and footer
-% but the content has only 160mm x 78mm
+%% content size
+%% slide size is 160mm x 90mm including header and footer
+%% but the content has only 160mm x 78mm
 \newdimen\slidewidth% width of content
 \newdimen\slideheight% height of content
 \slidewidth=160mm%
 \slideheight=78mm%
 
-% Margins
+%% Margins left and right
 % \setbeamersize{text margin left=0mm, text margin right=0mm,}
 % \setlength{\textwidth}{\beamer@paperwidth}
 \newlength\leftframemargin
@@ -127,11 +125,14 @@
 \setlength{\leftframemargin}{\beamer@leftmargin}
 \setlength{\rightframemargin}{\beamer@rightmargin}
 
-% Definition of headline
+
+%%% Slide formatting
+
+%% Definition of headline
+%% definition of headline is moved into footline
+%% headline then stays on top of slide
 \setbeamertemplate{headline}{%
 	\vspace{1cm}%
-	% definition of headline is moved into footline
-	% headline then stays on top of slide
     % \ifnum \theframenumber=1%
     % \else%
 	% 	\begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
@@ -159,12 +160,12 @@
  % TODO subtitle
 }
 
-% Definition of footer
+%% Definition of footer
 \setbeamercolor{footlinecolor}{fg=white,bg=ovgu-inf-blue}
 \setbeamertemplate{footline}{%
     \ifnum \theframenumber=1%
     \else%
-	% headline (heigh: 10mm, blue line ends at 9mm):
+	% headline (height: 10mm but blue line ends at 9mm):
 		\ifAMSBeamer@showheader%
 			\begin{tikzpicture}[inner sep=0pt, outer sep=0pt,overlay, remember picture,shift={($(current page.south west)+(0,-0mm)$)}]%
 			\useasboundingbox  (0,0) rectangle (160mm,90mm);%
@@ -198,7 +199,7 @@
     \fi%    
 }
 
-% Definition of title page
+%% Definition of title page
 % \setbeamertemplate{title page}{%
 %     \setbeamertemplate{footline}{} 
 % 	\begin{textblock*}{\paperwidth}[0.5,0.5](0.5\paperwidth,0.5\paperheight)%	
@@ -256,7 +257,7 @@
 	\end{tikzpicture}
 }
 
-% Section slide
+%% Section slide
 \newcommand*{\sectionslide}[2][]%
 {%
 \AMSBeamer@showheaderfalse%
@@ -270,13 +271,13 @@
 }
 
 
-% half-transparent pause
+%% half-transparent pause
 \setbeamercovered{transparent=45}
 
-% Use serifs in equations
+%% Use serifs in equations
 \usefonttheme[onlymath]{serif}
 
-% remove margin
+%% remove margin
 \RequirePackage{changepage}
 \newenvironment{nomargin}{
 	\begin{adjustwidth}{-\leftmargin}{-\rightmargin}%
@@ -284,14 +285,14 @@
 	\end{adjustwidth}%
 }
 
-% SI units
+%% SI units
 \RequirePackage{siunitx}
 
 
-% TikZ frame for absolute positioning:
-% always at the same position
-% no inner and outer sep of nodes
-% default value of inner sep is: inner sep=0.3333em
+%% TikZ frame for absolute positioning:
+%% always at the same position
+%% no inner and outer sep of nodes
+%% default value of inner sep is: inner sep=0.3333em
 \def\innersep{0.3333em}
 \newenvironment{tikzframe}{%
 	\begin{tikzpicture}[overlay, remember picture, shift={($(current page.south west)+(0,3mm)$)}, inner sep=0pt, outer sep=0pt]% shift to lower left corner and 3mm (footline) upwards
@@ -300,7 +301,7 @@
 	\end{tikzpicture}
 }
 
-% Grid for use in TikZ frame
+%% Grid for use in TikZ frame
 \newcommand{\makegrid}{%
 	\draw[style=help lines,step=0.1,opacity=0.2] (0,0) grid (\slidewidth,\slideheight);
 	\draw[very thin,step=1,opacity=0.2] (0,0) grid (\slidewidth,\slideheight);
@@ -314,7 +315,7 @@
 	}
 }%
 
-% Grid for use with textpos
+%% Grid for use with textpos
 \newcommand{\makegridtp}{%
 	\begin{tikzframe}
 		\draw[style=help lines,step=0.1,opacity=0.2] (0,0) grid (\slidewidth,\slideheight);
@@ -331,14 +332,17 @@
 }%
 
 
-% Show number of slides consisting of multiple frames
-% can be used outsize tikzframe
+
+%%% Helpers
+%% Show number of slides consisting of multiple frames
+%% can be used outsize tikzframe
 \newcommand{\overlaynumber}{%
 \begin{tikzpicture}[overlay, remember picture, shift={($(current page.north west)+(0,-2mm)$)}, inner sep=0pt, outer sep=0pt]%
 	\path (0,0) node[anchor=north west, inner sep=0pt]{\number\beamer@slideinframe};
 \end{tikzpicture}%
 }
 
+%% Todo Notes box in upper right corner
 \newcommand{\Notes}[1]{%
 \begin{tikzpicture}[overlay, remember picture, shift={($(current page.north east)+(-1mm,-10mm)$)}, inner sep=0pt, outer sep=0pt]%
 	\path (0,0) node[anchor=north east, inner sep=0pt, draw=red!50!black,thick, fill=white, text width=5cm,rounded corners=1mm,inner sep=2mm,font=\small]{\tiny #1};

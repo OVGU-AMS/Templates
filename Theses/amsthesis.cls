@@ -4,7 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{amsthesis}[2025/09/03 The AMS Thesis Class]
+\ProvidesClass{amsthesis}[2026/02/20 The AMS Thesis Class]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%            Class Options
@@ -42,11 +42,12 @@
 \LoadClass[a4paper,twoside,openright,numbers=noenddot,12pt]{book}
 
 \RequirePackage{amsmath,amsfonts,amssymb}
-\RequirePackage[usenames, dvipsnames]{xcolor}
+\RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{graphicx}
 
 \RequirePackage[utf8]{inputenc}				% Letters like ä ü ö ß
 \RequirePackage{epstopdf}					% include of .eps files in pdflatex, requires a ghostscript installation
+\RequirePackage{csquotes}					% Context sensitive quotation
 \RequirePackage[main=english,ngerman]{babel}				% Lineending in english
 
 \RequirePackage{lmodern}					% Latin Modern Font
@@ -55,12 +56,14 @@
 % space between items is \itemsep + \parsep, \itemsep is set to 0pt here
 \setlist{itemsep=0pt}						% Reduce spacing in itemize/enumerate
 
-\RequirePackage{caption,subcaption}			% Subcaption and subfigures 
+% \RequirePackage{caption,subcaption}			% Subcaption and subfigures 
 % Caption formatting
 % \captionsetup{format=hang,justification=justified,singlelinecheck=true,labelfont={sf,bf}}
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 \captionsetup{format=plain,justification=justified,singlelinecheck=true,labelfont={small,sf,bf},textfont={small}}
 \captionsetup[subfigure]{textfont={footnotesize},labelfont={footnotesize,sf}}
-\renewcommand\thesubfigure{(\alph{subfigure})}
+% \renewcommand\thesubfigure{(\alph{subfigure})}
 
 \RequirePackage{multirow}					% Table with combined rows and columns
 
@@ -301,7 +304,7 @@
 % \RequirePackage{cite}
 
 % Multiple bibliographies
-\usepackage[backend=bibtex, defernumbers=true, maxbibnames=99, sorting=none, citestyle=numeric-comp]{biblatex}
+\usepackage[backend=biber, defernumbers=true, maxbibnames=99, sorting=none, citestyle=numeric-comp]{biblatex}
 \renewcommand*{\bibfont}{\normalfont\small}
 \DeclareBibliographyCategory{own}
 \DeclareBibliographyCategory{students}
