@@ -1,0 +1,22 @@
+[package]
+name = "ams-thesis"
+version = "0.1.0"
+entrypoint = "src/ams-thesis.typ"
+authors = ["Kevin Kulot"]
+license = "0BSD"
+description = "A thesis template for the Autonomous Multisensor Systems group"
+repository = "https://github.com/xkevio/Templates"
+categories = ["thesis", "report"]
+keywords = ["thesis", "master", "bachelor", "university", "OvGU", "Magdeburg", "Otto von Guericke Universität"]
+compiler = "0.14.0"
+exclude = [
+    "justfile",
+    "scripts",
+    "thumbnails",
+    "*.pdf",
+]
+
+[template]
+path = "template"
+entrypoint = "thesis.typ"
+thumbnail = "thumbnails/1.png"
