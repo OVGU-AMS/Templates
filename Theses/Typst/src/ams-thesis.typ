@@ -15,25 +15,29 @@
   set text(12pt, font: "New Computer Modern")
 
   set heading(numbering: "1.1")
+  set block(spacing: 1.2em)
 
   show heading.where(level: 1): set heading(supplement: [Chapter])
-  show heading.where(level: 1): set block(spacing: 1.5em)
-  show heading.where(level: 1): it => block(width: 100%)[
+  show heading.where(level: 1): set block(above: 30pt, below: 30pt) // todo!
+  show heading.where(level: 1): it => block(width: 100%, inset: (top: 1.5cm))[
     #set align(end)
-    #set text(luma(75), weight: "regular")
+    #set text(gray.mix(black), weight: "regular", 24.88pt)
 
     #grid(
       columns: (100%, 4cm),
       align: (end + bottom, start + bottom),
-      text(0.75em, upper(it.supplement)),
-      h(0.5em)
-        + text(2.5em, weight: "bold", numbering(it.numbering, ..counter(heading).get()))
-        + h(0.5em)
-        + box(width: 1fr, rect(fill: luma(100), width: 100%)),
+      text(17pt, upper(it.supplement)),
+      h(5pt)
+        + text(54.88pt, weight: "bold", numbering(it.numbering, ..counter(heading).get()))
+        + h(5pt)
+        + box(width: 1fr, rect(fill: gray.mix(black), width: 5cm, height: 1.3cm)),
     )
 
     #it.body
   ]
+
+  // todo: incorporate into previous rule!
+  show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it
 
   show heading.where(level: 2): set block(above: 2em, below: 1.5em)
   show heading.where(level: 2): it => block[
@@ -73,5 +77,6 @@
     )
   ]
 
+  pagebreak(to: "odd")
   doc
 }
