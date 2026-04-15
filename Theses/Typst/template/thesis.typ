@@ -1,4 +1,4 @@
-#import "../src/ams-thesis.typ": *
+#import "../src/ams-thesis.typ": ams-thesis
 #show: ams-thesis
 
 = Introduction
