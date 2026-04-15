@@ -7,7 +7,11 @@
       inside: 3cm,
       outside: 4cm,
     ),
-    numbering: "1",
+    footer: context {
+      let page-count = counter(page).get().first()
+      let page-align = if calc.odd(page-count) { right } else { left } 
+      align(page-align, counter(page).display())
+    }
   )
 
   set document(title: title)
@@ -18,21 +22,23 @@
   set block(spacing: 1.2em)
 
   show heading.where(level: 1): set heading(supplement: [Chapter])
-  show heading.where(level: 1): set block(above: 30pt, below: 30pt) // todo!
-  show heading.where(level: 1): it => block(width: 100%, inset: (top: 1.5cm))[
+  show heading.where(level: 1): set block(below: 40pt) // todo!
+  show heading.where(level: 1): it => block(width: 100%)[
     #set align(end)
-    #set text(gray.mix(black), weight: "regular", 24.88pt)
+    #set text(luma(50%).mix(black), weight: "regular", 24.88pt)
 
-    #grid(
+    #v(50pt)
+    #box(grid(
       columns: (100%, 4cm),
       align: (end + bottom, start + bottom),
       text(17pt, upper(it.supplement)),
       h(5pt)
-        + text(54.88pt, weight: "bold", numbering(it.numbering, ..counter(heading).get()))
+        + text(2cm, weight: "bold", numbering(it.numbering, ..counter(heading).get()))
         + h(5pt)
-        + box(width: 1fr, rect(fill: gray.mix(black), width: 5cm, height: 1.3cm)),
-    )
+        + box(width: 1fr, rect(fill: luma(50%).mix(black), width: 5cm, height: 1.3cm)),
+    ))
 
+    #v(20pt)
     #it.body
   ]
 
