@@ -10,11 +10,22 @@
   huge: 24.88pt,
 )
 
+/// The AMS thesis template.
 #let ams-thesis(
+  /// The title of the thesis.
+  /// -> content
   title: [Title of Thesis],
-  author: [Max Mustermann],
+  /// The author of the thesis.
+  /// -> str | dictionary
+  author: "Max Mustermann",
+  /// The submission date.
+  /// -> datetime
   date: datetime.today(),
+  /// The thesis type (bachelor, master, PhD).
+  /// -> content
   thesis-type: [Master],
+  /// The reviewers of the thesis.
+  /// -> dictionary
   reviewers: (
     supervisor: "Michaela Mustermann",
     first-reviewer: "Prof. Dipl. Inf. Gutachter 1",
@@ -31,14 +42,15 @@
       outside: 4cm,
     ),
     footer: context {
+      set text(font: "New Computer Modern Sans")
       let page-count = counter(page).get().first()
       let page-align = if calc.odd(page-count) { right } else { left }
       align(page-align, counter(page).display())
     },
   )
 
-  set document(title: title)
-  set par(justify: true, first-line-indent: 2em, spacing: 0.65em, leading: 0.8em) // todo: baselinestretch to leading
+  set document(title: title, author: author)
+  set par(justify: true, first-line-indent: 2em, spacing: 0.65em, leading: 0.75em)
   set text(font-size.normal, font: "New Computer Modern")
 
   set heading(numbering: "1.1")
@@ -55,9 +67,9 @@
       columns: (100%, 4cm),
       align: (end + bottom, start + bottom),
       text(font-size.Large, upper(it.supplement)),
-      h(5pt)
+      h(0.2cm)
         + text(2cm, luma(25%), weight: "bold", numbering(it.numbering, ..counter(heading).get()))
-        + h(5pt)
+        + h(0.2cm)
         + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
     ))
 
@@ -85,14 +97,14 @@
     #image("logos/fin-en.pdf", width: 100%)
     #v(2cm)
 
-    #block(inset: (x: 2.5cm), height: 15cm)[
+    #block(inset: (x: 2.5cm), height: 15.5cm)[
       #text(font-size.huge)[*#thesis-type Thesis*]
 
       #std.title() \
 
       #text(font-size.large)[
         #author
-        #v(0.5cm)
+        #linebreak()#v(0.5cm)
         Magdeburg, #date.display("[day].[month].[year]")
       ]
 
@@ -107,20 +119,22 @@
 
     #v(1fr)
 
-    #line(length: 100%, stroke: 0.4pt)#v(0.15cm, weak: true)
-
-    #grid(
-      columns: (70%, 30%),
-      align: (left, right),
-      [
-        #set text(font-size.small)
-
-        Otto von Guericke University Magdeburg \
-        Faculty of Computer Science \
-        Institute for Intelligent Cooperating Systems \
-        Autonomous Multisensor Systems Group \
-      ],
-      image("logos/AMS.pdf", width: 90%),
+    #stack(
+      dir: ttb,
+      spacing: 0.15cm,
+      line(length: 100%, stroke: 0.4pt),
+      grid(
+        columns: (70%, 30%),
+        align: (left + horizon, right),
+        [
+          #set text(font-size.small)
+          Otto von Guericke University Magdeburg \
+          Faculty of Computer Science \
+          Institute for Intelligent Cooperating Systems \
+          Autonomous Multisensor Systems Group \
+        ],
+        image("logos/AMS.pdf", width: 90%),
+      ),
     )
   ]
 
