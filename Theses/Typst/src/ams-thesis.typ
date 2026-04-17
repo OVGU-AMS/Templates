@@ -10,6 +10,9 @@
   huge: 24.88pt,
 )
 
+/// Upright and bold symbol for vectors and matrices.
+#let vb(x) = $upright(bold(#x))$
+
 /// The AMS thesis template.
 #let ams-thesis(
   /// The title of the thesis.
@@ -50,11 +53,19 @@
   )
 
   set document(title: title, author: author)
-  set par(justify: true, first-line-indent: 2em, spacing: 0.65em, leading: 0.75em)
+  set par(justify: true, first-line-indent: 2em, spacing: 0.75em, leading: 0.75em)
   set text(font-size.normal, font: "New Computer Modern")
 
   set heading(numbering: "1.1")
   set block(spacing: 1.2em)
+
+  set math.equation(numbering: "(1)", supplement: none)
+  set list(indent: 1em, spacing: 1em)
+
+  show outline: set heading(outlined: true)
+  show outline.entry.where(level: 1): strong
+  show outline.entry.where(level: 1): set outline.entry(fill: none)
+  show outline.entry.where(level: 1): set block(above: 2em, below: 1em)
 
   show heading.where(level: 1): set heading(supplement: [Chapter])
   show heading.where(level: 1): set block(below: 40pt) // todo!
@@ -62,30 +73,39 @@
     #set align(end)
     #set text(weight: "regular", font-size.huge)
 
-    #v(50pt)
-    #box(grid(
-      columns: (100%, 4cm),
-      align: (end + bottom, start + bottom),
-      text(font-size.Large, upper(it.supplement)),
-      h(0.2cm)
-        + text(2cm, luma(25%), weight: "bold", numbering(it.numbering, ..counter(heading).get()))
-        + h(0.2cm)
-        + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
-    ))
+    #if it.numbering != none [
+      #v(50pt)
+      #box(grid(
+        columns: (100%, 4cm),
+        align: (end + bottom, start + bottom),
+        text(font-size.Large, upper(it.supplement)),
+        h(0.2cm)
+          + text(2cm, luma(25%), weight: "bold", numbering(it.numbering, ..counter(heading).get()))
+          + h(0.2cm)
+          + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
+      ))
 
-    #v(20pt)
-    #it.body
+      #v(20pt)
+      #it.body
+    ] else [
+      #v(50pt)
+      #it
+    ]
   ]
 
   // todo: incorporate into previous rule!
   show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it
 
+  show heading.where(level: 2): set text(font-size.Large)
   show heading.where(level: 2): set block(above: 2em, below: 1.5em)
   show heading.where(level: 2): it => block[
     #numbering(it.numbering, ..counter(heading).get())
     #h(1em)
     #it.body
   ]
+
+  show link: it => { set text(font: "DejaVu Sans Mono", 0.9em) if type(it.dest) == str; it }
+  show "doi": smallcaps
 
   show std.title: set text(font-size.huge, weight: "regular")
   show std.title: set block(spacing: 1cm)
