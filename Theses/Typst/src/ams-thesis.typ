@@ -1,3 +1,5 @@
+#import "@preview/subpar:0.2.2"
+
 /// LaTeX-like font-size names for easier porting. (cf. "Standard Document Classes for LaTeX version 2e" pp. 9-10)
 #let font-size = (
   tiny: 6pt,
@@ -12,12 +14,30 @@
 
 /// Upright and bold symbol for vectors and matrices.
 #let vb(x) = $upright(bold(#x))$
+#let empty-page = page(header: none, footer: none)[]
+
+/// Subfigures. Correct numbering is applied.
+#let subfigure = subpar.grid.with(
+  numbering: num => {
+    numbering("1.1", counter(heading).get().first(), num)
+  },
+  numbering-sub: (.., num) => {
+    set text(font: "New Computer Modern Sans")
+    numbering("(a)", num)
+  },
+  numbering-sub-ref: (sup, sub) => {
+    numbering("1.1(a)", counter(heading).get().first(), sup, sub)
+  },
+)
 
 /// The AMS thesis template.
 #let ams-thesis(
   /// The title of the thesis.
   /// -> content
   title: [Title of Thesis],
+  /// The abstract of the thesis.
+  /// -> content
+  abstract: lorem(100),
   /// The author of the thesis.
   /// -> str | dictionary
   author: "Max Mustermann",
@@ -44,6 +64,7 @@
       inside: 3cm,
       outside: 4cm,
     ),
+    numbering: "i",
     footer: context {
       set text(font: "New Computer Modern Sans")
       let page-count = counter(page).get().first()
@@ -58,43 +79,84 @@
 
   set heading(numbering: "1.1")
   set block(spacing: 1.2em)
-
-  set math.equation(numbering: "(1)", supplement: none)
   set list(indent: 1em, spacing: 1em)
 
+  set math.equation(
+    numbering: n => numbering("(1.1)", counter(heading).get().first(), n),
+    supplement: none,
+  )
+
+  set figure(gap: 1em)
+  show figure: set block(spacing: 2em)
+  show figure.caption: it => block[
+    #set align(left)
+    #text(font: "New Computer Modern Sans", weight: "bold")[
+      #it.supplement
+      #context it.counter.display(it.numbering)#it.separator
+    ]
+    #it.body
+  ]
+
+  set outline(depth: 2)
   show outline: set heading(outlined: true)
-  show outline.entry.where(level: 1): strong
   show outline.entry.where(level: 1): set outline.entry(fill: none)
-  show outline.entry.where(level: 1): set block(above: 2em, below: 1em)
+  show outline.entry.where(level: 1): set block(above: 2em)
+  show outline.entry.where(level: 1): it => link(
+    it.element.location(),
+    strong(it.indented(it.prefix(), it.inner(), gap: 1.5em)),
+  )
+
+  show outline.entry.where(level: 2): set outline.entry(fill: repeat(gap: 0.5em)[.])
+  show outline.entry.where(level: 2): it => link(
+    it.element.location(),
+    it.indented(
+      it.prefix(),
+      box(grid(
+        columns: 3,
+        column-gutter: (0.5em, 1em),
+        it.body(), it.fill, it.page(),
+      )),
+      gap: 1.5em,
+    ),
+  )
 
   show heading.where(level: 1): set heading(supplement: [Chapter])
   show heading.where(level: 1): set block(below: 40pt) // todo!
-  show heading.where(level: 1): it => block(width: 100%)[
-    #set align(end)
-    #set text(weight: "regular", font-size.huge)
+  show heading.where(level: 1): it => {
+    // Scoped set-page & pagebreak for truly empty pages when putting chapters on odd pages.
+    {
+      set page(footer: none)
+      pagebreak(weak: true, to: "odd")
+    }
 
-    #if it.numbering != none [
-      #v(50pt)
-      #box(grid(
-        columns: (100%, 4cm),
-        align: (end + bottom, start + bottom),
-        text(font-size.Large, upper(it.supplement)),
-        h(0.2cm)
-          + text(2cm, luma(25%), weight: "bold", numbering(it.numbering, ..counter(heading).get()))
-          + h(0.2cm)
-          + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
-      ))
+    // "CHAPTER X" layout inside margins.
+    block(width: 100%)[
+      #set align(end)
+      #set text(weight: "regular", font-size.huge)
 
-      #v(20pt)
-      #it.body
-    ] else [
-      #v(50pt)
-      #it
+      #if it.numbering != none [
+        #v(50pt)
+        #box(grid(
+          columns: (100%, 4cm),
+          align: (end + bottom, start + bottom),
+          text(font-size.Large, upper(it.supplement)),
+          h(0.2cm)
+            + text(2cm, luma(25%), weight: "bold", numbering(
+              it.numbering,
+              ..counter(heading).get(),
+            ))
+            + h(0.2cm)
+            + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
+        ))
+
+        #v(20pt)
+        #it.body
+      ] else [
+        #v(50pt)
+        #it
+      ]
     ]
-  ]
-
-  // todo: incorporate into previous rule!
-  show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it
+  }
 
   show heading.where(level: 2): set text(font-size.Large)
   show heading.where(level: 2): set block(above: 2em, below: 1.5em)
@@ -104,7 +166,10 @@
     #it.body
   ]
 
-  show link: it => { set text(font: "DejaVu Sans Mono", 0.9em) if type(it.dest) == str; it }
+  show link: it => {
+    set text(font: "DejaVu Sans Mono", 0.9em) if type(it.dest) == str
+    it
+  }
   show "doi": smallcaps
 
   show std.title: set text(font-size.huge, weight: "regular")
@@ -158,6 +223,9 @@
     )
   ]
 
-  pagebreak(to: "odd")
+  counter(page).update(0)
+  heading(numbering: none)[Abstract]
+  abstract
+
   doc
 }
