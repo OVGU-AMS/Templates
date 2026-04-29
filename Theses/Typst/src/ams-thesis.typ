@@ -1,4 +1,5 @@
 #import "@preview/subpar:0.2.2"
+#import "@preview/hydra:0.6.2": hydra
 
 /// LaTeX-like font-size names for easier porting. (cf. "Standard Document Classes for LaTeX version 2e" pp. 9-10)
 #let font-size = (
@@ -15,6 +16,12 @@
 /// Upright and bold symbol for vectors and matrices.
 #let vb(x) = $upright(bold(#x))$
 #let empty-page = page(header: none, footer: none)[]
+#let section(level: auto, body) = heading(
+  numbering: none,
+  outlined: false,
+  level: level,
+  body,
+)
 
 /// Subfigures. Correct numbering is applied.
 #let subfigure = subpar.grid.with(
@@ -59,12 +66,43 @@
   set page(
     "a4",
     margin: (
-      top: 2cm,
+      top: 2cm + 14pt + 0.5cm, // top + headheight + headsep
       bottom: 2cm,
       inside: 3cm,
       outside: 4cm,
     ),
     numbering: "i",
+    header-ascent: .5cm, // todo: should be equal `headsep`
+    header: context {
+      set text(font: "New Computer Modern Sans")
+      let header-rule(chapter) = stack(dir: ttb, spacing: 5pt, chapter, line(
+        length: 100%,
+        stroke: 0.5pt,
+      ))
+
+      // Section in header on the right for odd pages and chapters in header on the left for even pages.
+      if calc.odd(here().page()) {
+        align(right, hydra(2, display: (.., c) => {
+          header-rule(
+            counter(heading).display("1.1.") + h(1em) + c.body,
+          )
+        }))
+      } else {
+        align(left, hydra(1, display: (.., c) => {
+          if c.numbering != none {
+            header-rule(
+              c.supplement
+                + " "
+                + counter(heading.where(level: 1)).display("1.")
+                + " "
+                + c.body,
+            )
+          } else {
+            header-rule(c.body)
+          }
+        }))
+      }
+    },
     footer: context {
       set text(font: "New Computer Modern Sans")
       let page-count = counter(page).get().first()
@@ -74,7 +112,12 @@
   )
 
   set document(title: title, author: author)
-  set par(justify: true, first-line-indent: 2em, spacing: 0.75em, leading: 0.75em)
+  set par(
+    justify: true,
+    first-line-indent: 2em,
+    spacing: 0.75em,
+    leading: 0.75em,
+  )
   set text(font-size.normal, font: "New Computer Modern")
 
   set heading(numbering: "1.1")
@@ -106,7 +149,9 @@
     strong(it.indented(it.prefix(), it.inner(), gap: 1.5em)),
   )
 
-  show outline.entry.where(level: 2): set outline.entry(fill: repeat(gap: 0.5em)[.])
+  show outline.entry.where(level: 2): set outline.entry(fill: repeat(
+    gap: 0.5em,
+  )[.])
   show outline.entry.where(level: 2): it => link(
     it.element.location(),
     it.indented(
@@ -125,7 +170,7 @@
   show heading.where(level: 1): it => {
     // Scoped set-page & pagebreak for truly empty pages when putting chapters on odd pages.
     {
-      set page(footer: none)
+      set page(header: none, footer: none)
       pagebreak(weak: true, to: "odd")
     }
 
@@ -161,8 +206,10 @@
   show heading.where(level: 2): set text(font-size.Large)
   show heading.where(level: 2): set block(above: 2em, below: 1.5em)
   show heading.where(level: 2): it => block[
-    #numbering(it.numbering, ..counter(heading).get())
-    #h(1em)
+    #if it.numbering != none [
+      #numbering(it.numbering, ..counter(heading).get())
+      #h(1em)
+    ]
     #it.body
   ]
 

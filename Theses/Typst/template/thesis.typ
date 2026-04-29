@@ -3,6 +3,7 @@
 
 // Default depth of outline is 2, i.e., chapters and sections.
 #outline()
+#include "notation.typ"
 
 // Activate "mainmatter": reset page counter and use arabic numbering.
 #set page(numbering: "1")
