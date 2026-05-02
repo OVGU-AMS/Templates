@@ -1,6 +1,7 @@
 #import "@preview/subpar:0.2.2"
 #import "@preview/hydra:0.6.2": hydra
 
+#let in-outline = state("in-outline", false)
 /// LaTeX-like font-size names for easier porting. (cf. "Standard Document Classes for LaTeX version 2e" pp. 9-10)
 #let font-size = (
   tiny: 6pt,
@@ -23,6 +24,9 @@
   body,
 )
 
+
+#let flex-caption(short, long) = context if in-outline.get() { short } else { long }
+
 /// Subfigures. Correct numbering is applied.
 #let subfigure = subpar.grid.with(
   numbering: num => {
@@ -44,7 +48,10 @@
   title: [Title of Thesis],
   /// The abstract of the thesis.
   /// -> content
-  abstract: lorem(100),
+  abstract: heading(numbering: none)[Abstract] + lorem(100),
+  /// The German abstract of the thesis.
+  /// -> content
+  zusammenfassung: heading(numbering: none)[Zusammenfassung] + lorem(100),
   /// The author of the thesis.
   /// -> str | dictionary
   author: "Max Mustermann",
@@ -66,13 +73,13 @@
   set page(
     "a4",
     margin: (
-      top: 2cm + 14pt + 0.5cm, // top + headheight + headsep
+      top: 2cm + 14pt + 0.8cm, // top + headheight + headsep
       bottom: 2cm,
       inside: 3cm,
       outside: 4cm,
     ),
     numbering: "i",
-    header-ascent: .5cm, // todo: should be equal `headsep`
+    header-ascent: 0.8cm,
     header: context {
       set text(font: "New Computer Modern Sans")
       let header-rule(chapter) = stack(dir: ttb, spacing: 5pt, chapter, line(
@@ -91,11 +98,7 @@
         align(left, hydra(1, display: (.., c) => {
           if c.numbering != none {
             header-rule(
-              c.supplement
-                + " "
-                + counter(heading.where(level: 1)).display("1.")
-                + " "
-                + c.body,
+              c.supplement + " " + counter(heading.where(level: 1)).display("1.") + " " + c.body,
             )
           } else {
             header-rule(c.body)
@@ -129,7 +132,7 @@
     supplement: none,
   )
 
-  set figure(gap: 1em)
+  set figure(gap: 1em, numbering: (..n) => numbering("1.1", counter(heading).get().first(), ..n))
   show figure: set block(spacing: 2em)
   show figure.caption: it => block[
     #set align(left)
@@ -140,6 +143,7 @@
     #it.body
   ]
 
+  // Stylization of table of contents.
   set outline(depth: 2)
   show outline: set heading(outlined: true)
   show outline.entry.where(level: 1): set outline.entry(fill: none)
@@ -164,6 +168,30 @@
       gap: 1.5em,
     ),
   )
+
+  // Stylization of list of figures.
+  show outline.where(target: figure.where(kind: image)): it => {
+    in-outline.update(true)
+  
+    show outline.entry: set text(weight: "regular")
+    show outline.entry: set outline.entry(fill: repeat(gap: 0.5em)[.])
+    show outline.entry: set block(spacing: 1em)
+
+    show outline.entry: entry => context {
+      link(entry.element.location(), entry.indented(
+        gap: 1.5em,
+        numbering(
+          "1.1",
+          counter(heading).at(entry.element.location()).first(),
+          ..counter(it.target).at(entry.element.location()),
+        ),
+        entry.inner(),
+      ))
+    }
+
+    it
+    in-outline.update(false)
+  }
 
   show heading.where(level: 1): set heading(supplement: [Chapter])
   show heading.where(level: 1): set block(below: 40pt) // todo!
@@ -270,9 +298,11 @@
     )
   ]
 
+  // Reset page count after title page & add abstracts.
   counter(page).update(0)
-  heading(numbering: none)[Abstract]
+
   abstract
+  zusammenfassung
 
   doc
 }

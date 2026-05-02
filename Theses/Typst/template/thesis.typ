@@ -1,8 +1,10 @@
-#import "../src/ams-thesis.typ": ams-thesis, vb, subfigure
+#import "../src/ams-thesis.typ": ams-thesis, flex-caption, subfigure, vb
 #show: ams-thesis
 
 // Default depth of outline is 2, i.e., chapters and sections.
 #outline()
+
+#outline(target: figure.where(kind: image), title: [List of Figures])
 #include "notation.typ"
 
 // Activate "mainmatter": reset page counter and use arabic numbering.
@@ -66,7 +68,7 @@ Please consider the following points when including figures:
 - Use `<fig:label>` to label figures and subfigures and refer to them in text using `@fig:label`.
 
 #figure(
-  caption: [
+  caption: flex-caption[A short description for the List of Figures.][
     Figures should be vector graphics if possible. Plots should be created using CeTZ or lilaq. Text in figures should use the same font as the main document.
     Avoid pixelated images.
   ],
