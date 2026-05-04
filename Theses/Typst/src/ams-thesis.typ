@@ -2,6 +2,7 @@
 #import "@preview/hydra:0.6.2": hydra
 
 #let in-outline = state("in-outline", false)
+
 /// LaTeX-like font-size names for easier porting. (cf. "Standard Document Classes for LaTeX version 2e" pp. 9-10)
 #let font-size = (
   tiny: 6pt,
@@ -16,7 +17,9 @@
 
 /// Upright and bold symbol for vectors and matrices.
 #let vb(x) = $upright(bold(#x))$
+/// Fully empty page with no header and footer.
 #let empty-page = page(header: none, footer: none)[]
+/// Unnumbered and non-outlined section with custom level.
 #let section(level: auto, body) = heading(
   numbering: none,
   outlined: false,
@@ -24,7 +27,7 @@
   body,
 )
 
-
+/// Provides a short caption for List of Figures and the usual longer one.
 #let flex-caption(short, long) = context if in-outline.get() { short } else { long }
 
 /// Subfigures. Correct numbering is applied.
@@ -208,6 +211,11 @@
       #set text(weight: "regular", font-size.huge)
 
       #if it.numbering != none [
+        // Reset figure counters after each numbered chapter.
+        #counter(figure.where(kind: image)).update(0)
+        #counter(figure.where(kind: table)).update(0)
+        #counter(figure.where(kind: raw)).update(0)
+      
         #v(50pt)
         #box(grid(
           columns: (100%, 4cm),

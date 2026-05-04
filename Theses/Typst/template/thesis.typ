@@ -21,6 +21,8 @@
 == Structure of Thesis
 #lorem(100)
 
+#figure(caption: [Test], circle())
+
 = Background
 
 #lorem(50)
