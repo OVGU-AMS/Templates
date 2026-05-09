@@ -1,4 +1,4 @@
-#import "../src/ams-thesis.typ": ams-thesis, flex-caption, subfigure, vb
+#import "src/ams-thesis.typ": ams-thesis, flex-caption, subfigure, vb
 #show: ams-thesis
 
 // Default depth of outline is 2, i.e., chapters and sections.
