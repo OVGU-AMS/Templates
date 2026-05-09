@@ -1,0 +1,37 @@
+# ams-typst
+
+This folder provides a Typst thesis template for the [Autonomous Multisensor Systems](https://ams.ovgu.de) group.
+
+You can initialize the template with the following options:
+
+```typ
+#let ams-thesis(
+  /// The title of the thesis.
+  /// -> content
+  title: [Title of Thesis],
+  /// The abstract of the thesis.
+  /// -> content
+  abstract: heading(numbering: none)[Abstract] + lorem(100),
+  /// The German abstract of the thesis.
+  /// -> content
+  zusammenfassung: heading(numbering: none)[Zusammenfassung] + lorem(100),
+  /// The author of the thesis.
+  /// -> str | dictionary
+  author: "Max Mustermann",
+  /// The submission date.
+  /// -> datetime
+  date: datetime.today(),
+  /// The thesis type (bachelor, master, PhD).
+  /// -> content
+  thesis-type: [Master],
+  /// The reviewers of the thesis.
+  /// -> dictionary
+  reviewers: (
+    supervisor: "Michaela Mustermann",
+    first-reviewer: "Prof. Dipl. Inf. Gutachter 1",
+    second-reviewer: "Prof. Dr.-Ing. Gutachter 2",
+  ),
+)
+```
+
+Compile either in the webapp or locally with `typst compile thesis.typ`.
