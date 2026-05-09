@@ -21,8 +21,6 @@
 == Structure of Thesis
 #lorem(100)
 
-#figure(caption: [Test], circle())
-
 = Background
 
 #lorem(50)
@@ -91,5 +89,7 @@ Please consider the following points when including figures:
 )
 
 = Conclusions
+
+#lorem(200)
 
 #bibliography("bibliography/ams.bib")

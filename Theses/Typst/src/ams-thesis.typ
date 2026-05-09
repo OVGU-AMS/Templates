@@ -73,6 +73,9 @@
   ),
   doc,
 ) = {
+  // Page setup, alternating margins and top margin is based on base distance,
+  // header height and header separator. hydra provides the current chapter for
+  // the header rules and footer is sans-roman for frontmatter.
   set page(
     "a4",
     margin: (
@@ -117,24 +120,28 @@
     },
   )
 
+  // Basic document setup for metadata, paragraphs and text font and size.
   set document(title: title, author: author)
+  set text(font-size.normal, font: "New Computer Modern")
+  set heading(numbering: "1.1")
+  set list(indent: 1em, spacing: 1em)
+
+  // Paragraphs are justified, have a first-line indent and same line spacing as leading.
   set par(
     justify: true,
     first-line-indent: 2em,
     spacing: 0.75em,
     leading: 0.75em,
   )
-  set text(font-size.normal, font: "New Computer Modern")
 
-  set heading(numbering: "1.1")
-  set block(spacing: 1.2em)
-  set list(indent: 1em, spacing: 1em)
-
+  // Adjust equations to have extra spacing and heading-dependent numbering.
+  show math.equation: set block(spacing: 1.2em)
   set math.equation(
     numbering: n => numbering("(1.1)", counter(heading).get().first(), n),
     supplement: none,
   )
 
+  // Figures also get heading-dependent numbering, and some spacing and styling.
   set figure(gap: 1em, numbering: (..n) => numbering("1.1", counter(heading).get().first(), ..n))
   show figure: set block(spacing: 2em)
   show figure.caption: it => block[
@@ -175,7 +182,7 @@
   // Stylization of list of figures.
   show outline.where(target: figure.where(kind: image)): it => {
     in-outline.update(true)
-  
+
     show outline.entry: set text(weight: "regular")
     show outline.entry: set outline.entry(fill: repeat(gap: 0.5em)[.])
     show outline.entry: set block(spacing: 1em)
@@ -188,7 +195,11 @@
           counter(heading).at(entry.element.location()).first(),
           ..counter(it.target).at(entry.element.location()),
         ),
-        entry.inner(),
+        box(grid(
+          columns: (auto, 1fr, auto),
+          column-gutter: (0.5em, 1em),
+          entry.body(), entry.fill, entry.page(),
+        )),
       ))
     }
 
@@ -196,8 +207,9 @@
     in-outline.update(false)
   }
 
+  // Chapter styling: Big right-aligned "CHAPTER X" with a rectangle.
   show heading.where(level: 1): set heading(supplement: [Chapter])
-  show heading.where(level: 1): set block(below: 40pt) // todo!
+  show heading.where(level: 1): set block(below: 30pt)
   show heading.where(level: 1): it => {
     // Scoped set-page & pagebreak for truly empty pages when putting chapters on odd pages.
     {
@@ -215,8 +227,8 @@
         #counter(figure.where(kind: image)).update(0)
         #counter(figure.where(kind: table)).update(0)
         #counter(figure.where(kind: raw)).update(0)
-      
-        #v(50pt)
+
+        #v(1.4cm)
         #box(grid(
           columns: (100%, 4cm),
           align: (end + bottom, start + bottom),
@@ -230,7 +242,7 @@
             + box(width: 1fr, rect(fill: luma(25%), width: 5cm, height: 1.3cm)),
         ))
 
-        #v(20pt)
+        #v(10pt)
         #it.body
       ] else [
         #v(50pt)
@@ -239,8 +251,9 @@
     ]
   }
 
+  // Section styling, gap between numbering and around the section.
   show heading.where(level: 2): set text(font-size.Large)
-  show heading.where(level: 2): set block(above: 2em, below: 1.5em)
+  show heading.where(level: 2): set block(above: 35pt, below: 20pt)
   show heading.where(level: 2): it => block[
     #if it.numbering != none [
       #numbering(it.numbering, ..counter(heading).get())
@@ -249,11 +262,13 @@
     #it.body
   ]
 
+  // Various other show rules for links, lists and the title.
+  show selector.or(list, enum): set block(spacing: 1.2em)
+  show "doi": smallcaps
   show link: it => {
     set text(font: "DejaVu Sans Mono", 0.9em) if type(it.dest) == str
     it
   }
-  show "doi": smallcaps
 
   show std.title: set text(font-size.huge, weight: "regular")
   show std.title: set block(spacing: 1cm)
