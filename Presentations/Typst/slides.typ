@@ -20,3 +20,7 @@
 == First Slide
 
 A slide with a title and an *important* information.
+
+== Second Slide
+
+#lorem(10)
