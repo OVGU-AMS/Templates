@@ -15,12 +15,28 @@
 
 #title-slide()
 
-= First Section
+// ----- Slide content starts here. ----- //
 
-== First Slide
+= Template
 
-A slide with a title and an *important* information.
+== Heading 1
 
-== Second Slide
+You can use the usual Typst markup syntax such as headings.
+
+You can change or add certain stylistic choices -- let's number the headings:\
+```typ #set heading(numbering: "1.1")```
+
+// #set heading(numbering: "1.1")
+
+=== Subheading 2
+
+- This level 2 subheading is now numbered as `0.1` since the one before is not numbered.
+
+  - Either apply set rules globally or locally within a slide scope.
+
+  - This presentation template is available at ...
+    and consists of the Typst template and some example code.
+    
+= Second Slide
 
 #lorem(10)

@@ -6,16 +6,18 @@
 #let ovgu-inf-blue = rgb(0, 104, 180)
 
 #let ams-logo = image("logos/AMS.pdf", height: 20mm)
-// #let kmd-logo = image("logos/KMD.pdf", height: 20mm)
 #let university-logo = image("logos/Signet_INF_1_inv.pdf", height: 11mm)
 #let backdrop-logo = image("logos/otto.pdf")
-// #let header-logo = image("logos/AMSKMDhead.pdf", width: 100%)
+#let header-logo = image("logos/AMShead.pdf", width: 100%)
 
 #let title-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
     // Blue rectangle header with OvGU head and logo.
-    rect(fill: ovgu-inf-blue, width: 100%, height: 90mm - 55mm, inset: (left: 14mm, rest: 0mm))[
+    rect(fill: ovgu-inf-blue, width: 100%, height: 90mm - 55mm, inset: (
+      left: 14mm,
+      rest: 0mm,
+    ))[
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
@@ -49,9 +51,13 @@
   }
 
   let header(self) = {
-    set align(top)
-    show: components.cell.with(fill: self.colors.primary, inset: 1em)
-    utils.display-current-heading(level: 1)
+    header-logo
+    place(bottom + left, dx: 4mm, dy: -5mm, text(
+      fill: ovgu-inf-blue,
+      12pt,
+      weight: "bold",
+      utils.display-current-heading(level: 1),
+    ))
   }
 
   let footer(self) = {
@@ -77,14 +83,21 @@
     margin: (top: 1.1cm, bottom: 0.3cm, rest: 0cm),
   ))
 
-  touying-slide(self: self, ..args)
+  touying-slide(
+    self: self,
+    setting: body => {
+      show: pad.with(x: 1cm, y: 0.5cm)
+      body
+    },
+    ..args,
+  )
 })
 
 #let ams-theme(
   ..args,
   body,
 ) = {
-  set text(size: 10pt, font: "LMSans10", fill: m-dark-teal)
+  set text(size: 10pt, font: "Latin Modern Sans", fill: m-dark-teal)
 
   set math.equation(numbering: "(1)")
   set figure(gap: 1em)
@@ -95,7 +108,7 @@
     config-page(margin: 0cm, width: 160mm, height: 90mm, numbering: "1/1"),
     config-common(
       slide-fn: slide,
-      // new-section-slide-fn: slide,
+      slide-level: 1,
     ),
     config-colors(
       primary: ovgu-inf-blue,
