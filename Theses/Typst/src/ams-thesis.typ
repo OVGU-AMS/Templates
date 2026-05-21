@@ -155,12 +155,15 @@
 
   // Stylization of table of contents.
   set outline(depth: 2)
+
   show outline: set heading(outlined: true)
+  show outline: it => { show heading: set block(below: 1.5cm); it }
+  
   show outline.entry.where(level: 1): set outline.entry(fill: none)
   show outline.entry.where(level: 1): set block(above: 2em)
   show outline.entry.where(level: 1): it => link(
     it.element.location(),
-    strong(it.indented(it.prefix(), it.inner(), gap: 1.5em)),
+    strong(it.indented(it.prefix(), it.inner(), gap: 1em)),
   )
 
   show outline.entry.where(level: 2): set outline.entry(fill: repeat(
@@ -175,7 +178,7 @@
         column-gutter: (0.5em, 1em),
         it.body(), it.fill, it.page(),
       )),
-      gap: 1.5em,
+      gap: 1em,
     ),
   )
 
@@ -220,7 +223,8 @@
     // "CHAPTER X" layout inside margins.
     block(width: 100%)[
       #set align(end)
-      #set text(weight: "regular", font-size.huge)
+      #set text(weight: "regular", font-size.huge, hyphenate: false)
+      #set par(justify: false)
 
       #if it.numbering != none [
         // Reset figure counters after each numbered chapter.
