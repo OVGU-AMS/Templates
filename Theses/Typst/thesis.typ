@@ -2,6 +2,7 @@
 #show: ams-thesis.with(
   abstract: lorem-pars(5),
   zusammenfassung: lorem-pars(5),
+  // thesis-type: "PhD",
 )
 
 // Default depth of outline is 2, i.e., chapters and sections.

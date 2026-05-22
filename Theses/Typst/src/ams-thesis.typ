@@ -1,5 +1,6 @@
 #import "@preview/subpar:0.2.2"
 #import "@preview/hydra:0.6.2": hydra
+#import "title-page.typ"
 
 #let in-outline = state("in-outline", false)
 
@@ -69,9 +70,9 @@
   /// The submission date.
   /// -> datetime
   date: datetime.today(),
-  /// The thesis type (bachelor, master, PhD).
-  /// -> content
-  thesis-type: [Master],
+  /// The thesis type (possible values are: "Bachelor", "Master", "PhD").
+  /// -> str
+  thesis-type: "Master",
   /// The reviewers of the thesis.
   /// -> dictionary
   reviewers: (
@@ -112,7 +113,11 @@
         align(left, hydra(1, display: (.., c) => {
           if c.numbering != none {
             header-rule(
-              c.supplement + " " + counter(heading.where(level: 1)).display("1.") + " " + c.body,
+              c.supplement
+                + " "
+                + counter(heading.where(level: 1)).display("1.")
+                + " "
+                + c.body,
             )
           } else {
             header-rule(c.body)
@@ -150,7 +155,7 @@
   )
 
   // Figures also get heading-dependent numbering, and some spacing and styling.
-  set figure(gap: 1em, numbering: (..n) => numbering("1.1", counter(heading).get().first(), ..n))
+  set figure(gap: 1em, numbering: (..n) => numbering( "1.1", counter(heading).get().first(), ..n, ))
   show figure: set block(spacing: 2em)
   show figure.caption: it => block[
     #set align(left)
@@ -285,53 +290,18 @@
   show std.title: set text(font-size.huge, weight: "regular")
   show std.title: set block(spacing: 1cm)
 
-  // Title page of thesis/dissertation.
-  page(margin: 2.5cm, header: none, footer: none)[
-    #set par(first-line-indent: 0em)
-
-    #image("logos/fin-en.pdf", width: 100%)
-    #v(2cm)
-
-    #block(inset: (x: 2.5cm), height: 15.5cm)[
-      #text(font-size.huge)[*#thesis-type Thesis*]
-
-      #std.title() \
-
-      #text(font-size.large)[
-        #author
-        #linebreak()#v(0.5cm)
-        Magdeburg, #date.display("[day].[month].[year]")
-      ]
-
-      #v(1fr)
-
-      #text(font-size.large)[
-        Supervisor: #reviewers.supervisor \
-        Professor: #reviewers.first-reviewer \
-        Second Assessor: #reviewers.second-reviewer
-      ]
-    ]
-
-    #v(1fr)
-
-    #stack(
-      dir: ttb,
-      spacing: 0.15cm,
-      line(length: 100%, stroke: 0.4pt),
-      grid(
-        columns: (70%, 30%),
-        align: (left + horizon, right),
-        [
-          #set text(font-size.small)
-          Otto von Guericke University Magdeburg \
-          Faculty of Computer Science \
-          Institute for Intelligent Cooperating Systems \
-          Autonomous Multisensor Systems Group \
-        ],
-        image("logos/AMS.pdf", width: 90%),
-      ),
-    )
-  ]
+  // Title page of thesis or dissertation.
+  assert(
+    thesis-type in ("Bachelor", "Master", "PhD"),
+    message: "Possible values for thesis-type are: Bachelor, Master or PhD",
+  )
+  
+  // @todo: fix page number after dissertation title page!
+  if thesis-type == "Bachelor" or thesis-type == "Master" {
+    title-page.ba-ma-title(author, reviewers, font-size, thesis-type, date)
+  } else {
+    title-page.diss-title(author, reviewers, font-size, thesis-type, date)
+  }
 
   // Reset page count after title page & add abstracts.
   counter(page).update(0)
