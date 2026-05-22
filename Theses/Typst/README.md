@@ -10,13 +10,13 @@ You can initialize the template with the following options:
   /// -> content
   title: [Title of Thesis],
   /// The abstract of the thesis.
-  /// -> content
-  abstract: heading(numbering: none)[Abstract] + lorem(100),
+  /// -> content | none
+  abstract: none,
   /// The German abstract of the thesis.
-  /// -> content
-  zusammenfassung: heading(numbering: none)[Zusammenfassung] + lorem(100),
+  /// -> content | none
+  zusammenfassung: none,
   /// The author of the thesis.
-  /// -> str | dictionary
+  /// -> str
   author: "Max Mustermann",
   /// The submission date.
   /// -> datetime

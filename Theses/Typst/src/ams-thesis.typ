@@ -44,19 +44,27 @@
   },
 )
 
+/// Split up default `#lorem()` function into `n` paragraphs.
+#let lorem-pars(n, each: 4) = {
+  let sentences = lorem(n * each * 30).split(". ")
+  range(n)
+    .map(i => sentences.slice(i * each, count: each).join(". ") + [.])
+    .join(parbreak())
+}
+
 /// The AMS thesis template.
 #let ams-thesis(
   /// The title of the thesis.
   /// -> content
   title: [Title of Thesis],
   /// The abstract of the thesis.
-  /// -> content
-  abstract: heading(numbering: none)[Abstract] + lorem(100),
+  /// -> content | none
+  abstract: none,
   /// The German abstract of the thesis.
-  /// -> content
-  zusammenfassung: heading(numbering: none)[Zusammenfassung] + lorem(100),
+  /// -> content | none
+  zusammenfassung: none,
   /// The author of the thesis.
-  /// -> str | dictionary
+  /// -> str
   author: "Max Mustermann",
   /// The submission date.
   /// -> datetime
@@ -328,8 +336,8 @@
   // Reset page count after title page & add abstracts.
   counter(page).update(0)
 
-  abstract
-  zusammenfassung
+  if abstract != none { heading(numbering: none)[Abstract] + abstract }
+  if zusammenfassung != none { heading(numbering: none)[Zusammenfassung] + zusammenfassung }
 
   doc
 }

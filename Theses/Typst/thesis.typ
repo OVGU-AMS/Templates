@@ -1,5 +1,8 @@
-#import "src/ams-thesis.typ": ams-thesis, flex-caption, subfigure, vb
-#show: ams-thesis
+#import "src/ams-thesis.typ": *
+#show: ams-thesis.with(
+  abstract: lorem-pars(5),
+  zusammenfassung: lorem-pars(5),
+)
 
 // Default depth of outline is 2, i.e., chapters and sections.
 #outline()
@@ -16,16 +19,16 @@
 #lorem(100)
 
 == Motivation
-#lorem(200)
+#lorem-pars(7)
 
 == Structure of Thesis
 #lorem(100)
 
 = Background
 
-#lorem(50)
+#lorem-pars(2)
 
-= One Central Chapter: Some Instructions for Writing the Thesis
+= One Central Chapter: Instructions for Writing the Thesis
 
 Please consider the following instructions when writing your thesis.
 
@@ -46,7 +49,7 @@ The measurement update @eq:measurement is the optimal linear update for Gaussian
 
 - Use correct punctuation. Punctuation after equation should have a whitespace using, e.g., `thin ,`.
 
-- Equations should be numbered and referred to using `@eq:label`.
+- Equations should be numbered, labelled with `<eq:label>` and referred to using `@eq:label`.
 
 == Figures
 
@@ -72,7 +75,7 @@ Please consider the following points when including figures:
     Figures should be vector graphics if possible. Plots should be created using CeTZ or lilaq. Text in figures should use the same font as the main document.
     Avoid pixelated images.
   ],
-  rect(width: 100%, height: 9cm),
+  rect(width: 100%, height: 9cm, text(5em, align(horizon, "A"))),
 )<fig:rect>
 
 #lorem(200)
@@ -81,10 +84,14 @@ Please consider the following points when including figures:
   caption: [Caption for Both Subfigures.],
   columns: (50%, 50%),
   align: top,
+  placement: top,
   label: <fig:sub-rect>,
-  figure(caption: [A Subfigure], rect[B]),
+  figure(caption: [A Subfigure], square(width: 5cm, align(horizon, "B"))),
   <fig:sub-rect-a>,
-  figure(caption: [And Another Subfigure. It should be aligned with the first one], rect[C]),
+  figure(
+    caption: [And Another Subfigure. It should be aligned with the first one],
+    square(width: 5cm, align(horizon, "C")),
+  ),
   <fig:sub-rect-b>,
 )
 
@@ -93,3 +100,4 @@ Please consider the following points when including figures:
 #lorem(200)
 
 #bibliography("bibliography/ams.bib")
+#include "authorship.typ"
