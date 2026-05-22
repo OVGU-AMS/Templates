@@ -48,9 +48,7 @@
 /// Split up default `#lorem()` function into `n` paragraphs.
 #let lorem-pars(n, each: 4) = {
   let sentences = lorem(n * each * 30).split(". ")
-  range(n)
-    .map(i => sentences.slice(i * each, count: each).join(". ") + [.])
-    .join(parbreak())
+  range(n).map(i => sentences.slice(i * each, count: each).join(". ") + [.]).join(parbreak())
 }
 
 /// The AMS thesis template.
@@ -80,6 +78,10 @@
     first-reviewer: "Prof. Dipl. Inf. Gutachter 1",
     second-reviewer: "Prof. Dr.-Ing. Gutachter 2",
   ),
+  /// Extra information for the dissertation title page.
+  /// Possible keys are: degree, birthdate, birthplace.
+  /// -> dictionary | none
+  phd-extra: none,
   doc,
 ) = {
   // Page setup, alternating margins and top margin is based on base distance,
@@ -113,11 +115,7 @@
         align(left, hydra(1, display: (.., c) => {
           if c.numbering != none {
             header-rule(
-              c.supplement
-                + " "
-                + counter(heading.where(level: 1)).display("1.")
-                + " "
-                + c.body,
+              c.supplement + " " + counter(heading.where(level: 1)).display("1.") + " " + c.body,
             )
           } else {
             header-rule(c.body)
@@ -155,7 +153,7 @@
   )
 
   // Figures also get heading-dependent numbering, and some spacing and styling.
-  set figure(gap: 1em, numbering: (..n) => numbering( "1.1", counter(heading).get().first(), ..n, ))
+  set figure(gap: 1em, numbering: (..n) => numbering("1.1", counter(heading).get().first(), ..n))
   show figure: set block(spacing: 2em)
   show figure.caption: it => block[
     #set align(left)
@@ -170,8 +168,11 @@
   set outline(depth: 2)
 
   show outline: set heading(outlined: true)
-  show outline: it => { show heading: set block(below: 1.5cm); it }
-  
+  show outline: it => {
+    show heading: set block(below: 1.5cm)
+    it
+  }
+
   show outline.entry.where(level: 1): set outline.entry(fill: none)
   show outline.entry.where(level: 1): set block(above: 2em)
   show outline.entry.where(level: 1): it => link(
@@ -295,16 +296,15 @@
     thesis-type in ("Bachelor", "Master", "PhD"),
     message: "Possible values for thesis-type are: Bachelor, Master or PhD",
   )
-  
-  // @todo: fix page number after dissertation title page!
-  if thesis-type == "Bachelor" or thesis-type == "Master" {
-    title-page.ba-ma-title(author, reviewers, font-size, thesis-type, date)
-  } else {
-    title-page.diss-title(author, reviewers, font-size, thesis-type, date)
-  }
 
   // Reset page count after title page & add abstracts.
-  counter(page).update(0)
+  if thesis-type == "Bachelor" or thesis-type == "Master" {
+    title-page.ba-ma-title(author, reviewers, font-size, thesis-type, date)
+    counter(page).update(0)
+  } else {
+    title-page.diss-title(author, reviewers, font-size, thesis-type, date, phd-extra)
+    counter(page).update(1)
+  }
 
   if abstract != none { heading(numbering: none)[Abstract] + abstract }
   if zusammenfassung != none { heading(numbering: none)[Zusammenfassung] + zusammenfassung }

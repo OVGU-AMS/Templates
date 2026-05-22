@@ -2,7 +2,12 @@
 #show: ams-thesis.with(
   abstract: lorem-pars(5),
   zusammenfassung: lorem-pars(5),
-  // thesis-type: "PhD",
+  thesis-type: "PhD",
+  phd-extra: (
+    degree: "Dipl.-Inf.",
+    birthdate: "01.01.1970",
+    birthplace: "Musterhausen"
+  )
 )
 
 // Default depth of outline is 2, i.e., chapters and sections.

@@ -49,22 +49,19 @@
   )
 ]
 
-#let diss-title(author, reviewers, font-size, thesis-type, date) = [
+#let diss-title(author, reviewers, font-size, thesis-type, date, phd-extra) = [
+  #assert(phd-extra != none, message: "Field `phd-extra` cannot be none when PhD class is selected!")
+
   #set page(margin: (top: -1.5cm, rest: 2.5cm), header: none, footer: none)
   #set par(first-line-indent: 0em)
   #set text(font: "New Computer Modern Sans", font-size.Large)
 
   // Reset common spacing for bachelor/master thesis title page.
-  #show std.title: set block(spacing: 0cm)
+  #show std.title: set block(above: -1.8cm, below: 3.5cm)
   #show std.title: set text(font-size.LARGE)
-  
+
   #align(center, image("logos/OVGU.pdf", width: 9.2cm))
-
-  #v(-1.8cm)
-
   #std.title()
-
-  #v(3.5cm)
 
   #text(font-size.normal)[*DISSERTATION*]
 
@@ -83,13 +80,13 @@
 
   #v(1.25cm)
 
-  von ... #author
+  von #phd-extra.degree #author
 
   #v(.75cm)
 
-  geb. am 01.01.1970 #h(2.75cm) in ...
+  geb. am #phd-extra.birthdate #h(2.75cm) in #phd-extra.birthplace
 
-  #v(0.75cm)
+  #v(.75cm)
 
   Gutachterinnen/Gutachter
 
@@ -104,7 +101,7 @@
   Magdeburg, den #date.display("[day].[month].[year]")
 
   /* ----- */
-  
+
   #set page(margin: 2.5cm)
   #set text(font: "New Computer Modern", font-size.normal)
   #v(1fr)
