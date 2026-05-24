@@ -21,9 +21,9 @@ You can initialize the template with the following options:
   /// The submission date.
   /// -> datetime
   date: datetime.today(),
-  /// The thesis type (bachelor, master, PhD).
-  /// -> content
-  thesis-type: [Master],
+  /// The thesis type (possible values are: "Bachelor", "Master", "PhD").
+  /// -> str
+  thesis-type: "Master",
   /// The reviewers of the thesis.
   /// -> dictionary
   reviewers: (
@@ -39,3 +39,5 @@ You can initialize the template with the following options:
 ```
 
 Compile either in the webapp or locally with `typst compile thesis.typ`.
+
+In addition to "New Computer Modern" which is included in Typst, the "New Computer Modern Sans" font needs to be installed.
