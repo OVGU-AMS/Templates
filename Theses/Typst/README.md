@@ -31,6 +31,10 @@ You can initialize the template with the following options:
     first-reviewer: "Prof. Dipl. Inf. Gutachter 1",
     second-reviewer: "Prof. Dr.-Ing. Gutachter 2",
   ),
+  /// Extra information for the dissertation title page.
+  /// Possible keys are: degree, birthdate, birthplace.
+  /// -> dictionary | none
+  phd-extra: none,
 )
 ```
 
