@@ -125,18 +125,58 @@
   touying-slide(self: self, main-body)
 })
 
+#let thank-you-slide(..args) = touying-slide-wrapper(self => {
+  let info = self.info + args.named()
+  let body = {
+    // Blue rectangle header with OvGU head and logo.
+    rect(fill: ovgu-inf-blue, width: 100%, height: 90mm - 55mm, inset: (
+      left: 14mm,
+      rest: 0mm,
+    ))[
+      #place(top + right, backdrop-logo)
+      #place(top + left, dy: 3mm, university-logo)
+    ]
+    
+    place(bottom + left, dx: 14mm, dy: -60mm)[
+      #set text(white)
+
+      #show std.title: set text(14pt, weight: "bold")
+      #show std.title: set block(below: 0.7em)
+
+      #std.title(info.title)
+    ]
+    place(top + left, dx: 14mm, dy: 90mm - 40mm)[
+      #text(1.5em, ovgu-inf-blue, weight: "bold")[Thank You For Your Attention!]
+    ]
+    place(bottom + left, dx: 14mm, dy: -7mm)[
+      #set text(.75em)
+      *#info.author* \
+      Web: https://ams.ovgu.de \
+      Mail: NCC-1701\@ovgu.de
+    ]
+    // AMS + KMD logo.
+    place(bottom + right, dx: -10mm, dy: -7mm)[
+      #stack(dir: ltr, spacing: 5mm, ams-logo)
+    ]
+  }
+  touying-slide(self: self, body)
+})
+
 #let ams-theme(
   ..args,
   body,
 ) = {
   set text(size: 10pt, font: "Latin Modern Sans", fill: m-dark-teal)
-
   set math.equation(numbering: "(1)")
+
   set figure(gap: 1em)
   set list(indent: 1em)
   set enum(indent: 1em)
 
+  // Extra spacing for footnote entry, otherwise it sits on top of footer.
+  show footnote.entry: it => it + v(.65em)
   show heading.where(level: 1): set heading(numbering: none)
+  
   show: touying-slides.with(
     config-page(margin: 0cm, width: 160mm, height: 90mm, numbering: "1/1"),
     config-common(

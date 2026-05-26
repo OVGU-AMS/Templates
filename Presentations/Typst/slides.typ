@@ -76,3 +76,5 @@ _$->$ See next slide for visible changes..._
 = Further Notes
 
 ...
+
+#thank-you-slide()
