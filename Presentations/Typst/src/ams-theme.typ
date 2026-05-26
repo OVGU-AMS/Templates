@@ -33,8 +33,13 @@
     ]
     place(top + left, dx: 14mm, dy: 90mm - 50mm)[
       #let wide-lmmodern = text.with(font: "Latin Modern Sans 8")
-      // @typstyle off
-      #stack(dir: ttb, spacing: 5mm, strong(info.author), wide-lmmodern(info.institution, 7pt), wide-lmmodern(info.date.display("[day].[month].[year]"), 8pt))
+      #stack(
+        dir: ttb,
+        spacing: 5mm,
+        strong(info.author),
+        wide-lmmodern(info.institution, 7pt),
+        wide-lmmodern(info.date.display("[day].[month].[year]"), 8pt),
+      )
     ]
     // AMS + KMD logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
@@ -96,7 +101,7 @@
 #let new-section-slide(self: none, body) = touying-slide-wrapper(self => {
   let main-body = {
     set align(horizon)
-    
+
     text(1.25em, utils.display-current-heading(level: 1)) + v(1.5em, weak: true)
     text(ovgu-inf-blue, weight: "bold", 1.5em, self.info.title)
   }
@@ -115,13 +120,13 @@
       )
     ]
   }
-  
+
   self = utils.merge-dicts(self, config-page(
     footer: footer,
     footer-descent: 0cm,
     margin: (rest: 1cm, bottom: 0.3cm),
   ))
-  
+
   touying-slide(self: self, main-body)
 })
 
@@ -136,7 +141,7 @@
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
-    
+
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
 
@@ -148,11 +153,17 @@
     place(top + left, dx: 14mm, dy: 90mm - 40mm)[
       #text(1.5em, ovgu-inf-blue, weight: "bold")[Thank You For Your Attention!]
     ]
-    place(bottom + left, dx: 14mm, dy: -7mm)[
-      #set text(.75em)
-      *#info.author* \
-      Web: https://ams.ovgu.de \
-      Mail: NCC-1701\@ovgu.de
+    place(bottom + left, dx: 14mm, dy: -8.5mm)[
+      #set text(7pt)
+      *#info.author*
+      #grid(
+        columns: 2,
+        column-gutter: 3pt,
+        row-gutter: 1em,
+        align: (right, left),
+        [Web:], [https://ams.ovgu.de],
+        [Mail:], link("mailto:NCC-1701@ovgu.de"),
+      )
     ]
     // AMS + KMD logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
@@ -175,8 +186,10 @@
 
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
   show footnote.entry: it => it + v(.65em)
+  show raw: set text(font: "Latin Modern Mono", 1.1em)
+  show link: set text(font: "Latin Modern Mono")
   show heading.where(level: 1): set heading(numbering: none)
-  
+
   show: touying-slides.with(
     config-page(margin: 0cm, width: 160mm, height: 90mm, numbering: "1/1"),
     config-common(

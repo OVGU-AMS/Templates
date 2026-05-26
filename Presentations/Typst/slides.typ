@@ -53,8 +53,9 @@ _$->$ See next slide for visible changes..._
 
     - A scope can also be manually created with ```typ #{...}```.
 
-  - The template sets the numbering of level 1 headings to ```typc none```.
+  - The template sets the numbering of level 1 headings to ```typc none```.#footnote[Otherwise, "First Section" in the header would be numbered.]
 
+#set heading(numbering: none)
       
 = Second Section
 
