@@ -51,6 +51,15 @@
   range(n).map(i => sentences.slice(i * each, count: each).join(". ") + [.]).join(parbreak())
 }
 
+/// Activate appendix or backmatter via show-rule: Reset chapter counter,
+/// use alphabetic numbering and  change supplement to "Appendix".
+#let appendix(doc) = {
+  set heading(numbering: "A.1")
+  show heading.where(level: 1): set heading(supplement: "Appendix")
+  counter(heading).update(0)
+  doc
+}
+
 /// The AMS thesis template.
 #let ams-thesis(
   /// The title of the thesis.
@@ -177,7 +186,7 @@
   show outline.entry.where(level: 1): set block(above: 2em)
   show outline.entry.where(level: 1): it => link(
     it.element.location(),
-    strong(it.indented(it.prefix(), it.inner(), gap: 1em)),
+    strong(it.indented(it.prefix(), it.inner(), gap: .75em)),
   )
 
   show outline.entry.where(level: 2): set outline.entry(fill: repeat(

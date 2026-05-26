@@ -2,21 +2,20 @@
 #show: ams-thesis.with(
   abstract: lorem-pars(5),
   zusammenfassung: lorem-pars(5),
-  thesis-type: "PhD",
-  phd-extra: (
-    degree: "Dipl.-Inf.",
-    birthdate: "01.01.1970",
-    birthplace: "Musterhausen"
-  )
+  // thesis-type: "PhD",
+  // phd-extra: (
+  //   degree: "Dipl.-Inf.",
+  //   birthdate: "01.01.1970",
+  //   birthplace: "Musterhausen"
+  // )
 )
 
-// Default depth of outline is 2, i.e., chapters and sections.
 #outline()
-
 #outline(target: figure.where(kind: image), title: [List of Figures])
 #include "notation.typ"
 
-// Activate "mainmatter": reset page counter and use arabic numbering.
+/* --- Activate "mainmatter": reset page counter and use arabic numbering. --- */
+
 #set page(numbering: "1")
 #counter(page).update(0)
 
@@ -104,6 +103,18 @@ Please consider the following points when including figures:
 = Conclusions
 
 #lorem(200)
+
+/* --- Activate backmatter or appendices --- */
+
+#show: appendix
+
+= First Appendix
+
+#lorem(150)
+
+= Second Appendix
+
+#lorem(150)
 
 #bibliography("bibliography/ams.bib")
 #include "authorship.typ"
