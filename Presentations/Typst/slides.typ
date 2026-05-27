@@ -48,7 +48,7 @@ _$->$ See next slide for visible changes..._
   - Either apply set rules globally or locally within a slide scope.
 
   - When using the heading-based slide-syntax, set rules start being applied from the point they are defined in the source code.
-  
+
     - If the ```typ #slide()```-function is used instead, they are locally constrained.
 
     - A scope can also be manually created with ```typ #{...}```.
@@ -56,7 +56,7 @@ _$->$ See next slide for visible changes..._
   - The template sets the numbering of level 1 headings to ```typc none```.#footnote[Otherwise, "First Section" in the header would be numbered.]
 
 #set heading(numbering: none)
-      
+
 = Second Section
 
 == New Section Slides
@@ -72,10 +72,47 @@ _$->$ See next slide for visible changes..._
 
 = Test Slide Using CeTZ <touying:skip>
 
-...
+#{
+  import "@preview/cetz:0.5.2"
+  import "@preview/cetz-plot:0.1.4"
+
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: *
+
+    plot.plot(
+      size: (13, 5),
+      axis-style: "school-book",
+      x-grid: true,
+      y-grid: true,
+      y-tick-step: 0.25,
+      x-format: v => if v != 0 { $#{ calc.round(v / calc.pi, digits: 2) } pi$ } else { $0$ },
+      x-tick-step: 0.25 * calc.pi,
+      {
+        plot.add(domain: (0, 3 * calc.pi), t => calc.sin(t), samples: 150)
+      },
+    )
+  })
+}
 
 = Further Notes
 
-...
+== Alignment
+
+- Default alignment per slide is ```typc top + left```, this can be changed with ```typ #set align(..)```.
+
+- Slide bodies are padded by default, this can be disabled with...
+
+== Special functions
+
+- ```typ #title-slide()``` generates the title slide from the information given in the show-rule.
+
+- ```typ #thank-you-slide()``` for the following slide to thank your audience.
+
+- ```typ #slide()``` and ```typ #new-section-slide()``` can also be manually called.
+
+== _something else_
+
+- todo...
 
 #thank-you-slide()

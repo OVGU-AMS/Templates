@@ -142,6 +142,7 @@
       #place(top + left, dy: 3mm, university-logo)
     ]
 
+    // Title of Presentation.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
 
@@ -150,9 +151,13 @@
 
       #std.title(info.title)
     ]
+
+    // "Thank You" text somewhat further down.
     place(top + left, dx: 14mm, dy: 90mm - 40mm)[
       #text(1.5em, ovgu-inf-blue, weight: "bold")[Thank You For Your Attention!]
     ]
+
+    // Name, website and mail on same level as AMS logo.
     place(bottom + left, dx: 14mm, dy: -8.5mm)[
       #set text(7pt)
       *#info.author*
@@ -165,7 +170,8 @@
         [Mail:], link("mailto:NCC-1701@ovgu.de"),
       )
     ]
-    // AMS + KMD logo.
+
+    // AMS logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
       #stack(dir: ltr, spacing: 5mm, ams-logo)
     ]
@@ -177,7 +183,7 @@
   ..args,
   body,
 ) = {
-  set text(size: 10pt, font: "Latin Modern Sans", fill: m-dark-teal)
+  set text(size: 10pt, font: ("Latin Modern Sans", "LMSans10"), fill: m-dark-teal)
   set math.equation(numbering: "(1)")
 
   set figure(gap: 1em)
@@ -186,8 +192,8 @@
 
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
   show footnote.entry: it => it + v(.65em)
-  show raw: set text(font: "Latin Modern Mono", 1.1em)
-  show link: set text(font: "Latin Modern Mono")
+  show raw: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"), 1.1em)
+  show link: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"))
   show heading.where(level: 1): set heading(numbering: none)
 
   show: touying-slides.with(
