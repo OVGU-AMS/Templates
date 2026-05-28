@@ -10,6 +10,9 @@
 #let backdrop-logo = image("logos/otto.pdf")
 #let header-logo = image("logos/AMShead.pdf", width: 100%)
 
+/// The title slide.
+///
+/// Information is automatically filled in from the theme rule.
 #let title-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -31,6 +34,7 @@
       #std.title(info.title)
       #text(10pt, strong(info.subtitle))
     ]
+    // Additional information regarding institution, course, etc.
     place(top + left, dx: 14mm, dy: 90mm - 50mm)[
       #let wide-lmmodern = text.with(font: "Latin Modern Sans 8")
       #stack(
@@ -41,7 +45,7 @@
         wide-lmmodern(info.date.display("[day].[month].[year]"), 8pt),
       )
     ]
-    // AMS + KMD logo.
+    // AMS logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
       #stack(dir: ltr, spacing: 5mm, ams-logo)
     ]
@@ -50,8 +54,11 @@
   touying-slide(self: self, body)
 })
 
-#let slide(title: auto, ..args) = touying-slide-wrapper(self => {
-  if title != auto {
+/// A normal slide with an optional title.
+///
+/// If `title` is `none`, the last level 1 heading is used instead. 
+#let slide(title: none, ..args) = touying-slide-wrapper(self => {
+  if title != none {
     self.store.title = title
   }
 
@@ -61,13 +68,12 @@
       fill: ovgu-inf-blue,
       12pt,
       weight: "bold",
-      utils.display-current-heading(level: 1),
+      if title != none { title } else { utils.display-current-heading(level: 1) },
     ))
   }
 
   let footer(self) = {
     set align(bottom)
-
     block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
       #set text(white, 4pt, weight: "bold")
       #set align(horizon)
@@ -98,17 +104,18 @@
   )
 })
 
-#let new-section-slide(self: none, body) = touying-slide-wrapper(self => {
+/// A new section slide which is automatically created for level 1 headings.
+///
+/// Can also be manually called with a custom presentation title. 
+#let new-section-slide(title: none, ..args) = touying-slide-wrapper(self => {
   let main-body = {
     set align(horizon)
-
     text(1.25em, utils.display-current-heading(level: 1)) + v(1.5em, weak: true)
-    text(ovgu-inf-blue, weight: "bold", 1.5em, self.info.title)
+    text(ovgu-inf-blue, weight: "bold", 1.5em, if title != none { title } else { self.info.title })
   }
 
   let footer(self) = {
     set align(bottom)
-
     block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
       #set text(white, 4pt, weight: "bold")
       #set align(horizon)
@@ -130,6 +137,9 @@
   touying-slide(self: self, main-body)
 })
 
+/// A thank-you slide.
+///
+/// Similar structure to title slide but with thank-you message.
 #let thank-you-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -141,7 +151,7 @@
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
-
+    
     // Title of Presentation.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
@@ -151,12 +161,10 @@
 
       #std.title(info.title)
     ]
-
     // "Thank You" text somewhat further down.
     place(top + left, dx: 14mm, dy: 90mm - 40mm)[
       #text(1.5em, ovgu-inf-blue, weight: "bold")[Thank You For Your Attention!]
     ]
-
     // Name, website and mail on same level as AMS logo.
     place(bottom + left, dx: 14mm, dy: -8.5mm)[
       #set text(7pt)

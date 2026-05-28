@@ -76,6 +76,8 @@ _$->$ See next slide for visible changes..._
   import "@preview/cetz:0.5.2"
   import "@preview/cetz-plot:0.1.4"
 
+  set align(center)
+
   cetz.canvas({
     import cetz.draw: *
     import cetz-plot: *
@@ -101,7 +103,9 @@ _$->$ See next slide for visible changes..._
 
 - Default alignment per slide is ```typc top + left```, this can be changed with ```typ #set align(..)```.
 
-- Slide bodies are padded by default, this can be disabled with...
+- Slide bodies are padded by default, this can be disabled by...
+
+  - ...manually calling ```typ #slide(..)``` with ```typc setting: body => body```.
 
 == Special functions
 
@@ -109,10 +113,22 @@ _$->$ See next slide for visible changes..._
 
 - ```typ #thank-you-slide()``` for the following slide to thank your audience.
 
-- ```typ #slide()``` and ```typ #new-section-slide()``` can also be manually called.
+- ```typ #slide()``` and ```typ #new-section-slide()``` can also be manually called with a title.
 
-== _something else_
+  - In the first case, no new section slide is automatically created.
 
-- todo...
+  - In the second case, a custom subtitle can be created (see next slides).
+
+// Calling it manually enables replacing the presentation title.
+#new-section-slide(title: [Custom Chapter Subtitle!])
+
+// Calling it manually enables custom title, no new-section slide and the ability
+// to override some customization settings such as default padding.
+#slide(title: [Non-padded Slide], setting: body => body)[
+  No padding to the sides.
+  #align(center + horizon)[Good for placing big images.]
+  #align(bottom + right)[Easier manual placement!]
+]
+
 
 #thank-you-slide()
