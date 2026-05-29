@@ -49,8 +49,8 @@ The following slide functions are available:
 
 /// A new section slide which is automatically created for level 1 headings.
 ///
-/// Can also be manually called with a custom presentation title. 
-#let new-section-slide(title: none, ..args)
+/// Can also be manually called with a custom presentation title as well as a subtitle. 
+#let new-section-slide(title: none, subtitle: none, ..args)
 
 /// A thank-you slide.
 ///

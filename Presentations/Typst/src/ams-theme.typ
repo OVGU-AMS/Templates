@@ -56,7 +56,7 @@
 
 /// A normal slide with an optional title.
 ///
-/// If `title` is `none`, the last level 1 heading is used instead. 
+/// If `title` is `none`, the last level 1 heading is used instead.
 #let slide(title: none, ..args) = touying-slide-wrapper(self => {
   if title != none {
     self.store.title = title
@@ -68,7 +68,9 @@
       fill: ovgu-inf-blue,
       12pt,
       weight: "bold",
-      if title != none { title } else { utils.display-current-heading(level: 1) },
+      if title != none { title } else {
+        utils.display-current-heading(level: 1)
+      },
     ))
   }
 
@@ -106,12 +108,23 @@
 
 /// A new section slide which is automatically created for level 1 headings.
 ///
-/// Can also be manually called with a custom presentation title. 
-#let new-section-slide(title: none, ..args) = touying-slide-wrapper(self => {
+/// Can also be manually called with a custom presentation title as well as a subtitle.
+#let new-section-slide(
+  title: none,
+  subtitle: none,
+  ..args,
+) = touying-slide-wrapper(self => {
   let main-body = {
     set align(horizon)
-    text(1.25em, utils.display-current-heading(level: 1)) + v(1.5em, weak: true)
-    text(ovgu-inf-blue, weight: "bold", 1.5em, if title != none { title } else { self.info.title })
+    (
+      text(1.25em, if subtitle != none { subtitle } else {
+        utils.display-current-heading(level: 1)
+      })
+        + v(1.5em, weak: true)
+    )
+    text(ovgu-inf-blue, weight: "bold", 1.5em, if title != none { title } else {
+      self.info.title
+    })
   }
 
   let footer(self) = {
@@ -151,7 +164,7 @@
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
-    
+
     // Title of Presentation.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
@@ -191,7 +204,11 @@
   ..args,
   body,
 ) = {
-  set text(size: 10pt, font: ("Latin Modern Sans", "LMSans10"), fill: m-dark-teal)
+  set text(
+    size: 10pt,
+    font: ("Latin Modern Sans", "LMSans10"),
+    fill: m-dark-teal,
+  )
   set math.equation(numbering: "(1)")
 
   set figure(gap: 1em)

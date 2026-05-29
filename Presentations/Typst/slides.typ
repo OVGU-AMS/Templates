@@ -111,16 +111,16 @@ _$->$ See next slide for visible changes..._
 
 - ```typ #title-slide()``` generates the title slide from the information given in the show-rule.
 
-- ```typ #thank-you-slide()``` for the following slide to thank your audience.
+- ```typ #thank-you-slide()``` to create a slide for thanking your audience.
 
-- ```typ #slide()``` and ```typ #new-section-slide()``` can also be manually called with a title.
+- ```typ #slide()``` and ```typ #new-section-slide()``` can also be manually called with a title & subtitle.
 
   - In the first case, no new section slide is automatically created.
 
-  - In the second case, a custom subtitle can be created (see next slides).
+  - In the second case, a custom subtitle & title can be created (see next slides).
 
 // Calling it manually enables replacing the presentation title.
-#new-section-slide(title: [Custom Chapter Subtitle!])
+#new-section-slide(title: [Custom Presentation Title!], subtitle: [Random Text])
 
 // Calling it manually enables custom title, no new-section slide and the ability
 // to override some customization settings such as default padding.
