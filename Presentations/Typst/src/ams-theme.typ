@@ -212,7 +212,7 @@
   set math.equation(numbering: "(1)")
 
   set figure(gap: 1em)
-  set list(indent: 1em)
+  set list(indent: 1em, marker: text(ovgu-inf-blue, "•"))
   set enum(indent: 1em)
 
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
