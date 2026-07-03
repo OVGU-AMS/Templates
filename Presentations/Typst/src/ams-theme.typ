@@ -163,6 +163,7 @@
 /// A thank-you slide.
 ///
 /// Similar structure to title slide but with thank-you message.
+/// Uses the `extra` argument to display web page and mail.
 #let thank-you-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -197,8 +198,8 @@
         column-gutter: 3pt,
         row-gutter: 1em,
         align: (right, left),
-        [Web:], [https://ams.ovgu.de],
-        [Mail:], link("mailto:NCC-1701@ovgu.de"),
+        [Web:], self.info.extra.web,
+        [Mail:], link("mailto:" + self.info.extra.mail),
       )
     ]
 
@@ -230,6 +231,9 @@
   /// The institution, faculty or university of this presentation.
   /// -> content
   institution: none,
+  /// A custom dictionary of extra information, currently only used for web and mail.
+  /// -> dict
+  extra: none,
   body,
 ) = {
   set text(
@@ -269,6 +273,7 @@
       author: author,
       date: date,
       institution: institution,
+      extra: extra
     ),
   )
 
