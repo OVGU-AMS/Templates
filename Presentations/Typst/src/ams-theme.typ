@@ -1,14 +1,24 @@
-#import "@preview/touying:0.7.3": *
+#import "@preview/touying:0.7.4": *
 
 #let m-dark-teal = rgb("#23373b")
 #let ovgu-darkgray = rgb("#606060")
-#let ovgu-orange = rgb("#F39100")
 #let ovgu-inf-blue = rgb(0, 104, 180)
+
+#let AMSblue = ovgu-inf-blue
+#let AMSred = rgb(194, 23, 20)
+#let AMSgreen = rgb(0, 120, 38)
+#let AMSorange = rgb(246, 129, 0)
 
 #let ams-logo = image("logos/AMS.pdf", height: 20mm)
 #let university-logo = image("logos/Signet_INF_1_inv.pdf", height: 11mm)
 #let backdrop-logo = image("logos/otto.pdf")
 #let header-logo = image("logos/AMShead.pdf", width: 100%)
+
+#let format-author(author) = if type(author) == array {
+  author.join(", ")
+} else {
+  author
+}
 
 /// The title slide.
 ///
@@ -40,7 +50,7 @@
       #stack(
         dir: ttb,
         spacing: 5mm,
-        strong(info.author),
+        strong(format-author(info.author)),
         wide-lmmodern(info.institution, 7pt),
         wide-lmmodern(info.date.display("[day].[month].[year]"), 8pt),
       )
@@ -80,9 +90,9 @@
       #set text(white, 4pt, weight: "bold")
       #set align(horizon)
       #grid(
-        columns: (1fr, 1fr),
+        columns: (auto, 1fr),
         align: (left, right),
-        self.info.title + " | " + self.info.author,
+        if self.info.short-title != none { self.info.short-title } else { self.info.title } + " | " + format-author(self.info.author),
         context utils.slide-counter.display() + "/" + utils.last-slide-number,
       )
     ]
@@ -133,9 +143,9 @@
       #set text(white, 4pt, weight: "bold")
       #set align(horizon)
       #grid(
-        columns: (1fr, 1fr),
+        columns: (auto, 1fr),
         align: (left, right),
-        self.info.title + " | " + self.info.author,
+        if self.info.short-title != none { self.info.short-title } else { self.info.title } + " | " + format-author(self.info.author),
         context utils.slide-counter.display() + "/" + utils.last-slide-number,
       )
     ]
@@ -200,8 +210,26 @@
   touying-slide(self: self, body)
 })
 
+/// The AMS theme rule.
 #let ams-theme(
-  ..args,
+  /// The title of the presentation, which will be displayed in the title slide and footer.
+  /// -> content
+  title: none,
+  /// The short title of the presentation. Displayed in the footer if given.
+  /// -> content
+  short-title: none,
+  /// The subtitle of the presentation.
+  /// -> content
+  subtitle: none,
+  /// The author(s) of the presentation.
+  /// -> content | str | array
+  author: none,
+  /// The date of the presentation. See the `datetime` type for usage.
+  /// -> datetime
+  date: none,
+  /// The institution, faculty or university of this presentation.
+  /// -> content
+  institution: none,
   body,
 ) = {
   set text(
@@ -234,7 +262,14 @@
       tertiary: ovgu-darkgray,
     ),
     config-store(title: none, footer: none),
-    ..args,
+    config-info(
+      title: title,
+      short-title: short-title,
+      subtitle: subtitle,
+      author: author,
+      date: date,
+      institution: institution,
+    ),
   )
 
   body

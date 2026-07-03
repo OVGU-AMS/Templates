@@ -1,10 +1,10 @@
-#import "@preview/touying:0.7.3": *
+#import "@preview/touying:0.7.4": *
 #import "src/ams-theme.typ": *
 
-#show: ams-theme.with(config-info(
+#show: ams-theme.with(
   title: [Full Title of the Presentation],
   subtitle: [Subtitle if necessary],
-  author: [Your Name],
+  author: "Your Name",
   institution: [
     Autonomous Multisensor Systems Group\
     Institute for Intelligent Cooperating Systems\
@@ -12,7 +12,7 @@
     Otto von Guericke University Magdeburg
   ],
   date: datetime.today(),
-))
+)
 
 #title-slide()
 
