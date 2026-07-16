@@ -1,4 +1,4 @@
-# ams-theme
+# ams-slides
 
 This folder provides a Typst presentation template for the [Autonomous Multisensor Systems](https://ams.ovgu.de) group based on the `touying` package.
 
@@ -8,7 +8,7 @@ You can initialize the presentation and its title slide with the following optio
 
 ```typ
 #import "@preview/touying:0.7.4": *
-#import "src/ams-theme.typ": *
+#import "@local/ams-slides:0.1.0": *
 
 #show: ams-theme.with(
   title: [Full Title of the Presentation],
@@ -34,6 +34,11 @@ You can then use heading-based syntax for slide creation where level 1 headings 
 as well as a new section slide or manually use the slide functions mentioned below. (See the PDF and the annotated source code for a quick overview)
 
 Compile either in the webapp or locally with `typst compile slides.typ`.
+
+### Local Installation
+
+In order to make the template available locally under the `@local` namespace, clone this repository and refer to [Local Packages](https://github.com/typst/packages/#local-packages) or use the [Unofficial Typst Package Manager](https://github.com/typst-community/utpm).
+You can also use the provided [`justfile`](./justfile) to move this template to the correct location as well as generate up-to-date thumbnails for publishing.
 
 ## Utility
 

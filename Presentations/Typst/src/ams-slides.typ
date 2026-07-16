@@ -212,7 +212,7 @@
 })
 
 /// The AMS theme rule.
-#let ams-theme(
+#let ams-slides(
   /// The title of the presentation, which will be displayed in the title slide and footer.
   /// -> content
   title: none,

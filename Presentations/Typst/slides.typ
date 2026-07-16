@@ -1,7 +1,7 @@
 #import "@preview/touying:0.7.4": *
-#import "src/ams-theme.typ": *
+#import "@local/ams-slides:0.1.0": *
 
-#show: ams-theme.with(
+#show: ams-slides.with(
   title: [Full Title of the Presentation],
   subtitle: [Subtitle if necessary],
   author: "Your Name",

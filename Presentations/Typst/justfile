@@ -1,0 +1,19 @@
+set default-list := true
+
+VERSION := `grep version typst.toml | grep -E '[0-9]+.[0-9]+.[0-9]+' -o`
+DATA_DIR := if os() == "windows" {
+     "%APPDATA%"
+} else if os() == "macos" {
+    "~/Library/Application\\ Support"
+} else {
+    "~/.local/share"
+}
+
+# Install template to local namespace ($XDG_DATA_HOME)
+install-local:
+    mkdir -p {{DATA_DIR}}/typst/packages/local/ams-slides/{{VERSION}}
+    cp -r ./* {{DATA_DIR}}/typst/packages/local/ams-slides/{{VERSION}}
+
+# Create thumbnails for README and thumbnail folder
+make-thumbnails: install-local
+    typst compile slides.typ -f png --pages 1 --ppi 300 thumbnails/p-{0p}.png
