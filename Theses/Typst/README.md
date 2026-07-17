@@ -47,9 +47,6 @@ Compile either in the webapp or locally with `typst compile thesis.typ`.
 The following helper functions are available:
 
 ```typ
-/// Upright and bold symbol for vectors and matrices.
-#let vb(x) = $upright(bold(#x))$
-
 /// Fully empty page with no header and footer.
 #let empty-page = page(header: none, footer: none)[]
 
@@ -93,6 +90,8 @@ The following helper functions are available:
   doc
 }
 ```
+
+Additionally, you can find a collection of pre-defined math functions in [`math.typ`](./src/math.typ).
 
 ## Fonts
 
