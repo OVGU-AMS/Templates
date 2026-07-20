@@ -52,7 +52,7 @@
         spacing: 5mm,
         strong(format-author(info.author)),
         wide-lmmodern(info.institution, 7pt),
-        wide-lmmodern(info.date.display("[day].[month].[year]"), 8pt),
+        wide-lmmodern(info.date.display("[day].[month].[year]"), 7pt),
       )
     ]
     // AMS logo.
@@ -127,7 +127,7 @@
   let main-body = {
     set align(horizon)
     (
-      text(1.25em, if subtitle != none { subtitle } else {
+      text(size: 12pt, if subtitle != none { subtitle } else {
         utils.display-current-heading(level: 1)
       })
         + v(1.5em, weak: true)

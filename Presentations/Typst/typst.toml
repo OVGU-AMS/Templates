@@ -2,7 +2,7 @@
 name = "ams-slides"
 version = "0.1.0"
 entrypoint = "src/ams-slides.typ"
-authors = ["Kevin Kulot"]
+authors = ["Kevin Kulot", "Benjamin Noack"]
 license = "0BSD"
 description = "A slide template for Autonomous Multisensor Systems group"
 repository = "https://github.com/OVGU-AMS/Templates"
