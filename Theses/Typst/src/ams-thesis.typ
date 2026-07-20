@@ -1,6 +1,8 @@
 #import "@preview/subpar:0.2.2"
 #import "@preview/hydra:0.6.2": hydra
+
 #import "title-page.typ"
+#import "math.typ"
 
 #let in-outline = state("in-outline", false)
 
@@ -16,8 +18,6 @@
   huge: 24.88pt,
 )
 
-/// Upright and bold symbol for vectors and matrices.
-#let vb(x) = $upright(bold(#x))$
 /// Fully empty page with no header and footer.
 #let empty-page = page(header: none, footer: none)[]
 /// Unnumbered and non-outlined section with custom level.
