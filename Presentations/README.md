@@ -1,6 +1,6 @@
-This folder contains $\LaTeX$ and PowerPoint templates for presentations.
+This folder contains $\LaTeX$, Typst and PowerPoint templates for presentations.
 
 
-## :warning: PowerPoint Template 
+## :warning: Typst & PowerPoint Template 
 
-PowerPoint users need to install [Latin Modern OTF fonts](http://www.gust.org.pl/projects/e-foundry/latin-modern/download).
+Typst and PowerPoint users need to install [Latin Modern OTF fonts](http://www.gust.org.pl/projects/e-foundry/latin-modern/download).
