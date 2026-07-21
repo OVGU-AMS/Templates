@@ -1,4 +1,4 @@
-#import "src/ams-thesis.typ": section
+#import "@local/ams-thesis:0.1.0": section
 
 #section(level: 1)[Statement of Authorship]
 

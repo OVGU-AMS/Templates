@@ -2,7 +2,7 @@
 #import "@preview/hydra:0.6.2": hydra
 
 #import "title-page.typ"
-#import "math.typ"
+#import "math-functions.typ"
 
 #let in-outline = state("in-outline", false)
 

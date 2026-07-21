@@ -7,7 +7,8 @@ This folder provides a Typst thesis template for the [Autonomous Multisensor Sys
 You can initialize the template with the following options:
 
 ```typ
-#let ams-thesis(
+#import "@local/ams-thesis:0.1.0": *
+#show: ams-thesis.with(
   /// The title of the thesis.
   /// -> content
   title: [Title of Thesis],
@@ -41,6 +42,11 @@ You can initialize the template with the following options:
 ```
 
 Compile either in the webapp or locally with `typst compile thesis.typ`.
+
+### Local Installation
+
+In order to make the template available locally under the `@local` namespace, clone this repository and refer to [Local Packages](https://github.com/typst/packages/#local-packages) or use the [Unofficial Typst Package Manager](https://github.com/typst-community/utpm).
+You can also use the provided [`justfile`](./justfile) to move this template to the correct location as well as generate up-to-date thumbnails for publishing.
 
 ## Utility
 
@@ -91,7 +97,7 @@ The following helper functions are available:
 }
 ```
 
-Additionally, you can find a collection of pre-defined math functions in [`math.typ`](./src/math.typ).
+Additionally, you can find a collection of pre-defined math functions in [`math-functions.typ`](./src/math-functions.typ).
 
 ## Fonts
 

@@ -1,4 +1,4 @@
-#import "src/ams-thesis.typ": section, math.rv
+#import "@local/ams-thesis:0.1.0": section, math-functions.rv
 
 #heading(numbering: none)[Notation]
 

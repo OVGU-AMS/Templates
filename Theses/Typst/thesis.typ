@@ -1,4 +1,6 @@
-#import "src/ams-thesis.typ": *
+#import "@local/ams-thesis:0.1.0": *
+#import math-functions: *
+
 #show: ams-thesis.with(
   abstract: lorem-pars(5),
   zusammenfassung: lorem-pars(5),
@@ -44,10 +46,10 @@ Never start a section directly after a chapter heading, but always add some intr
 Equations should be included in the text using correct punctuation. The estimate can be updated by
 
 $
-  underline(hat(vb(x)))_k = underline(hat(vb(x)))_(k - 1) + vb(K)_k (underline(vb(y))_k - vb(H)_k underline(hat(vb(x)))_(k - 1)) thin ,
+  underline(hat(rv(x)))_k = underline(hat(rv(x)))_(k - 1) + rv(K)_k (underline(rv(y))_k - rv(H)_k underline(hat(rv(x)))_(k - 1)) thin ,
 $<eq:measurement>
 
-where $vb(K)_k in RR^(n times m)$ is the Kalman gain, $underline(vb(y))_k in RR^m$ the measurement, and $vb(H)_k in RR^(m times n)$ the observation matrix.
+where $rv(K)_k in RR^(n times m)$ is the Kalman gain, $underline(rv(y))_k in RR^m$ the measurement, and $rv(H)_k in RR^(m times n)$ the observation matrix.
 The measurement update @eq:measurement is the optimal linear update for Gaussian random variables @LCSS19_Schmitt. In summary, take care of the following points when writing equations:
 
 - Embed equations in the text.

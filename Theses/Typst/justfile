@@ -1,0 +1,30 @@
+set default-list := true
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+
+VERSION := replace_regex(read("typst.toml"), '(?s).*version = "([^"]+)".*', '$1')
+
+DATA_DIR := if os() == "windows" {
+    env("LOCALAPPDATA")
+} else if os() == "macos" {
+    "$HOME/Library/Application Support"
+} else {
+    env("XDG_DATA_HOME", "$HOME/.local/share")
+}
+
+PKG_DIR := DATA_DIR / "typst/packages/local/ams-thesis" / VERSION
+
+# Install template to local namespace
+[unix]
+install-local:
+    mkdir -p "{{PKG_DIR}}"
+    cp -r ./* "{{PKG_DIR}}"
+
+# Install template to local namespace
+[windows]
+install-local:
+    New-Item -ItemType Directory -Force -Path "{{PKG_DIR}}" | Out-Null
+    Copy-Item -Recurse -Force -Path ./* -Destination "{{PKG_DIR}}"
+
+# Create thumbnails for README and thumbnail folder
+make-thumbnails: install-local
+    typst compile thesis.typ -f png --pages 1 --ppi 300 thumbnails/p-{0p}.png
