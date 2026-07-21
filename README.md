@@ -6,7 +6,10 @@ This repository provides templates for the [Autonomous Multisensor Systems](http
 
 The [`Theses`](./Theses) folder provides LaTeX and Typst templates for bachelor, master and PhD theses.
 
-![A thesis title page featuring a blue logo with generic title metadata.](./Theses/Typst/thumbnails/p-01.png)
+<p align="left">
+  <img src="./Theses/Typst/thumbnails/p-01.png" width="49.5%">
+  <img src="./Theses/Typst/thumbnails/p-01-phd.png" width=49.5%">
+</p>
 
 ## Presentations
 
