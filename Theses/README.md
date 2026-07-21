@@ -2,13 +2,13 @@
 
 This folder provides theses templates for the [Autonomous Multisensor Systems](https://ams.ovgu.de) group.
 
-You can choose between the class option `BA`, `MA`, and `PhD`.
+You can choose between the class option `BA` / `Bachelor`, `MA` / `Master`, and `PhD` (LaTeX / Typst).
 
 The task sheet in the subfolder `Thesis Task Description` should be filled out before the Bachelor or Master thesis is registered. 
 
 ## Math Macros / Functions
 
-You can use the following pre-defined math macros or functions, they are defined in [`mathmacros.sty`](./LaTeX/mathmacros.sty) and [`math.typ`](./Typst/src/math.typ) for LaTeX and Typst respectively.
+You can use the following pre-defined math macros or functions, they are defined in [`mathmacros.sty`](./LaTeX/mathmacros.sty) and [`math-functions.typ`](./Typst/src/math-functions.typ) for LaTeX and Typst respectively.
 
 | LaTeX            | Typst[^1]               | Rendered                                                | Description                  |
 |------------------|-------------------------|---------------------------------------------------------|------------------------------|
