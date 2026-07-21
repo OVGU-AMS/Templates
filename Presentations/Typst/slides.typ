@@ -1,8 +1,9 @@
 #import "@preview/touying:0.7.4": *
-#import "@local/ams-slides:0.1.0": *
+#import "@local/ams-slides:0.2.0": *
 
 #show: ams-slides.with(
-  title: [Full Title of the Presentation],
+  title: [Full Title of the Presentation], // if you use line breaks in the title, then also define the short-tile without line breaks!
+  // short-title: [Short Title of the Presentation], // This title is used in the footer
   subtitle: [Subtitle if necessary],
   author: "Your Name",
   institution: [
@@ -22,13 +23,83 @@
 
 // ----- Slide content starts here. ----- //
 
-= First Section
+= Introduction
+
+== Slide Concept
+
+
+#place(
+  top + left,
+  dx: 0mm,
+  dy: 0mm,
+  image("pages/example.pdf")
+)
+
+#pause
+
+#place(
+  top + left,
+  dx: 15mm,
+  dy: 10mm,
+  ams-shadow-box(
+    title: "Design Rules",
+    // width: 7cm,
+    [
+      - avoid text-heavy slides
+      - prefer vector graphics
+      - all text has to be readable
+    ],
+  ),
+)
+// #make-grid
+#pause 
+
+#place(
+  top + left,
+  dx: 80mm,
+  dy: 15mm,
+  ams-shadow-box(
+    title: "Text Boxes",
+    color: AMSred,
+    width: 7cm,
+    [
+      You can use these text boxes in different colors:
+      ```typ
+      #ams-shadow-box(
+        title: "Text Boxes",
+        color: AMSred, // AMSgreen, AMSblue
+        width: 4.5cm,
+        [...]
+      )
+  
+      ```
+    ],
+  ),
+)
+
+#pause
+
+#place(
+  top + left,
+  dx: 25mm,
+  dy: 50mm,
+  ams-box(
+    title: "Shadows",
+    color: AMSgreen,
+    width: 4.5cm,
+    [
+      You can use ```typst #ams-box``` to remove the shadow.
+    ],
+  ),
+)
+
 
 == Template
+#show: with-margin
 
 You can use the usual Typst markup syntax such as headings.
 
-#block(stroke: (left: 1pt + ovgu-inf-blue), inset: .5em, fill: luma(235))[
+#block(stroke: (left: 1.5pt + ovgu-inf-blue), inset: .5em, fill: luma(235))[
   Note that within this presentation template, thanks to `touying`, *level 1 headings correspond to new slides* while level 2 headings effectively act as chapters within these slides -- basically offset by one.
 ]
 
@@ -61,9 +132,9 @@ _$->$ See next slide for visible changes..._
 
 #set heading(numbering: none)
 
-= Second Section
+== Second Section
 
-== New Section Slides
+=== New Section Slides
 
 - By default, when a new slide-section is created, an additional "new section slide" is also created (see the previous slide).
 
@@ -101,9 +172,9 @@ _$->$ See next slide for visible changes..._
   })
 }
 
-= Further Notes
+== Further Notes
 
-== Alignment
+=== Alignment
 
 - Default alignment per slide is ```typc top + left```, this can be changed with ```typ #set align(..)```.
 
@@ -111,7 +182,7 @@ _$->$ See next slide for visible changes..._
 
   - ...manually calling ```typ #slide(..)``` with ```typc setting: body => body```.
 
-== Special functions
+=== Special functions
 
 - ```typ #title-slide()``` generates the title slide from the information given in the show-rule.
 

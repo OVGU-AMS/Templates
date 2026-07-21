@@ -1,4 +1,6 @@
 #import "@preview/touying:0.7.4": *
+#import "@preview/cetz:0.5.2"
+#import "@preview/shadowed:0.3.0": shadow
 
 #let m-dark-teal = rgb("#23373b")
 #let ovgu-darkgray = rgb("#606060")
@@ -20,9 +22,81 @@
   author
 }
 
-/// The title slide.
-///
-/// Information is automatically filled in from the theme rule.
+#let header(self) = {
+  // header-logo // it is defined as foreground to be on top of full-slide images
+  place(bottom + left, dx: 4mm, dy: -5mm, text(
+    fill: ovgu-inf-blue,
+    12pt,
+    weight: "bold",
+    if self.store.title != none { self.store.title } else {
+      utils.display-current-heading(level: 2)
+    },
+  ))
+}
+
+#let footer(self) = {
+  set align(bottom)
+  block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
+    #set text(white, 5pt, weight: "bold")
+    #set align(horizon)
+    #grid(
+      columns: (auto, 1fr),
+      align: (left, right),
+      if self.info.short-title != none { self.info.short-title } else { self.info.title }
+        + " | "
+        + format-author(self.info.author),
+      context utils.slide-counter.display() + "/" + utils.last-slide-number,
+    )
+  ]
+}
+
+
+
+/***************************************
+ * normal slide with optional title    *
+ *                                     *
+ * if no title is set, level 2 is used *
+ ***************************************/
+#let slide(title: none, margin: auto, ..args) = touying-slide-wrapper(self => {
+  if title != none {
+    self.store.title = title
+  } else {
+    self.store.title = none
+  }
+  
+  self = utils.merge-dicts(self, config-page(
+    header: header,
+    footer: footer,
+    foreground: align(top, header-logo),
+    footer-descent: 0cm,
+    header-ascent: -0.2cm,
+    margin: (top: 0.9cm, bottom: 0.3cm, rest: 0cm),
+  ))
+  let use-margin = if margin == auto { self.info.margin } else { margin }
+  
+  touying-slide(
+    self: self,
+    setting: body => {
+      show: if use-margin { pad.with(x: 1cm, y: 0.5cm) } else { pad.with(x: 0cm, y: 0cm) }
+      body
+    },
+    ..args,
+  )
+})
+
+#let with-margin = touying-set-config.with(config-info(margin: true))
+#let without-margin = touying-set-config.with(config-info(margin: false))
+
+/*#######################################
+# . . . . . .SPECIAL SLIDES . . . . . . #
+#######################################*/
+
+/**************************************************************
+ * title slide                                                *
+ *                                                            *
+ * Information is automatically filled in from the theme rule *
+ **************************************************************/
+
 #let title-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -37,10 +111,10 @@
     // Title, subtitle and author data.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
-
+      
       #show std.title: set text(14pt, weight: "bold")
       #show std.title: set block(below: 0.7em)
-
+      
       #std.title(info.title)
       #text(10pt, strong(info.subtitle))
     ]
@@ -60,65 +134,17 @@
       #stack(dir: ltr, spacing: 5mm, ams-logo)
     ]
   }
-
+  
   touying-slide(self: self, body)
 })
 
-/// A normal slide with an optional title.
-///
-/// If `title` is `none`, the last level 1 heading is used instead.
-#let slide(title: none, ..args) = touying-slide-wrapper(self => {
-  if title != none {
-    self.store.title = title
-  }
 
-  let header(self) = {
-    header-logo
-    place(bottom + left, dx: 4mm, dy: -5mm, text(
-      fill: ovgu-inf-blue,
-      12pt,
-      weight: "bold",
-      if title != none { title } else {
-        utils.display-current-heading(level: 1)
-      },
-    ))
-  }
+/***************************************************************************************
+ * A new section slide which is automatically created for level 2 headings.            *
+ *                                                                                     *
+ * Can also be manually called with a custom presentation title as well as a subtitle. *
+ ***************************************************************************************/
 
-  let footer(self) = {
-    set align(bottom)
-    block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
-      #set text(white, 4pt, weight: "bold")
-      #set align(horizon)
-      #grid(
-        columns: (auto, 1fr),
-        align: (left, right),
-        if self.info.short-title != none { self.info.short-title } else { self.info.title } + " | " + format-author(self.info.author),
-        context utils.slide-counter.display() + "/" + utils.last-slide-number,
-      )
-    ]
-  }
-
-  self = utils.merge-dicts(self, config-page(
-    header: header,
-    footer: footer,
-    footer-descent: 0cm,
-    header-ascent: 0cm,
-    margin: (top: 1.1cm, bottom: 0.3cm, rest: 0cm),
-  ))
-
-  touying-slide(
-    self: self,
-    setting: body => {
-      show: pad.with(x: 1cm, y: 0.5cm)
-      body
-    },
-    ..args,
-  )
-})
-
-/// A new section slide which is automatically created for level 1 headings.
-///
-/// Can also be manually called with a custom presentation title as well as a subtitle.
 #let new-section-slide(
   title: none,
   subtitle: none,
@@ -136,34 +162,23 @@
       self.info.title
     })
   }
-
-  let footer(self) = {
-    set align(bottom)
-    block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
-      #set text(white, 4pt, weight: "bold")
-      #set align(horizon)
-      #grid(
-        columns: (auto, 1fr),
-        align: (left, right),
-        if self.info.short-title != none { self.info.short-title } else { self.info.title } + " | " + format-author(self.info.author),
-        context utils.slide-counter.display() + "/" + utils.last-slide-number,
-      )
-    ]
-  }
-
+  
   self = utils.merge-dicts(self, config-page(
     footer: footer,
     footer-descent: 0cm,
     margin: (rest: 1cm, bottom: 0.3cm),
   ))
-
+  
   touying-slide(self: self, main-body)
 })
 
-/// A thank-you slide.
-///
-/// Similar structure to title slide but with thank-you message.
-/// Uses the `extra` argument to display web page and mail.
+/****************************************************************
+ * thank-you slide                                              *
+ *                                                              *
+ * Similar structure to title slide but with thank-you message. *
+ * Uses the `extra` argument to display web page and mail.      *
+ ****************************************************************/
+
 #let thank-you-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -175,15 +190,16 @@
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
-
+    
     // Title of Presentation.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
-
+      
       #show std.title: set text(14pt, weight: "bold")
       #show std.title: set block(below: 0.7em)
-
+      
       #std.title(info.title)
+      #text(10pt, strong(info.subtitle))
     ]
     // "Thank You" text somewhat further down.
     place(top + left, dx: 14mm, dy: 90mm - 40mm)[
@@ -202,7 +218,7 @@
         [Mail:], link("mailto:" + self.info.extra.mail),
       )
     ]
-
+    
     // AMS logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
       #stack(dir: ltr, spacing: 5mm, ams-logo)
@@ -211,7 +227,9 @@
   touying-slide(self: self, body)
 })
 
-/// The AMS theme rule.
+/******************
+ * AMS theme rule *
+ ******************/
 #let ams-slides(
   /// The title of the presentation, which will be displayed in the title slide and footer.
   /// -> content
@@ -234,6 +252,12 @@
   /// A custom dictionary of extra information, currently only used for web and mail.
   /// -> dict
   extra: none,
+  // defines whether equations should numbered, not recommended for scientific slides
+  numbered-equations: false,
+  // new slides are generated at heading level 2, heading level 1 generates title slides
+  slide-heading-level: 2,
+  // slides do not have a margin. For text-centric slides, this can be set to false
+  margin: false,
   body,
 ) = {
   set text(
@@ -241,24 +265,32 @@
     font: ("Latin Modern Sans", "LMSans10"),
     fill: m-dark-teal,
   )
-  set math.equation(numbering: "(1)")
-
+  
+  if numbered-equations {
+    set math.equation(numbering: "(1)")
+  }
+  
   set figure(gap: 1em)
-  set list(indent: 1em, marker: text(ovgu-inf-blue, "•"))
-  set enum(indent: 1em)
-
+  set list(indent: 0em, marker: text(font: "Latin Modern Roman", ovgu-inf-blue, "•"))
+  set enum(indent: 0em)
+  
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
   show footnote.entry: it => it + v(.65em)
   show raw: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"), 1.1em)
   show link: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"))
   show heading.where(level: 1): set heading(numbering: none)
-
+  
   show: touying-slides.with(
-    config-page(margin: 0cm, width: 160mm, height: 90mm, numbering: "1/1"),
+    config-page(
+      margin: 0cm,
+      width: 160mm,
+      height: 90mm,
+      numbering: "1/1",
+    ),
     config-common(
       slide-fn: slide,
       new-section-slide-fn: new-section-slide,
-      slide-level: 1,
+      slide-level: slide-heading-level,
     ),
     config-colors(
       primary: ovgu-inf-blue,
@@ -273,9 +305,85 @@
       author: author,
       date: date,
       institution: institution,
-      extra: extra
+      extra: extra,
+      margin: margin,
     ),
   )
-
+  
   body
 }
+
+
+
+/*#######################################
+# . . . . . . . .HELPERS. . . . . . . . #
+#######################################*/
+
+
+/**************
+ * ruler grid *
+ **************/
+
+#let make-grid = place(
+  top + left,
+  cetz.canvas(length: 1mm, {
+    import cetz.draw: *
+    // this rect alone defines the canvas size: exactly 160 x 78 mm
+    rect((0, 0), (160, 78), stroke: none)
+    grid(
+      (0, 0),
+      (160, 78),
+      help-lines: true,
+      step: 1,
+    )
+    grid(
+      (0, 0),
+      (160, 78),
+      stroke: black.lighten(20%) + 0.2pt,
+      step: 10,
+    )
+    
+    // numbers along the x-axis (bottom)
+    for x in range(0, 161, step: 10) {
+      content((x, 10), anchor: "north-west", padding: 1, text(5pt, [#x]))
+    }
+    
+    // numbers along the y-axis (left)
+    for y in range(0, 79, step: 10) {
+      content((10, y), anchor: "south-east", padding: 1, text(5pt, [#y]))
+    }
+  }),
+)
+
+/**************************************
+ * text boxes with and without shadow *
+ **************************************/
+
+#let ams-shadow(body) = shadow(
+  blur: 4pt,
+  fill: rgb(0, 0, 0, 40%),
+  radius: 2mm + 1.3pt,
+  dx: 3pt,
+  dy: 3pt,
+  body,
+)
+
+#let ams-box(color: AMSblue, title: none, width: auto, justify: true, ..args, body) = block(
+  fill: gradient.linear(white, color.lighten(70%), angle: 90deg),
+  width: width,
+  inset: 8pt,
+  radius: 2mm,
+  stroke: color + 1.5pt,
+  ..args.named(),
+  {
+    set par(justify: justify)
+    set list(indent: 0em, marker: text(font: "Latin Modern Roman", color, "•"))
+    if title != none {
+      text(fill: color, weight: "bold")[#title]
+      v(-0.2em)
+    }
+    body
+  },
+)
+
+#let ams-shadow-box(..args, body) = ams-shadow(ams-box(..args.named(), body))
