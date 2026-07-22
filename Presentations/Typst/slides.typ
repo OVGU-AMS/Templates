@@ -1,6 +1,7 @@
 #import "@preview/touying:0.7.4": *
 #import "@local/ams-slides:0.2.0": *
 
+
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
   // If you use line breaks in the title, then also define the short-tile without line breaks!
@@ -279,5 +280,22 @@ to remove the margin and activate margins with
   #align(bottom + right)[Easier manual placement!]
 ]
 
+== Manual Placement
+#make-grid
+
+#place(
+  top + left,
+  dx: 15mm,
+  dy: 10mm,
+  ams-shadow-box(
+    title: "Helper Grid",
+    [
+      For manual placement you can activate a grid with ```typ #makegrid``` \
+      The line distance is 1~mm
+
+      The usable slide area measures 160~mm × 78~mm.
+    ],
+  ),
+)
 
 #thank-you-slide()
