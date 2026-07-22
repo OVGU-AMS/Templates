@@ -25,7 +25,8 @@
 
 = Introduction
 
-== Slide Concept
+#[#show: without-margin
+== Slide Concept<slide-concept>
 
 
 #place(
@@ -92,10 +93,10 @@
     ],
   ),
 )
-
+]
 
 == Template
-#show: with-margin
+// #show: with-margin
 
 You can use the usual Typst markup syntax such as headings.
 
@@ -171,6 +172,20 @@ _$->$ See next slide for visible changes..._
     )
   })
 }
+
+== Margins
+
+Standard slides have white margins of $1$~cm on the left and right, and $0.5$~cm at the top and bottom.
+
+You can change this setting with
+```typ
+#show: without-margin
+```
+to remove the margin and with
+```typ
+#show: with-margin
+```
+
 
 == Further Notes
 

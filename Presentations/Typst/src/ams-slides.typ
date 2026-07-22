@@ -256,8 +256,8 @@
   numbered-equations: false,
   // new slides are generated at heading level 2, heading level 1 generates title slides
   slide-heading-level: 2,
-  // slides do not have a margin. For text-centric slides, this can be set to false
-  margin: false,
+  // for using images, margin can be removed. For text-centric slides, this can be set to true
+  margin: true,
   body,
 ) = {
   set text(
