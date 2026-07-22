@@ -176,13 +176,73 @@ _$->$ See next slide for visible changes..._
 
 == Margins
 
-Standard slides have white margins of $1$~cm on the left and right, and $0.5$~cm at the top and bottom.
+#place(
+  top + left,
+  dx:-10mm,
+  dy: -5mm,
+  block(
+    fill: black.lighten(60%),
+    width: 160mm,
+    height: 78mm,
+
+  ),
+)
+#place(
+  top + left,
+  dx: 160mm-20mm,
+  dy: 50mm,
+  box(width: 1cm, {
+    place(bottom + center, dy: -2pt, text(7pt)[1 cm])
+    line(length: 1cm)
+  })
+)
+#place(
+  top + left,
+  dx: -10mm,
+  dy: 50mm,
+  box(width: 1cm, {
+    place(bottom + center, dy: -2pt, text(7pt)[1 cm])
+    line(length: 1cm)
+  }),
+)
+#place(
+  top + left,
+  dx: 70mm,
+  dy: -5mm,
+  box(width: 1cm, {
+    place(bottom + center, dy: -1.5mm, text(7pt)[0.5 cm])
+    line(end: (0mm, 5mm))
+  }),
+)
+
+#place(
+  top + left,
+  dx: 70mm,
+  dy: 68mm,
+  box(width: 1cm, {
+    place(bottom + center, dy: -1.5mm, text(7pt)[0.5 cm])
+    line(end: (0mm, 5mm))
+  }),
+)
+
+#place(
+  top + left,
+  block(
+    stroke: (paint: black, thickness: 0.3pt, dash: "dashed"),
+    fill:white,
+    width: 160mm - 20mm,
+    height: 78mm - 10mm,
+
+  )
+)
+
+Standard slides have white margins of $1$~cm on the left and right, and $0.5$~cm at the top and bottom
 
 You can change this setting with
 ```typ
 #show: without-margin
 ```
-to remove the margin and with
+to remove the margin and activate margins with
 ```typ
 #show: with-margin
 ```
@@ -194,9 +254,6 @@ to remove the margin and with
 
 - Default alignment per slide is ```typc top + left```, this can be changed with ```typ #set align(..)```.
 
-- Slide bodies are *not*  padded by default, this can be toggled by...
-
-  - ...using ```typ #show: with-margin``` or ```typ #show: without-margin```
 
 === Special functions
 
