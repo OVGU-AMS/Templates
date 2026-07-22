@@ -1,4 +1,4 @@
-# ams-typst
+# ams-thesis
 
 This folder provides a Typst thesis template for the [Autonomous Multisensor Systems](https://ams.ovgu.de) group.
 
