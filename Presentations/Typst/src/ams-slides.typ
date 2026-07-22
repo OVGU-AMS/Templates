@@ -52,11 +52,13 @@
 
 
 
-/***************************************
- * normal slide with optional title    *
- *                                     *
- * if no title is set, level 2 is used *
- ***************************************/
+/// Normal slide with an optional title. If no title is set, the most
+/// recent level 2 heading is used instead.
+///
+/// - title (content, none): A title which is displayed in the header.
+/// - margin (bool): Whether to apply a margin to the slide content.
+///
+/// -> content
 #let slide(title: none, margin: auto, ..args) = touying-slide-wrapper(self => {
   if title != none {
     self.store.title = title
@@ -72,13 +74,17 @@
     header-ascent: -0.2cm,
     margin: (top: 0.9cm, bottom: 0.3cm, rest: 0cm),
   ))
+  
   let use-margin = if margin == auto { self.info.margin } else { margin }
   
   touying-slide(
     self: self,
     setting: body => {
-      show: if use-margin { pad.with(x: 1cm, y: 0.5cm) } else { pad.with(x: 0cm, y: 0cm) }
-      body
+      if use-margin {
+        pad(x: 1cm, y: 0.5cm, body)
+      } else {
+        body
+      }
     },
     ..args,
   )
@@ -91,12 +97,9 @@
 # . . . . . .SPECIAL SLIDES . . . . . . #
 #######################################*/
 
-/**************************************************************
- * title slide                                                *
- *                                                            *
- * Information is automatically filled in from the theme rule *
- **************************************************************/
-
+/// The title slide.
+///
+/// Information is automatically filled in from the theme rule.
 #let title-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -139,12 +142,14 @@
 })
 
 
-/***************************************************************************************
- * A new section slide which is automatically created for level 2 headings.            *
- *                                                                                     *
- * Can also be manually called with a custom presentation title as well as a subtitle. *
- ***************************************************************************************/
-
+/// A new section slide which is automatically created for headings with level `slide-heading-level`.
+///
+/// Can also be manually called with a custom presentation title as well as a subtitle.
+///
+/// - title (content, none): An optional custom presentation title.
+/// - subtitle (content, none): An optional subtitle.
+///
+/// -> content
 #let new-section-slide(
   title: none,
   subtitle: none,
@@ -172,13 +177,12 @@
   touying-slide(self: self, main-body)
 })
 
-/****************************************************************
- * thank-you slide                                              *
- *                                                              *
- * Similar structure to title slide but with thank-you message. *
- * Uses the `extra` argument to display web page and mail.      *
- ****************************************************************/
-
+/// A thank-you slide.
+///
+/// Similar structure to title slide but with thank-you message.
+/// Uses the `extra` argument from the theme rule display web page and mail.
+///
+/// -> content
 #let thank-you-slide(..args) = touying-slide-wrapper(self => {
   let info = self.info + args.named()
   let body = {
@@ -227,36 +231,30 @@
   touying-slide(self: self, body)
 })
 
-/******************
- * AMS theme rule *
- ******************/
+/// The AMS theme rule.
+///
+/// - title (content, none): The title of the presentation, which will be displayed in the title slide and footer.
+/// - short-title (content, none): The short title of the presentation. Displayed in the footer if given.
+/// - subtitle (content, none): The subtitle of the presentation.
+/// - author (content, str, array): The author(s) of the presentation.
+/// - date (datetime): The date of the presentation. See the `datetime` type for usage.
+/// - institution (content, none): The institution, faculty or university of this presentation.
+/// - extra (dict): A custom dictionary of extra information, currently only used for web and mail.
+/// - numbered-equations (bool): Defines whether equations should be numbered. Not recommended for scientific slides.
+/// - slide-heading-level (int): New slides are generated at this heading level.
+/// - margin (bool): Whether slides have a margin, `false` by default.
+///
+/// -> content
 #let ams-slides(
-  /// The title of the presentation, which will be displayed in the title slide and footer.
-  /// -> content
   title: none,
-  /// The short title of the presentation. Displayed in the footer if given.
-  /// -> content
   short-title: none,
-  /// The subtitle of the presentation.
-  /// -> content
   subtitle: none,
-  /// The author(s) of the presentation.
-  /// -> content | str | array
   author: none,
-  /// The date of the presentation. See the `datetime` type for usage.
-  /// -> datetime
   date: none,
-  /// The institution, faculty or university of this presentation.
-  /// -> content
   institution: none,
-  /// A custom dictionary of extra information, currently only used for web and mail.
-  /// -> dict
   extra: none,
-  // defines whether equations should numbered, not recommended for scientific slides
   numbered-equations: false,
-  // new slides are generated at heading level 2, heading level 1 generates title slides
   slide-heading-level: 2,
-  // slides do not have a margin. For text-centric slides, this can be set to false
   margin: false,
   body,
 ) = {
@@ -266,9 +264,7 @@
     fill: m-dark-teal,
   )
   
-  if numbered-equations {
-    set math.equation(numbering: "(1)")
-  }
+  set math.equation(numbering: "(1)") if numbered-equations
   
   set figure(gap: 1em)
   set list(indent: 0em, marker: text(font: "Latin Modern Roman", ovgu-inf-blue, "•"))
@@ -314,16 +310,11 @@
 }
 
 
-
 /*#######################################
 # . . . . . . . .HELPERS. . . . . . . . #
 #######################################*/
 
-
-/**************
- * ruler grid *
- **************/
-
+/// Ruler grid.
 #let make-grid = place(
   top + left,
   cetz.canvas(length: 1mm, {
@@ -356,9 +347,10 @@
 )
 
 /**************************************
- * text boxes with and without shadow *
+ * Text boxes with and without shadow *
  **************************************/
 
+/// Pre-defined `shadow` function.
 #let ams-shadow(body) = shadow(
   blur: 4pt,
   fill: rgb(0, 0, 0, 40%),
@@ -368,6 +360,15 @@
   body,
 )
 
+/// A text box without shadow.
+///
+/// - color (color): Main color for the background gradient.
+/// - title (content, none): Title of the text box.
+/// - width (relative): Width of the text box. Scales automatically by default.
+/// - justify (bool): Whether to justify the text in the box.
+/// - body (content): Content of the text box.
+///
+/// -> content
 #let ams-box(color: AMSblue, title: none, width: auto, justify: true, ..args, body) = block(
   fill: gradient.linear(white, color.lighten(70%), angle: 90deg),
   width: width,
@@ -386,4 +387,5 @@
   },
 )
 
+/// The `ams-box` function wrapped in a shadow.
 #let ams-shadow-box(..args, body) = ams-shadow(ams-box(..args.named(), body))

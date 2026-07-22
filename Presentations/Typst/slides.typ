@@ -2,8 +2,9 @@
 #import "@local/ams-slides:0.2.0": *
 
 #show: ams-slides.with(
-  title: [Full Title of the Presentation], // if you use line breaks in the title, then also define the short-tile without line breaks!
-  // short-title: [Short Title of the Presentation], // This title is used in the footer
+  title: [Full Title of the Presentation],
+  // If you use line breaks in the title, then also define the short-tile without line breaks!
+  // short-title: [Short Title of the Presentation], -> This title is used in the footer.
   subtitle: [Subtitle if necessary],
   author: "Your Name",
   institution: [
@@ -16,7 +17,7 @@
   extra: (
     web: "https://ams.ovgu.de",
     mail: "NCC-1701@ovgu.de"
-  )
+  ),
 )
 
 #title-slide()
@@ -26,7 +27,6 @@
 = Introduction
 
 == Slide Concept
-
 
 #place(
   top + left,
@@ -71,7 +71,6 @@
         width: 4.5cm,
         [...]
       )
-  
       ```
     ],
   ),
@@ -88,7 +87,7 @@
     color: AMSgreen,
     width: 4.5cm,
     [
-      You can use ```typst #ams-box``` to remove the shadow.
+      You can use ```typ #ams-box``` to remove the shadow.
     ],
   ),
 )
@@ -100,7 +99,8 @@
 You can use the usual Typst markup syntax such as headings.
 
 #block(stroke: (left: 1.5pt + ovgu-inf-blue), inset: .5em, fill: luma(235))[
-  Note that within this presentation template, thanks to `touying`, *level 1 headings correspond to new slides* while level 2 headings effectively act as chapters within these slides -- basically offset by one.
+  Note that within this presentation template, thanks to `touying`, *level 1 headings correspond to new chapters and new-section-slides* while level 2 headings effectively act as new slides with their title in the header -- basically offset by one.
+  This can be changed with the `slide-heading-level` parameter of the main theme show rule.
 ]
 
 You can change or add certain stylistic choices -- let's number the headings & add spacing below headings for a less cluttered look:\
@@ -136,7 +136,7 @@ _$->$ See next slide for visible changes..._
 
 === New Section Slides
 
-- By default, when a new slide-section is created, an additional "new section slide" is also created (see the previous slide).
+- By default, when a new slide-section is created, an additional "new section slide" is also created (see the previous slides).
 
 - Content will automatically overflow to a new slide within a section.
 
@@ -144,8 +144,9 @@ _$->$ See next slide for visible changes..._
 
 - To create a slide with a new section but *without* a new section slide, append the ```typ <touying:skip>``` label to the heading (see next slide as example).#footnote[See https://touying-typ.github.io/docs/intro for more features.]
 
+  - This also depends on the `slide-heading-level` parameter
 
-= Test Slide Using CeTZ <touying:skip>
+== Test Slide Using CeTZ <touying:skip>
 
 #{
   import "@preview/cetz:0.5.2"
@@ -178,9 +179,9 @@ _$->$ See next slide for visible changes..._
 
 - Default alignment per slide is ```typc top + left```, this can be changed with ```typ #set align(..)```.
 
-- Slide bodies are padded by default, this can be disabled by...
+- Slide bodies are *not*  padded by default, this can be toggled by...
 
-  - ...manually calling ```typ #slide(..)``` with ```typc setting: body => body```.
+  - ...using ```typ #show: with-margin``` or ```typ #show: without-margin```
 
 === Special functions
 
@@ -199,7 +200,8 @@ _$->$ See next slide for visible changes..._
 
 // Calling it manually enables custom title, no new-section slide and the ability
 // to override some customization settings such as default padding.
-#slide(title: [Non-padded Slide], setting: body => body)[
+#show: without-margin
+#slide(title: [Non-padded Slide])[
   No padding to the sides.
   #align(center + horizon)[Good for placing big images.]
   #align(bottom + right)[Easier manual placement!]
