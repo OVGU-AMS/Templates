@@ -17,7 +17,7 @@
   extra: (
     web: "https://ams.ovgu.de",
     mail: "NCC-1701@ovgu.de"
-  )
+  ),
 )
 
 #title-slide()

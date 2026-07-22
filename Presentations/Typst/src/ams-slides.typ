@@ -74,13 +74,14 @@
     header-ascent: -0.2cm,
     margin: (top: 0.9cm, bottom: 0.3cm, rest: 0cm),
   ))
+  
   let use-margin = if margin == auto { self.info.margin } else { margin }
   
   touying-slide(
     self: self,
     setting: body => {
       if use-margin {
-        pad(x: 1em, y: 0.5em, body)
+        pad(x: 1cm, y: 0.5cm, body)
       } else {
         body
       }
@@ -263,9 +264,7 @@
     fill: m-dark-teal,
   )
   
-  if numbered-equations {
-    set math.equation(numbering: "(1)")
-  }
+  set math.equation(numbering: "(1)") if numbered-equations
   
   set figure(gap: 1em)
   set list(indent: 0em, marker: text(font: "Latin Modern Roman", ovgu-inf-blue, "•"))

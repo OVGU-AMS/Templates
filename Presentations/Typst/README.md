@@ -12,8 +12,8 @@ You can initialize the presentation and its title slide with the following optio
 
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
-  subtitle: [Subtitle if necessary],
   short-title: [Short title for the footer],
+  subtitle: [Subtitle if necessary],
   author: "Your Name",
   institution: [
     Autonomous Multisensor Systems Group\
@@ -25,13 +25,16 @@ You can initialize the presentation and its title slide with the following optio
   extra: (
     web: "https://ams.ovgu.de",
     mail: "NCC-1701@ovgu.de"
-  )
+  ),
+  numbered-equations: false,
+  slide-heading-level: 2,
+  margin: false,
 )
 
 #title-slide()
 ```
 
-You can then use heading-based syntax for slide creation where level 1 headings create a new slide
+You can then use heading-based syntax for slide creation where level 1 and 2 headings create a new slide (depending on `slide-heading-level`)
 as well as a new section slide or manually use the slide functions mentioned below. (See the PDF and the annotated source code for a quick overview)
 
 Compile either in the webapp or locally with `typst compile slides.typ`.
