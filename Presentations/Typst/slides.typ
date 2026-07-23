@@ -17,7 +17,7 @@
   date: datetime.today(),
   extra: (
     web: "https://ams.ovgu.de",
-    mail: "NCC-1701@ovgu.de"
+    mail: "NCC-1701@ovgu.de",
   ),
 )
 
@@ -27,76 +27,76 @@
 
 = Introduction
 
-#[#show: without-margin
-== Slide Concept<slide-concept>
+#[
+  #show: without-margin
+  == Slide Concept<slide-concept>
 
-#place(
-  top + left,
-  dx: 0mm,
-  dy: 0mm,
-  image("pages/example.pdf")
-)
+  #place(
+    top + left,
+    dx: 0mm,
+    dy: 0mm,
+    image("pages/example.pdf"),
+  )
 
-#pause
+  #pause
 
-#place(
-  top + left,
-  dx: 15mm,
-  dy: 10mm,
-  ams-shadow-box(
-    title: "Design Rules",
-    // width: 7cm,
-    [
-      - avoid text-heavy slides
-      - prefer vector graphics
-      - all text has to be readable
-    ],
-  ),
-)
-// #make-grid
-#pause 
+  #place(
+    top + left,
+    dx: 15mm,
+    dy: 10mm,
+    ams-shadow-box(
+      title: "Design Rules",
+      // width: 7cm,
+      [
+        - avoid text-heavy slides
+        - prefer vector graphics
+        - all text has to be readable
+      ],
+    ),
+  )
 
-#place(
-  top + left,
-  dx: 80mm,
-  dy: 15mm,
-  ams-shadow-box(
-    title: "Text Boxes",
-    color: AMSred,
-    width: 7cm,
-    [
-      You can use these text boxes in different colors:
-      ```typ
-      #ams-shadow-box(
-        title: "Text Boxes",
-        color: AMSred, // AMSgreen, AMSblue
-        width: 4.5cm,
-        [...]
-      )
-      ```
-    ],
-  ),
-)
+  #pause
 
-#pause
+  #place(
+    top + left,
+    dx: 80mm,
+    dy: 15mm,
+    ams-shadow-box(
+      title: "Text Boxes",
+      color: AMSred,
+      width: 7cm,
+      [
+        You can use these text boxes in different colors:
+        ```typ
+        #ams-shadow-box(
+          title: "Text Boxes",
+          color: AMSred, // AMSgreen, AMSblue
+          width: 4.5cm,
+          [...]
+        )
+        ```
+      ],
+    ),
+  )
 
-#place(
-  top + left,
-  dx: 25mm,
-  dy: 50mm,
-  ams-box(
-    title: "Shadows",
-    color: AMSgreen,
-    width: 4.5cm,
-    [
-      You can use ```typ #ams-box``` to remove the shadow.
-    ],
-  ),
-)
+  #pause
+
+  #place(
+    top + left,
+    dx: 25mm,
+    dy: 50mm,
+    ams-box(
+      title: "Shadows",
+      color: AMSgreen,
+      width: 4.5cm,
+      [
+        You can use ```typ #ams-box``` to remove the shadow.
+      ],
+    ),
+  )
 ]
 
 == Template
-// #show: with-margin
 
 You can use the usual Typst markup syntax such as headings.
 
@@ -166,7 +166,9 @@ _$->$ See next slide for visible changes..._
       x-grid: true,
       y-grid: true,
       y-tick-step: 0.25,
-      x-format: v => if v != 0 { $#{ calc.round(v / calc.pi, digits: 2) } pi$ } else { $0$ },
+      x-format: v => if v != 0 {
+        $#{ calc.round(v / calc.pi, digits: 2) } pi$
+      } else { $0$ },
       x-tick-step: 0.25 * calc.pi,
       {
         plot.add(domain: (0, 3 * calc.pi), t => calc.sin(t), samples: 150)
@@ -179,23 +181,22 @@ _$->$ See next slide for visible changes..._
 
 #place(
   top + left,
-  dx:-10mm,
+  dx: -10mm,
   dy: -5mm,
   block(
     fill: black.lighten(60%),
     width: 160mm,
     height: 78mm,
-
   ),
 )
 #place(
   top + left,
-  dx: 160mm-20mm,
+  dx: 160mm - 20mm,
   dy: 50mm,
   box(width: 1cm, {
     place(bottom + center, dy: -2pt, text(7pt)[1 cm])
     line(length: 1cm)
-  })
+  }),
 )
 #place(
   top + left,
@@ -230,16 +231,16 @@ _$->$ See next slide for visible changes..._
   top + left,
   block(
     stroke: (paint: black, thickness: 0.3pt, dash: "dashed"),
-    fill:white,
+    fill: white,
     width: 160mm - 20mm,
     height: 78mm - 10mm,
-
-  )
+  ),
 )
 
 Standard slides have white margins of $1$~cm on the left and right, and $0.5$~cm at the top and bottom
 
 You can change this setting with
+
 ```typ
 #show: without-margin
 ```
@@ -290,10 +291,10 @@ to remove the margin and activate margins with
   ams-shadow-box(
     title: "Helper Grid",
     [
-      For manual placement you can activate a grid with ```typ #makegrid``` \
-      The line distance is 1~mm
+      For manual placement you can activate a grid with ```typ #make-grid``` \
+      The line distance is $1$ mm
 
-      The usable slide area measures 160~mm × 78~mm.
+      The usable slide area measures $160$ mm × $78$ mm.
     ],
   ),
 )

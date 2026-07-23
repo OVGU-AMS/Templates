@@ -42,7 +42,9 @@
     #grid(
       columns: (auto, 1fr),
       align: (left, right),
-      if self.info.short-title != none { self.info.short-title } else { self.info.title }
+      if self.info.short-title != none { self.info.short-title } else {
+        self.info.title
+      }
         + " | "
         + format-author(self.info.author),
       context utils.slide-counter.display() + "/" + utils.last-slide-number,
@@ -65,7 +67,7 @@
   } else {
     self.store.title = none
   }
-  
+
   self = utils.merge-dicts(self, config-page(
     header: header,
     footer: footer,
@@ -74,9 +76,9 @@
     header-ascent: -0.2cm,
     margin: (top: 0.9cm, bottom: 0.3cm, rest: 0cm),
   ))
-  
+
   let use-margin = if margin == auto { self.info.margin } else { margin }
-  
+
   touying-slide(
     self: self,
     setting: body => {
@@ -114,10 +116,10 @@
     // Title, subtitle and author data.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
-      
+
       #show std.title: set text(14pt, weight: "bold")
       #show std.title: set block(below: 0.7em)
-      
+
       #std.title(info.title)
       #text(10pt, strong(info.subtitle))
     ]
@@ -137,7 +139,7 @@
       #stack(dir: ltr, spacing: 5mm, ams-logo)
     ]
   }
-  
+
   touying-slide(self: self, body)
 })
 
@@ -167,13 +169,13 @@
       self.info.title
     })
   }
-  
+
   self = utils.merge-dicts(self, config-page(
     footer: footer,
     footer-descent: 0cm,
     margin: (rest: 1cm, bottom: 0.3cm),
   ))
-  
+
   touying-slide(self: self, main-body)
 })
 
@@ -194,14 +196,14 @@
       #place(top + right, backdrop-logo)
       #place(top + left, dy: 3mm, university-logo)
     ]
-    
+
     // Title of Presentation.
     place(bottom + left, dx: 14mm, dy: -60mm)[
       #set text(white)
-      
+
       #show std.title: set text(14pt, weight: "bold")
       #show std.title: set block(below: 0.7em)
-      
+
       #std.title(info.title)
       #text(10pt, strong(info.subtitle))
     ]
@@ -222,7 +224,7 @@
         [Mail:], link("mailto:" + self.info.extra.mail),
       )
     ]
-    
+
     // AMS logo.
     place(bottom + right, dx: -10mm, dy: -7mm)[
       #stack(dir: ltr, spacing: 5mm, ams-logo)
@@ -242,7 +244,7 @@
 /// - extra (dict): A custom dictionary of extra information, currently only used for web and mail.
 /// - numbered-equations (bool): Defines whether equations should be numbered. Not recommended for scientific slides.
 /// - slide-heading-level (int): New slides are generated at this heading level.
-/// - margin (bool): Whether slides have a margin, `false` by default.
+/// - margin (bool): Whether slides have a margin, `true` by default.
 ///
 /// -> content
 #let ams-slides(
@@ -264,19 +266,23 @@
     font: ("Latin Modern Sans", "LMSans10"),
     fill: m-dark-teal,
   )
-  
+
   set math.equation(numbering: "(1)") if numbered-equations
-  
+
   set figure(gap: 1em)
-  set list(indent: 0em, marker: text(font: "Latin Modern Roman", ovgu-inf-blue, "•"))
+  set list(indent: 0em, marker: text(
+    font: "Latin Modern Roman",
+    ovgu-inf-blue,
+    "•",
+  ))
   set enum(indent: 0em)
-  
+
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
   show footnote.entry: it => it + v(.65em)
   show raw: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"), 1.1em)
   show link: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"))
   show heading.where(level: 1): set heading(numbering: none)
-  
+
   show: touying-slides.with(
     config-page(
       margin: 0cm,
@@ -306,7 +312,7 @@
       margin: margin,
     ),
   )
-  
+
   body
 }
 
@@ -334,12 +340,12 @@
       stroke: black.lighten(20%) + 0.2pt,
       step: 10,
     )
-    
+
     // numbers along the x-axis (bottom)
     for x in range(0, 161, step: 10) {
       content((x, 10), anchor: "north-west", padding: 1, text(5pt, [#x]))
     }
-    
+
     // numbers along the y-axis (left)
     for y in range(0, 79, step: 10) {
       content((10, y), anchor: "south-east", padding: 1, text(5pt, [#y]))
@@ -370,7 +376,14 @@
 /// - body (content): Content of the text box.
 ///
 /// -> content
-#let ams-box(color: AMSblue, title: none, width: auto, justify: true, ..args, body) = block(
+#let ams-box(
+  color: AMSblue,
+  title: none,
+  width: auto,
+  justify: true,
+  ..args,
+  body,
+) = block(
   fill: gradient.linear(white, color.lighten(70%), angle: 90deg),
   width: width,
   inset: 8pt,
