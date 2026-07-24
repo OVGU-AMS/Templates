@@ -61,35 +61,30 @@
 }
 
 /// The AMS thesis template.
+///
+/// - title (content, none): The title of the thesis.
+/// - abstract (content, none): The abstract of the thesis.
+/// - zusammenfassung (content, none): The German abstract of the thesis.
+/// - author (str): The author of the thesis.
+/// - date (datetime): The submission date.
+/// - thesis-type (str): The thesis type (possible values are: "Bachelor", "Master", "PhD").
+/// - reviewers (dictionary): The reviewers of the thesis.
+/// - phd-extra (dictionary, none): Extra information for the dissertation title page. Keys are: degree, birthdate, birthplace.
+/// - doc (content): The document.
+///
+/// -> content
 #let ams-thesis(
-  /// The title of the thesis.
-  /// -> content
   title: [Title of Thesis],
-  /// The abstract of the thesis.
-  /// -> content | none
   abstract: none,
-  /// The German abstract of the thesis.
-  /// -> content | none
   zusammenfassung: none,
-  /// The author of the thesis.
-  /// -> str
   author: "Max Mustermann",
-  /// The submission date.
-  /// -> datetime
   date: datetime.today(),
-  /// The thesis type (possible values are: "Bachelor", "Master", "PhD").
-  /// -> str
   thesis-type: "Master",
-  /// The reviewers of the thesis.
-  /// -> dictionary
   reviewers: (
     supervisor: "Michaela Mustermann",
     first-reviewer: "Prof. Dipl. Inf. Gutachter 1",
     second-reviewer: "Prof. Dr.-Ing. Gutachter 2",
   ),
-  /// Extra information for the dissertation title page.
-  /// Possible keys are: degree, birthdate, birthplace.
-  /// -> dictionary | none
   phd-extra: none,
   doc,
 ) = {

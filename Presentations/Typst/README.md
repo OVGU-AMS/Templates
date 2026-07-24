@@ -28,7 +28,7 @@ You can initialize the presentation and its title slide with the following optio
   ),
   numbered-equations: false,
   slide-heading-level: 2,
-  margin: false,
+  margin: true,
 )
 
 #title-slide()
