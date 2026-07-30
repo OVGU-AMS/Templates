@@ -1,7 +1,6 @@
 #import "@preview/touying:0.7.4": *
 #import "@local/ams-slides:0.2.0": *
 
-
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
   // If you use line breaks in the title, then also define the short-tile without line breaks!
@@ -268,6 +267,22 @@ to remove the margin and activate margins with
   - In the first case, no new section slide is automatically created.
 
   - In the second case, a custom subtitle & title can be created (see next slides).
+
+=== Primary Color
+
+- The primary color of this theme (#AMSblue) can be changed in the following ways:
+
+  + Passing in the ```typc config-colors()``` dictionary as the last argument of the `ams-slides` show-rule, i.e.,
+    ```typ #show: ams-slides.with(.., config-colors(primary: <color>))```,
+
+  + Using ```typ #show: touying-set-config.with(config-colors(primary: <color>))```
+
+  where ```typc <color>``` is your color of choice, such as `green`, `blue` or ```typc rgb(10, 120, 30)```.
+
+  This affects the text color of the heading text in the header, the footer background color, the blue rectangle in the title slide,
+  the rectangle and text color of the "Thank You" slide as well as the text color in the new section slides.
+
+  It does *not* affect the text boxes or the AMS and OVGU logos!
 
 // Calling it manually enables replacing the presentation title.
 #new-section-slide(title: [Custom Presentation Title!], subtitle: [Random Text])

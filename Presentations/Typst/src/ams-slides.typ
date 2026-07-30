@@ -16,16 +16,16 @@
 #let backdrop-logo = image("logos/otto.pdf")
 #let header-logo = image("logos/AMShead.pdf", width: 100%)
 
-#let format-author(author) = if type(author) == array {
+#let _format-author(author) = if type(author) == array {
   author.join(", ")
 } else {
   author
 }
 
-#let header(self) = {
+#let _header(self) = {
   // header-logo // it is defined as foreground to be on top of full-slide images
   place(bottom + left, dx: 4mm, dy: -5mm, text(
-    fill: ovgu-inf-blue,
+    fill: self.colors.primary,
     12pt,
     weight: "bold",
     if self.store.title != none { self.store.title } else {
@@ -34,9 +34,9 @@
   ))
 }
 
-#let footer(self) = {
+#let _footer(self) = {
   set align(bottom)
-  block(fill: ovgu-inf-blue, width: 100%, height: 100%, inset: (x: .5cm))[
+  block(fill: self.colors.primary, width: 100%, height: 100%, inset: (x: .5cm))[
     #set text(white, 5pt, weight: "bold")
     #set align(horizon)
     #grid(
@@ -46,7 +46,7 @@
         self.info.title
       }
         + " | "
-        + format-author(self.info.author),
+        + _format-author(self.info.author),
       context utils.slide-counter.display() + "/" + utils.last-slide-number,
     )
   ]
@@ -69,8 +69,8 @@
   }
 
   self = utils.merge-dicts(self, config-page(
-    header: header,
-    footer: footer,
+    header: _header,
+    footer: _footer,
     foreground: align(top, header-logo),
     footer-descent: 0cm,
     header-ascent: -0.2cm,
@@ -106,7 +106,7 @@
   let info = self.info + args.named()
   let body = {
     // Blue rectangle header with OvGU head and logo.
-    rect(fill: ovgu-inf-blue, width: 100%, height: 90mm - 55mm, inset: (
+    rect(fill: self.colors.primary, width: 100%, height: 90mm - 55mm, inset: (
       left: 14mm,
       rest: 0mm,
     ))[
@@ -129,7 +129,7 @@
       #stack(
         dir: ttb,
         spacing: 5mm,
-        strong(format-author(info.author)),
+        strong(_format-author(info.author)),
         wide-lmmodern(info.institution, 7pt),
         wide-lmmodern(info.date.display("[day].[month].[year]"), 7pt),
       )
@@ -165,13 +165,13 @@
       })
         + v(1.5em, weak: true)
     )
-    text(ovgu-inf-blue, weight: "bold", 1.5em, if title != none { title } else {
+    text(self.colors.primary, weight: "bold", 1.5em, if title != none { title } else {
       self.info.title
     })
   }
 
   self = utils.merge-dicts(self, config-page(
-    footer: footer,
+    footer: _footer,
     footer-descent: 0cm,
     margin: (rest: 1cm, bottom: 0.3cm),
   ))
@@ -189,7 +189,7 @@
   let info = self.info + args.named()
   let body = {
     // Blue rectangle header with OvGU head and logo.
-    rect(fill: ovgu-inf-blue, width: 100%, height: 90mm - 55mm, inset: (
+    rect(fill: self.colors.primary, width: 100%, height: 90mm - 55mm, inset: (
       left: 14mm,
       rest: 0mm,
     ))[
@@ -209,7 +209,7 @@
     ]
     // "Thank You" text somewhat further down.
     place(top + left, dx: 14mm, dy: 90mm - 40mm)[
-      #text(1.5em, ovgu-inf-blue, weight: "bold")[Thank You For Your Attention!]
+      #text(1.5em, self.colors.primary, weight: "bold")[Thank You For Your Attention!]
     ]
     // Name, website and mail on same level as AMS logo.
     place(bottom + left, dx: 14mm, dy: -8.5mm)[
@@ -244,7 +244,7 @@
 /// - extra (dict): A custom dictionary of extra information, currently only used for web and mail.
 /// - numbered-equations (bool): Defines whether equations should be numbered. Not recommended for scientific slides.
 /// - slide-heading-level (int): New slides are generated at this heading level.
-/// - margin (bool): Whether slides have a margin, `true` by default.
+/// - margin (bool): Whether slides have a margin, `true` by default. For full-sized images, `false` is recommended.
 ///
 /// -> content
 #let ams-slides(
@@ -257,8 +257,8 @@
   extra: none,
   numbered-equations: false,
   slide-heading-level: 2,
-  // for using images, margin can be removed. For text-centric slides, this can be set to true
   margin: true,
+  ..args,
   body,
 ) = {
   set text(
@@ -311,6 +311,7 @@
       extra: extra,
       margin: margin,
     ),
+    ..args
   )
 
   body
