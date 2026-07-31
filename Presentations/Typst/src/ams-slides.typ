@@ -402,5 +402,9 @@
   },
 )
 
-/// The `ams-box` function wrapped in a shadow.
-#let ams-shadow-box(..args, body) = ams-shadow(ams-box(..args.named(), body))
+/// The `ams-box` function wrapped in a shadow. Accepts the same parameters.
+///
+/// - args (arguments): The arguments of `ams-box`.
+///
+/// -> content
+#let ams-shadow-box(..args) = ams-shadow(ams-box(..args))
