@@ -390,6 +390,7 @@
   stroke: color + 1.5pt,
   ..args.named(),
   {
+    set align(left)
     set par(justify: justify)
     set list(indent: 0em, marker: AMS-bullet-marker(color: color))
     if title != none {
