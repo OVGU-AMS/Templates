@@ -52,7 +52,10 @@
   ]
 }
 
-
+#let AMS-bullet-marker(color: AMSblue) = (
+  text(font: "Latin Modern Roman", fill: color, [•]),
+  text(fill: color, [--]),
+)
 
 /// Normal slide with an optional title. If no title is set, the most
 /// recent level 2 heading is used instead.
@@ -270,11 +273,7 @@
   set math.equation(numbering: "(1)") if numbered-equations
 
   set figure(gap: 1em)
-  set list(indent: 0em, marker: text(
-    font: "Latin Modern Roman",
-    ovgu-inf-blue,
-    "•",
-  ))
+  set list(indent: 0em, marker: AMS-bullet-marker())
   set enum(indent: 0em)
 
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
@@ -392,7 +391,7 @@
   ..args.named(),
   {
     set par(justify: justify)
-    set list(indent: 0em, marker: text(font: "Latin Modern Roman", color, "•"))
+    set list(indent: 0em, marker: AMS-bullet-marker(color: color))
     if title != none {
       text(fill: color, weight: "bold")[#title]
       v(-0.2em)
