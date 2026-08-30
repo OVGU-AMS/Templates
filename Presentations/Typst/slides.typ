@@ -181,7 +181,9 @@ Note that you have to include
 #place(hide(bib))
 ```
 on any of your slides. 
+// (see #link("https://touying-typ.github.io/docs/reference/magic/bibliography-as-footnote"))
 ]
+
 #place(hide(bib))
 
 
