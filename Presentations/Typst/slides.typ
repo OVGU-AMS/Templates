@@ -21,6 +21,7 @@
   ),
 )
 
+
 #title-slide()
 
 // ----- Slide content starts here. ----- //
@@ -100,7 +101,7 @@
 
 You can use the usual Typst markup syntax such as headings.
 
-#block(stroke: (left: 1.5pt + ovgu-inf-blue), inset: .5em, fill: luma(235))[
+#block(stroke: (left: 1.5pt + AMSblue), inset: .5em, fill: luma(235))[
   Note that within this presentation template, thanks to `touying`, *level 1 headings correspond to new chapters and new-section-slides* while level 2 headings effectively act as new slides with their title in the header -- basically offset by one.
   This can be changed with the `slide-heading-level` parameter of the main theme show rule.
 ]
@@ -147,6 +148,64 @@ _$->$ See next slide for visible changes..._
 - To create a slide with a new section but *without* a new section slide, append the ```typ <touying:skip>``` label to the heading (see next slide as example).#footnote[See https://touying-typ.github.io/docs/intro for more features.]
 
   - This also depends on the `slide-heading-level` parameter
+
+== References As Footnotes
+
+In a presentation, we recommend to include references as footnotes on the same slide.
+
+You can define a bibliography using a BibLaTeX `.bib` file and include the following at the beginning of your typst file:
+
+```typ
+#let bib = bibliography(title: none,"FILE.bib")
+#show: magic.bibliography-as-footnote.with(numbering: "1",bib)
+```
+
+#let bib = bibliography(title: none,
+  bytes(
+    "@Article{Kalman1960,
+  Title = {{A} {N}ew {A}pproach to {L}inear {F}iltering and {P}rediction {P}roblems},
+  Author = {Kalman, Rudolf E.},
+  Journal = {Transactions of the ASME - Journal of Basic Engineering},
+  Year = {1960},
+  Pages = {35--45},
+  Volume = {82}}",
+  ),
+)
+
+#show: magic.bibliography-as-footnote.with(numbering: "1",bib)
+
+With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>).
+
+#block(stroke: (left: 1.5pt + AMSred), inset: .5em, fill: luma(235), width:100%)[
+Note that you have to include 
+```typ 
+#place(hide(bib))
+```
+on any of your slides. 
+]
+#place(hide(bib))
+
+
+
+
+// // @einstein1905
+
+== References With Separate Bibliography
+// #magic.bibliography()
+If needed (e.g., for some seminars), you can include a separate bibliography.
+
+At the beginning of the document, you have to define:
+```typ
+#let bib = bibliography(title: none,"FILE.bib")
+```
+
+You can cite work with ```typ #cite(<KEY>)``` and generate a separate slide with the bibliography with:
+
+
+```typ
+== Bibliography
+#bib
+```
 
 == Test Slide Using CeTZ <touying:skip>
 
@@ -299,4 +358,8 @@ to remove the margin and activate margins with
   ),
 )
 
+
+
 #thank-you-slide()
+
+
