@@ -295,7 +295,7 @@
       slide-level: slide-heading-level,
     ),
     config-colors(
-      primary: ovgu-inf-blue,
+      primary: AMSblue,
       secondary: m-dark-teal,
       tertiary: ovgu-darkgray,
     ),
