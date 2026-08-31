@@ -1,5 +1,5 @@
 #import "@preview/touying:0.7.4": *
-#import "@local/ams-slides:0.2.0": *
+#import "@local/ams-slides:0.2.1": *
 
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
@@ -148,6 +148,46 @@ _$->$ See next slide for visible changes..._
 
   - This also depends on the `slide-heading-level` parameter
 
+
+== #box(
+  (
+    "L"
+      + h(-0.32em)
+      + text(baseline: -0.35em, size: 0.66em, "A")
+      + h(-0.13em)
+      + "T"
+      + h(-0.14em)
+      + text(baseline: 0.22em, "E")
+      + h(-0.14em)
+      + "X"
+  ),
+) Font Sizes 
+
+#[
+  #set par(spacing: 0.7em)
+#tiny[tiny text with ```typ #tiny[tiny text]```]
+
+#scriptsize[scriptsize text with ```typ #scriptsize[scriptsize text]```]
+
+#footnotesize[footnotesize text with ```typ #footnotesize[footnotesize text]```]
+
+#small[small text with ```typ #small[small text]```]
+
+#normalsize[normalsize text with ```typ #normalsize[normalsize text]```] 
+
+#large[large text with ```typ #large[large text]```]
+
+#Large[Large text with ```typ #Large[Large text]```]
+
+#LARGE[LARGE text with ```typ #LARGE[LARGE text]```]
+
+#huge[huge text with ```typ #huge[huge text]```]
+
+#Huge[Huge text with ```typ #Huge[Huge text]```]
+]
+
+= References
+
 == References As Footnotes
 
 In a presentation, we recommend to include references as footnotes on the same slide.
@@ -171,17 +211,18 @@ You can define a bibliography using a BibLaTeX `.bib` file and include the follo
   ),
 )
 
-#show: magic.bibliography-as-footnote.with(numbering: "1",bib)
+#show: magic.bibliography-as-footnote.with(bib, numbering: "1")
+With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>). 
 
-With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>).
-
-#block(stroke: (left: 1.5pt + AMSred), inset: .5em, fill: luma(235), width:100%)[
-Note that you have to include 
-```typ 
-#place(hide(bib))
-```
-on any of your slides. 
-// (see #link("https://touying-typ.github.io/docs/reference/magic/bibliography-as-footnote"))
+#place(dy:5mm)[
+  #block(stroke: (left: 1.5pt + AMSred), inset: .5em, fill: luma(235), width:100%)[
+  Note that you have to include 
+  ```typ 
+  #place(hide(bib))
+  ```
+  on any of your slides. 
+  (see #link("https://touying-typ.github.io/docs/reference/magic/bibliography-as-footnote"))
+]
 ]
 
 #place(hide(bib))
@@ -199,14 +240,18 @@ At the beginning of the document, you have to define:
 ```typ
 #let bib = bibliography(title: none,"FILE.bib")
 ```
+and can omit the option to print them as footnotes.
 
-You can cite work with ```typ #cite(<KEY>)``` and generate a separate slide with the bibliography with:
+You can cite work with ```typ #cite(<KEY>)``` and generate a separate slide#footnote[The separate bibliography will not be rendered if you use it together with ```typ  #place(hide(bib))```.] with the bibliography using:
 
 
 ```typ
 == Bibliography
 #bib
 ```
+
+// == Bibliography
+// #bib
 
 == Test Slide Using CeTZ <touying:skip>
 

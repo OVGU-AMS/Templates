@@ -57,6 +57,18 @@
   text(fill: color, [--]),
 )
 
+/// LaTeX like font sizes
+#let tiny(body)       = text(size: 5pt, body)
+#let scriptsize(body) = text(size: 7pt, body)
+#let footnotesize(body) = text(size: 8pt, body)
+#let small(body) = text(size: 9pt, body)
+#let normalsize(body) = text(size: 10pt, body)
+#let large(body) = text(size: 12pt, body)
+#let Large(body) = text(size: 14.4pt, body)
+#let LARGE(body) = text(size: 17.28pt, body)
+#let huge(body) = text(size: 20.74pt, body)
+#let Huge(body) = text(size: 24.88pt, body)
+
 /// Normal slide with an optional title. If no title is set, the most
 /// recent level 2 heading is used instead.
 ///
@@ -71,13 +83,15 @@
     self.store.title = none
   }
 
+  let use-margin = if margin == auto { self.info.margin } else { margin }
+
   self = utils.merge-dicts(self, config-page(
     header: _header,
     footer: _footer,
     foreground: align(top, header-logo),
     footer-descent: 0cm,
     header-ascent: -0.2cm,
-    margin: (top: 0.9cm, bottom: 0.3cm, rest: 0cm),
+    margin: if use-margin { (top: 0.9cm, bottom: 0.3cm, rest: 1cm) } else { (top: 0.9cm, bottom: 0.3cm, rest: 0cm) }, // this adds the left and right margin
   ))
 
   let use-margin = if margin == auto { self.info.margin } else { margin }
@@ -86,7 +100,7 @@
     self: self,
     setting: body => {
       if use-margin {
-        pad(x: 1cm, y: 0.5cm, body)
+        pad(y: 0.5cm, body) // this adds the top and bottom margin
       } else {
         body
       }
@@ -277,7 +291,15 @@
   set enum(indent: 0em)
 
   // Extra spacing for footnote entry, otherwise it sits on top of footer.
-  show footnote.entry: it => it + v(.65em)
+  show footnote.entry: it => {
+    footnotesize(it)
+    context {
+      let p = it.note.location().page()
+      let last = query(footnote).filter(f => f.location().page() == p).last()
+      if last.location() == it.note.location() { v(0.65em) }
+    }
+  }
+
   show raw: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"), 1.1em)
   show link: set text(font: ("Latin Modern Mono", "Latin Modern Mono 12"))
   show heading.where(level: 1): set heading(numbering: none)

@@ -21,6 +21,11 @@
 % \setlength\title@titlemargin{13mm}\setlength\title@institutemargin\title@titlemargin
 % \makeatother
 
+%% If you do not need references, this can be commented out:
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+
 %% Title:
 \title{Full Title of the Presentation}
 %% include [Short Title] if title is too long for footline:
@@ -142,6 +147,60 @@
 
 
     % \transfade<2->
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% References
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Reference}
+\sectionslide{\insertsection}
+
+\subsection{References}
+
+\defverbatim[colored]\bibcode{%
+	\begin{verbatim}
+	\begin{frame}[allowframebreaks]
+		\frametitle{Bibliography}
+		\printbibliography
+	\end{frame}
+	\end{verbatim}}
+
+\begin{frame}[fragile,label=slidereferences]
+	\frametitle{\insertsubsectionhead}%
+	%
+	% \makegridtp
+
+
+	In a presentation, we recommend to include references as footnotes on the same slide.
+
+	\bigskip%
+	This is a citation\footfullcite{Kalman1960} using 
+	\begin{verbatim}
+	\footfullcite{Kalman1960}
+	\end{verbatim}
+
+	\bigskip
+
+	As an alternative, you can also cite work like this \cite{Kalman1960} with
+	\verb|\cite{Kalman1960}|.
+
+	\smallskip
+	In this case, you should include a separate bibliography (see next slide):
+	\bibcode
+
+    % \transfade<2->
+\end{frame}
+
+\begin{frame}%[allowframebreaks]
+	\frametitle{Bibliography}
+	\printbibliography
+
+	\bigskip
+	(A separate bibliography is only necessary if you do not use the footnote citations. E.g., for seminar presentations, a separate bibliography could be useful.)
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

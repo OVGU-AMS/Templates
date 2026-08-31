@@ -1,14 +1,14 @@
 [package]
 name = "ams-slides"
-version = "0.2.0"
+version = "0.2.1"
 entrypoint = "src/ams-slides.typ"
 authors = ["Kevin Kulot", "Benjamin Noack"]
 license = "0BSD"
 description = "A slide template for Autonomous Multisensor Systems group"
 repository = "https://github.com/OVGU-AMS/Templates"
 categories = ["presentation", "thesis"]
-keywords = ["slides", "master", "bachelor", "university", "OVGU", "Magdeburg", "Otto-von-Guericke-Universität"]
-compiler = "0.14.0"
+keywords = ["slides", "master", "bachelor", "university", "OVGU", "Magdeburg", "Otto von Guericke University"]
+compiler = "0.15.0"
 exclude = ["thumbnails"]
 
 [template]

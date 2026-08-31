@@ -3,7 +3,7 @@
 %%
 %% Author: Benjamin Noack
 %% Last Modified by: Benjamin Noack
-%% Date: 2025-06-11
+%% Date: 2026-08-31
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -93,14 +93,14 @@
 \setbeamerfont{frametitle}{series=\bfseries,size=\large}
 \setbeamerfont{framesubtitle}{size=\normalsize}
 \setbeamerfont{author}{series=\bfseries,size=\normalsize}
-\setbeamercolor{frametitle}{fg=ovgu-inf-blue}
+\setbeamercolor{frametitle}{fg=AMSblue}
 % \setbeamercolor{frametitle}{fg=ovgu-inf-blue,bg=red}
 
 %% set bullet color in itemized
 % \setbeamercolor{itemize item}?
-\setbeamercolor{item}{fg=ovgu-inf-blue}
-\setbeamercolor{subitem}{fg=ovgu-inf-blue}
-\setbeamercolor{subsubitem}{fg=ovgu-inf-blue}
+\setbeamercolor{item}{fg=AMSblue}
+\setbeamercolor{subitem}{fg=AMS-blue}
+\setbeamercolor{subsubitem}{fg=AMSblue}
 
 %% manually set bullet color, e.g., \item<AMSred@1->
 \newenvironment{AMSgreenenv}{\only{\setbeamercolor{itemize item}{fg=AMSgreen}\usebeamerfont{color=AMSgreen}}}{}
@@ -108,6 +108,13 @@
 \newenvironment{AMSorangeenv}{\only{\setbeamercolor{itemize item}{fg=AMSorange}}}{}
 \setbeamercolor{alerted text}{fg=AMSred}
 \setbeamercolor{example text}{fg=AMSgreen}
+
+%% Colors for bibliography
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry title}{fg=black}
+\setbeamercolor{bibliography entry location}{fg=black}
+\setbeamercolor{bibliography entry note}{fg=black}
+\setbeamercolor{bibliography item}{fg=black}
 
 %% content size
 %% slide size is 160mm x 90mm including header and footer
@@ -161,7 +168,7 @@
 }
 
 %% Definition of footer
-\setbeamercolor{footlinecolor}{fg=white,bg=ovgu-inf-blue}
+\setbeamercolor{footlinecolor}{fg=white,bg=AMSblue}
 \setbeamertemplate{footline}{%
     \ifnum \theframenumber=1%
     \else%
@@ -235,7 +242,7 @@
     \setbeamertemplate{footline}{} 
 	\begin{tikzpicture}[overlay, remember picture, shift={(current page.south west)}, inner sep=0pt, outer sep=0pt]% shift to lower left corner and 3mm (footline) upwards
 		\useasboundingbox (0,0) rectangle (160mm,90mm);%
-		\fill[ovgu-inf-blue] (0,90mm) rectangle (160mm,55mm);
+		\fill[AMSblue] (0,90mm) rectangle (160mm,55mm);
 		\node[anchor=north east] at (160mm,90mm) {\includegraphics{logos/otto.pdf}};
 		\node[anchor=north west] at (\title@titlemargin,87mm) {\includegraphics[height=11mm]{logos/Signet_INF_1_inv.pdf}};	
 		%132mm
