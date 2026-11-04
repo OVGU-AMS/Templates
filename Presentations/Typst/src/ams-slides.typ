@@ -148,7 +148,7 @@
         spacing: 5mm,
         strong(_format-author(info.author)),
         wide-lmmodern(info.institution, 7pt),
-        wide-lmmodern(info.date.display("[day].[month].[year]"), 7pt),
+        wide-lmmodern(utils.display-info-date(self), 7pt),
       )
     ]
     // AMS logo.
