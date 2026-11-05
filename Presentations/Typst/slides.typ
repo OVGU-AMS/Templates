@@ -18,9 +18,6 @@
     web: "https://ams.ovgu.de",
     mail: "NCC-1701@ovgu.de",
   ),
-  config-common(
-    show-notes-on-second-screen: right,
-  ),
 )
 
 
@@ -100,7 +97,6 @@
 ]
 
 == Template
-
 You can use the usual Typst markup syntax such as headings.
 
 #block(stroke: (left: 1.5pt + AMSblue), inset: .5em, fill: luma(235))[
@@ -383,6 +379,11 @@ to remove the margin and activate margins with
 
   It does *not* affect the text boxes or the AMS and OVGU logos!
 
+== Speaker Notes
+
+You can enable speaker notes (these are like the presenter view in PowerPoint) on any side (right, left, top, bottom) of the main slides by passing ```typ config-common(show-notes-on-second-screen: right)``` to the ```typ ..arg``` argument of the ```typ ams-slides``` function used in the main show-rule. Once enabled, you can add notes to particular slide using ```typ #speaker-note[Your text.]```.
+
+
 // Calling it manually enables replacing the presentation title.
 #new-section-slide(title: [Custom Presentation Title!], subtitle: [Random Text])
 
@@ -412,8 +413,6 @@ to remove the margin and activate margins with
     ],
   ),
 )
-
-
 
 #thank-you-slide()
 

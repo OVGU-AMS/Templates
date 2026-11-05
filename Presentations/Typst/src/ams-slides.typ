@@ -69,6 +69,15 @@
 #let huge(body) = text(size: 20.74pt, body)
 #let Huge(body) = text(size: 24.88pt, body)
 
+/// Notes slide for use with the `show-notes-on-second-screen` feature.
+#let notes(self: none, note: none, ..args) = touying-notes(
+  self: self,
+  header: self => pad(x: 16pt, y: 9pt, text(size: 12pt, utils.display-current-heading(depth: self.slide-level))),
+  fill: self.colors.neutral-lightest,
+  note: normalsize(note),
+  ..args,
+)
+
 /// Normal slide with an optional title. If no title is set, the most
 /// recent level 2 heading is used instead.
 ///
@@ -315,6 +324,7 @@
       slide-fn: slide,
       new-section-slide-fn: new-section-slide,
       slide-level: slide-heading-level,
+      notes-fn: notes,
     ),
     config-colors(
       primary: AMSblue,
