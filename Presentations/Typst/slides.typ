@@ -1,5 +1,5 @@
-#import "@preview/touying:0.7.4": *
-#import "@local/ams-slides:0.2.1": *
+#import "@preview/touying:0.8.0": *
+#import "@local/ams-slides:0.2.2": *
 
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
@@ -196,7 +196,7 @@ You can define a bibliography using a BibLaTeX `.bib` file and include the follo
 
 ```typ
 #let bib = bibliography(title: none,"FILE.bib")
-#show: magic.bibliography-as-footnote.with(numbering: "1",bib)
+#show: magic.bibliography-as-footnote.with(numbering: "1")
 ```
 
 #let bib = bibliography(title: none,
@@ -211,7 +211,7 @@ You can define a bibliography using a BibLaTeX `.bib` file and include the follo
   ),
 )
 
-#show: magic.bibliography-as-footnote.with(bib, numbering: "1")
+#show: magic.bibliography-as-footnote.with(numbering: "1")
 With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>). 
 
 #place(dy:5mm)[
@@ -233,7 +233,6 @@ With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>).
 // // @einstein1905
 
 == References With Separate Bibliography
-// #magic.bibliography()
 If needed (e.g., for some seminars), you can include a separate bibliography.
 
 At the beginning of the document, you have to define:

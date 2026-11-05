@@ -1,6 +1,6 @@
-#import "@preview/touying:0.7.4": *
-#import "@preview/cetz:0.5.2"
-#import "@preview/shadowed:0.3.0": shadow
+#import "@preview/touying:0.8.0": *
+#import "@preview/cetz:0.5.3"
+#import "@preview/shadowed:0.4.0": shadow
 
 #let m-dark-teal = rgb("#23373b")
 #let ovgu-darkgray = rgb("#606060")
