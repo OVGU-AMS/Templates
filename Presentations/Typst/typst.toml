@@ -1,6 +1,6 @@
 [package]
 name = "ams-slides"
-version = "0.2.1"
+version = "0.2.2"
 entrypoint = "src/ams-slides.typ"
 authors = ["Kevin Kulot", "Benjamin Noack"]
 license = "0BSD"

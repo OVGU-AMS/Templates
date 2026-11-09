@@ -1,5 +1,5 @@
-#import "@preview/touying:0.7.4": *
-#import "@local/ams-slides:0.2.1": *
+#import "@preview/touying:0.8.0": *
+#import "@local/ams-slides:0.2.2": *
 
 #show: ams-slides.with(
   title: [Full Title of the Presentation],
@@ -97,7 +97,6 @@
 ]
 
 == Template
-
 You can use the usual Typst markup syntax such as headings.
 
 #block(stroke: (left: 1.5pt + AMSblue), inset: .5em, fill: luma(235))[
@@ -149,41 +148,31 @@ _$->$ See next slide for visible changes..._
   - This also depends on the `slide-heading-level` parameter
 
 
-== #box(
-  (
-    "L"
-      + h(-0.32em)
-      + text(baseline: -0.35em, size: 0.66em, "A")
-      + h(-0.13em)
-      + "T"
-      + h(-0.14em)
-      + text(baseline: 0.22em, "E")
-      + h(-0.14em)
-      + "X"
-  ),
-) Font Sizes 
+== #box((
+  "L" + h(-0.32em) + text(baseline: -0.35em, size: 0.66em, "A") + h(-0.13em) + "T" + h(-0.14em) + text(baseline: 0.22em, "E") + h(-0.14em) + "X"
+)) Font Sizes
 
 #[
   #set par(spacing: 0.7em)
-#tiny[tiny text with ```typ #tiny[tiny text]```]
+  #tiny[tiny text with ```typ #tiny[tiny text]```]
 
-#scriptsize[scriptsize text with ```typ #scriptsize[scriptsize text]```]
+  #scriptsize[scriptsize text with ```typ #scriptsize[scriptsize text]```]
 
-#footnotesize[footnotesize text with ```typ #footnotesize[footnotesize text]```]
+  #footnotesize[footnotesize text with ```typ #footnotesize[footnotesize text]```]
 
-#small[small text with ```typ #small[small text]```]
+  #small[small text with ```typ #small[small text]```]
 
-#normalsize[normalsize text with ```typ #normalsize[normalsize text]```] 
+  #normalsize[normalsize text with ```typ #normalsize[normalsize text]```]
 
-#large[large text with ```typ #large[large text]```]
+  #large[large text with ```typ #large[large text]```]
 
-#Large[Large text with ```typ #Large[Large text]```]
+  #Large[Large text with ```typ #Large[Large text]```]
 
-#LARGE[LARGE text with ```typ #LARGE[LARGE text]```]
+  #LARGE[LARGE text with ```typ #LARGE[LARGE text]```]
 
-#huge[huge text with ```typ #huge[huge text]```]
+  #huge[huge text with ```typ #huge[huge text]```]
 
-#Huge[Huge text with ```typ #Huge[Huge text]```]
+  #Huge[Huge text with ```typ #Huge[Huge text]```]
 ]
 
 = References
@@ -196,10 +185,11 @@ You can define a bibliography using a BibLaTeX `.bib` file and include the follo
 
 ```typ
 #let bib = bibliography(title: none,"FILE.bib")
-#show: magic.bibliography-as-footnote.with(numbering: "1",bib)
+#show: magic.bibliography-as-footnote.with(numbering: "1")
 ```
 
-#let bib = bibliography(title: none,
+#let bib = bibliography(
+  title: none,
   bytes(
     "@Article{Kalman1960,
   Title = {{A} {N}ew {A}pproach to {L}inear {F}iltering and {P}rediction {P}roblems},
@@ -211,18 +201,18 @@ You can define a bibliography using a BibLaTeX `.bib` file and include the follo
   ),
 )
 
-#show: magic.bibliography-as-footnote.with(bib, numbering: "1")
-With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>). 
+#show: magic.bibliography-as-footnote.with(numbering: "1")
+With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>).
 
-#place(dy:5mm)[
-  #block(stroke: (left: 1.5pt + AMSred), inset: .5em, fill: luma(235), width:100%)[
-  Note that you have to include 
-  ```typ 
-  #place(hide(bib))
-  ```
-  on any of your slides. 
-  (see #link("https://touying-typ.github.io/docs/reference/magic/bibliography-as-footnote"))
-]
+#place(dy: 5mm)[
+  #block(stroke: (left: 1.5pt + AMSred), inset: .5em, fill: luma(235), width: 100%)[
+    Note that you have to include
+    ```typ
+    #place(hide(bib))
+    ```
+    on any of your slides.
+    (see #link("https://touying-typ.github.io/docs/reference/magic/bibliography-as-footnote"))
+  ]
 ]
 
 #place(hide(bib))
@@ -233,7 +223,6 @@ With ```typ #cite(<KEY>)```, you can cite the work#cite(<Kalman1960>).
 // // @einstein1905
 
 == References With Separate Bibliography
-// #magic.bibliography()
 If needed (e.g., for some seminars), you can include a separate bibliography.
 
 At the beginning of the document, you have to define:
@@ -390,6 +379,11 @@ to remove the margin and activate margins with
 
   It does *not* affect the text boxes or the AMS and OVGU logos!
 
+== Speaker Notes
+
+You can enable speaker notes (these are like the presenter view in PowerPoint) on any side (right, left, top, bottom) of the main slides by passing ```typ config-common(show-notes-on-second-screen: right)``` to the ```typ ..arg``` argument of the ```typ ams-slides``` function used in the main show-rule. Once enabled, you can add notes to particular slide using ```typ #speaker-note[Your text.]```.
+
+
 // Calling it manually enables replacing the presentation title.
 #new-section-slide(title: [Custom Presentation Title!], subtitle: [Random Text])
 
@@ -419,8 +413,6 @@ to remove the margin and activate margins with
     ],
   ),
 )
-
-
 
 #thank-you-slide()
 

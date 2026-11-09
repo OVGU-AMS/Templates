@@ -1,6 +1,6 @@
-#import "@preview/touying:0.7.4": *
-#import "@preview/cetz:0.5.2"
-#import "@preview/shadowed:0.3.0": shadow
+#import "@preview/touying:0.8.0": *
+#import "@preview/cetz:0.5.3"
+#import "@preview/shadowed:0.4.0": shadow
 
 #let m-dark-teal = rgb("#23373b")
 #let ovgu-darkgray = rgb("#606060")
@@ -58,7 +58,7 @@
 )
 
 /// LaTeX like font sizes
-#let tiny(body)       = text(size: 5pt, body)
+#let tiny(body) = text(size: 5pt, body)
 #let scriptsize(body) = text(size: 7pt, body)
 #let footnotesize(body) = text(size: 8pt, body)
 #let small(body) = text(size: 9pt, body)
@@ -68,6 +68,15 @@
 #let LARGE(body) = text(size: 17.28pt, body)
 #let huge(body) = text(size: 20.74pt, body)
 #let Huge(body) = text(size: 24.88pt, body)
+
+/// Notes slide for use with the `show-notes-on-second-screen` feature.
+#let notes(self: none, note: none, ..args) = touying-notes(
+  self: self,
+  header: self => pad(x: 16pt, y: 9pt, text(size: 12pt, utils.display-current-heading(depth: self.slide-level))),
+  fill: self.colors.neutral-lightest,
+  note: normalsize(note),
+  ..args,
+)
 
 /// Normal slide with an optional title. If no title is set, the most
 /// recent level 2 heading is used instead.
@@ -91,7 +100,7 @@
     foreground: align(top, header-logo),
     footer-descent: 0cm,
     header-ascent: -0.2cm,
-    margin: if use-margin { (top: 0.9cm, bottom: 0.3cm, rest: 1cm) } else { (top: 0.9cm, bottom: 0.3cm, rest: 0cm) }, // this adds the left and right margin
+    margin: if use-margin { (top: 0.9cm, bottom: 0.3cm, x: 1cm) } else { (top: 0.9cm, bottom: 0.3cm, x: 0cm) }, // this adds the left and right margin
   ))
 
   let use-margin = if margin == auto { self.info.margin } else { margin }
@@ -148,7 +157,7 @@
         spacing: 5mm,
         strong(_format-author(info.author)),
         wide-lmmodern(info.institution, 7pt),
-        wide-lmmodern(info.date.display("[day].[month].[year]"), 7pt),
+        wide-lmmodern(utils.display-info-date(self), 7pt),
       )
     ]
     // AMS logo.
@@ -190,7 +199,7 @@
   self = utils.merge-dicts(self, config-page(
     footer: _footer,
     footer-descent: 0cm,
-    margin: (rest: 1cm, bottom: 0.3cm),
+    margin: (top: 1cm, bottom: 0.3cm, x: 1cm),
   ))
 
   touying-slide(self: self, main-body)
@@ -315,6 +324,7 @@
       slide-fn: slide,
       new-section-slide-fn: new-section-slide,
       slide-level: slide-heading-level,
+      notes-fn: notes,
     ),
     config-colors(
       primary: AMSblue,
@@ -332,7 +342,7 @@
       extra: extra,
       margin: margin,
     ),
-    ..args
+    ..args,
   )
 
   body
